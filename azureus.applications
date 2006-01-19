@@ -1,0 +1,8 @@
+azureus
+	command=azureus
+	name=Azureus
+	can_open_multiple_files=true
+	expects_uris=true
+	requires_terminal=false
+	supported_uri_schemes=http,ftp,file
+	mime_types=application/x-bittorrent

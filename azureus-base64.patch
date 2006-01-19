@@ -1,0 +1,44 @@
+--- com/aelitis/net/udp/impl/PRUDPPacketHandlerImpl.java~	2005-11-22 12:07:30.000000000 -0800
++++ com/aelitis/net/udp/impl/PRUDPPacketHandlerImpl.java	2006-01-17 21:56:00.000000000 -0800
+@@ -43,7 +43,7 @@
+ import com.aelitis.net.udp.PRUDPPacketRequest;
+ import com.aelitis.net.udp.PRUDPRequestHandler;
+ 
+-import org.bouncycastle.util.encoders.Base64;
++import gnu.crypto.util.Base64;
+ 
+ public class 
+ PRUDPPacketHandlerImpl
+--- org/gudy/azureus2/ui/console/util/StringEncrypter.java~	2005-10-14 04:43:14.000000000 -0700
++++ org/gudy/azureus2/ui/console/util/StringEncrypter.java	2006-01-17 21:56:24.000000000 -0800
+@@ -12,7 +12,7 @@
+ import javax.crypto.spec.DESKeySpec;
+ import javax.crypto.spec.DESedeKeySpec;
+ 
+-import org.bouncycastle.util.encoders.Base64;
++import gnu.crypto.util.Base64;
+ 
+ /**
+  * utility class to encrypt strings. this class was taken from the examples at:
+--- org/gudy/azureus2/ui/swt/auth/AuthenticatorWindow.java~	2005-10-14 00:17:38.000000000 -0700
++++ org/gudy/azureus2/ui/swt/auth/AuthenticatorWindow.java	2006-01-17 21:56:47.000000000 -0800
+@@ -42,7 +42,7 @@
+ import org.gudy.azureus2.core3.config.*;
+ import org.gudy.azureus2.core3.security.*;
+ 
+-import org.bouncycastle.util.encoders.Base64;
++import gnu.crypto.util.Base64;
+ 
+ public class 
+ AuthenticatorWindow 
+--- org/gudy/azureus2/core3/tracker/server/impl/tcp/TRTrackerServerProcessorTCP.java~	2005-10-15 17:36:18.000000000 -0700
++++ org/gudy/azureus2/core3/tracker/server/impl/tcp/TRTrackerServerProcessorTCP.java	2006-01-17 21:57:15.000000000 -0800
+@@ -31,7 +31,7 @@
+ import org.gudy.azureus2.core3.tracker.server.impl.*;
+ import org.gudy.azureus2.core3.util.*;
+ 
+-import org.bouncycastle.util.encoders.Base64;
++import gnu.crypto.util.Base64;
+ 
+ public abstract class 
+ TRTrackerServerProcessorTCP

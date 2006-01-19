@@ -1,0 +1,14 @@
+--- org/gudy/azureus2/pluginsimpl/local/PluginInitializer.java~	2005-10-18 17:40:06.000000000 -0700
++++ org/gudy/azureus2/pluginsimpl/local/PluginInitializer.java	2005-12-17 19:19:51.000000000 -0800
+@@ -131,11 +131,6 @@
+    					"azbpcorepatcher", 
+    					"CorePatcher",
+ 					"true" },
+-	   		{	 PluginManagerDefaults.PID_PLATFORM_CHECKER, 
+-   					"org.gudy.azureus2.platform.win32.PlatformManagerUpdateChecker", 
+-   					"azplatform2", 
+-   					"azplatform2",
+-					"true" },
+ 	   		{	 PluginManagerDefaults.PID_JPC, 
+ 					"com.aelitis.azureus.plugins.jpc.JPCPlugin", 
+ 					"azjpc", 

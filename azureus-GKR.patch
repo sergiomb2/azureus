@@ -1,0 +1,29 @@
+--- org/gudy/azureus2/core3/security/impl/SESecurityManagerImpl.java~	2005-12-19 07:55:50.000000000 -0800
++++ org/gudy/azureus2/core3/security/impl/SESecurityManagerImpl.java	2006-01-14 16:52:09.000000000 -0800
+@@ -336,7 +336,7 @@
+ 		try{
+ 			this_mon.enter();
+ 		
+-			KeyStore keystore = KeyStore.getInstance("JKS");
++			KeyStore keystore = KeyStore.getInstance("GKR");
+ 			
+ 			if ( !new File(name).exists()){
+ 		
+@@ -391,7 +391,7 @@
+ 		
+ 		throws Exception
+ 	{
+-		KeyStore key_store = KeyStore.getInstance("JKS");
++		KeyStore key_store = KeyStore.getInstance("GKR");
+ 		
+ 		if ( !new File(keystore_name).exists()){
+ 			
+@@ -676,7 +676,7 @@
+ 		try{
+ 			this_mon.enter();
+ 		
+-			KeyStore keystore = KeyStore.getInstance("JKS");
++			KeyStore keystore = KeyStore.getInstance("GKR");
+ 			
+ 			if ( !new File(truststore_name).exists()){
+ 		
