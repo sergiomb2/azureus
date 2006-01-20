@@ -1,6 +1,6 @@
 Name:           azureus
 Version:        2.3.0.6
-Release:        13%{?dist}
+Release:        14%{?dist}
 Summary:        A BitTorrent Client
 
 Group:          Applications/Internet
@@ -66,7 +66,7 @@ cp %{SOURCE5} ChangeLog.txt
 
 %build
 mkdir -p build/libs
-build-jar-repository build/libs jakarta-commons-cli swt-gtk-3.1.1 junit log4j gnu-crypto
+build-jar-repository build/libs jakarta-commons-cli swt-gtk-3.1.1 log4j gnu-crypto
 find ./ -name osx | xargs rm -r
 find ./ -name macosx | xargs rm -r
 find ./ -name [Ww]in32\* | xargs rm -r
@@ -143,6 +143,9 @@ fi
 %{_libdir}/gcj/*
 
 %changelog
+* Wed Jan 18 2006 Anthony Green <green@redhat.com> - 2.3.0.6-14
+- Remove junit from build-jar-repository.
+
 * Wed Jan 18 2006 Anthony Green <green@redhat.com> - 2.3.0.6-13
 - Drop the junit dependencies.
 - Delete unused test code.
