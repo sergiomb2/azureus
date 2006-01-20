@@ -1,6 +1,6 @@
 Name:           azureus
 Version:        2.3.0.6
-Release:        14%{?dist}
+Release:        15%{?dist}
 Summary:        A BitTorrent Client
 
 Group:          Applications/Internet
@@ -74,6 +74,7 @@ find ./ -name [Ww]in32\* | xargs rm -r
 rm org/gudy/azureus2/core3/security/impl/SESecurityManagerBC.java
 # Remove test code
 rm org/gudy/azureus2/ui/console/multiuser/TestUserManager.java
+rm org/gudy/azureus2/ui/swt/test/PrintTransferTypes.java
 ant jar
 
 %install
@@ -143,6 +144,9 @@ fi
 %{_libdir}/gcj/*
 
 %changelog
+* Wed Jan 18 2006 Anthony Green <green@redhat.com> - 2.3.0.6-15
+- Remove PrintTransferTypes, which is unused and not 64-bit clean.
+
 * Wed Jan 18 2006 Anthony Green <green@redhat.com> - 2.3.0.6-14
 - Remove junit from build-jar-repository.
 
