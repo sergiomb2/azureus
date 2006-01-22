@@ -1,6 +1,6 @@
 Name:           azureus
 Version:        2.3.0.6
-Release:        16%{?dist}
+Release:        17%{?dist}
 Summary:        A BitTorrent Client
 
 Group:          Applications/Internet
@@ -144,7 +144,7 @@ fi
 %{_libdir}/gcj/*
 
 %changelog
-* Sat Jan 21 2006 Anthony Green <green@redhat.com> - 2.3.0.6-16
+* Sat Jan 21 2006 Anthony Green <green@redhat.com> - 2.3.0.6-17
 - Use "$@" instead of $* in azureus.script (thanks ivazquez).
 - Improve .desktop file.
 
