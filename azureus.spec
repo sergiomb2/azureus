@@ -146,6 +146,7 @@ fi
 %changelog
 * Sat Jan 21 2006 Anthony Green <green@redhat.com> - 2.3.0.6-16
 - Use "$@" instead of $* in azureus.script (thanks ivazquez).
+- Improve .desktop file.
 
 * Wed Jan 18 2006 Anthony Green <green@redhat.com> - 2.3.0.6-15
 - Remove PrintTransferTypes, which is unused and not 64-bit clean.
