@@ -1,6 +1,6 @@
 Name:           azureus
 Version:        2.3.0.6
-Release:        17%{?dist}
+Release:        18%{?dist}
 Summary:        A BitTorrent Client
 
 Group:          Applications/Internet
@@ -29,11 +29,12 @@ Patch8:         azureus-base64.patch
 Patch9:         azureus-no-bouncycastle.patch
 Patch10:        azureus-cache-size.patch
 Patch11:        azureus-remove-manifest-classpath.patch
+Patch12:        azureus-themed.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  ant, jpackage-utils >= 1.5, xml-commons-apis
-BuildRequires:  jakarta-commons-cli, libswt3-gtk2, log4j, gnu-crypto
-Requires:       jakarta-commons-cli, libswt3-gtk2, log4j, gnu-crypto
+BuildRequires:  jakarta-commons-cli, libswt3-gtk2, log4j, gnu-crypto, libgtk-java, glib-java
+Requires:       jakarta-commons-cli, libswt3-gtk2, log4j, gnu-crypto, libgtk-java, glib-java
 Requires:       libgcj >= 4.1.0-0.15
 BuildRequires:    java-gcj-compat-devel >= 1.0.31
 Requires(post):   java-gcj-compat >= 1.0.31
@@ -61,12 +62,13 @@ advanced users.
 %patch9 -p0
 %patch10 -p0
 %patch11 -p0
+%patch12 -p0
 cp %{SOURCE4} License.txt
 cp %{SOURCE5} ChangeLog.txt
 
 %build
 mkdir -p build/libs
-build-jar-repository build/libs jakarta-commons-cli swt-gtk-3.1.1 log4j gnu-crypto
+build-jar-repository build/libs jakarta-commons-cli swt-gtk-3.1.1 log4j gnu-crypto gtk2.8 glib0.2
 find ./ -name osx | xargs rm -r
 find ./ -name macosx | xargs rm -r
 find ./ -name [Ww]in32\* | xargs rm -r
@@ -144,6 +146,12 @@ fi
 %{_libdir}/gcj/*
 
 %changelog
+* Wed Jan 25 2006 Anthony Green <green@redhat.com> - 2.3.0.6-18
+- Theme CoolBar icons with azureus-themed.patch.
+- Add libgtk-java and glib-java dependencies to spec file.
+- Add gtk2.8 and glib0.2 to azureus.script.
+- Add missing semi-colon to Azureus.desktop.
+
 * Sat Jan 21 2006 Anthony Green <green@redhat.com> - 2.3.0.6-17
 - Use "$@" instead of $* in azureus.script (thanks ivazquez).
 - Improve .desktop file.
