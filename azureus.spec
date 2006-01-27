@@ -1,6 +1,6 @@
 Name:           azureus
 Version:        2.3.0.6
-Release:        19%{?dist}
+Release:        20%{?dist}
 Summary:        A BitTorrent Client
 
 Group:          Applications/Internet
@@ -146,6 +146,9 @@ fi
 %{_libdir}/gcj/*
 
 %changelog
+* Fri Jan 27 2006 Anthony Green <green@redhat.com> - 2.3.0.6-20
+- Remove junit reference from startup script.
+
 * Wed Jan 25 2006 Anthony Green <green@redhat.com> - 2.3.0.6-19
 - Theme CoolBar icons with azureus-themed.patch.
 - Add libgtk-java and glib-java dependencies to spec file.
