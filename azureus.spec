@@ -1,6 +1,6 @@
 Name:           azureus
 Version:        2.3.0.6
-Release:        20%{?dist}
+Release:        21%{?dist}
 Summary:        A BitTorrent Client
 
 Group:          Applications/Internet
@@ -30,6 +30,8 @@ Patch9:         azureus-no-bouncycastle.patch
 Patch10:        azureus-cache-size.patch
 Patch11:        azureus-remove-manifest-classpath.patch
 Patch12:        azureus-themed.patch
+Patch13:        azureus-no-shared-plugins.patch
+Patch14:        azureus-no-shared-plugins2.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  ant, jpackage-utils >= 1.5, xml-commons-apis
@@ -63,6 +65,8 @@ advanced users.
 %patch10 -p0
 %patch11 -p0
 %patch12 -p0
+%patch13 -p0
+%patch14 -p0
 cp %{SOURCE4} License.txt
 cp %{SOURCE5} ChangeLog.txt
 
@@ -146,6 +150,10 @@ fi
 %{_libdir}/gcj/*
 
 %changelog
+* Fri Jan 27 2006 Anthony Green <green@redhat.com> - 2.3.0.6-21
+- Add azureus-no-shared-plugins.patch.
+- Add azureus-no-shared-plugins2.patch.
+
 * Fri Jan 27 2006 Anthony Green <green@redhat.com> - 2.3.0.6-20
 - Remove junit reference from startup script.
 

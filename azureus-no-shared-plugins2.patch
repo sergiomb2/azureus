@@ -1,0 +1,51 @@
+--- org/gudy/azureus2/ui/swt/views/ConfigView.java~	2005-11-20 14:43:58.000000000 -0500
++++ org/gudy/azureus2/ui/swt/views/ConfigView.java	2006-01-28 13:17:26.000000000 -0500
+@@ -539,37 +539,6 @@
+       }
+     });
+ 
+-    label = new Label(infoGroup, SWT.WRAP);
+-    label.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+-    Messages.setLanguageText(label, "ConfigView.pluginlist.whereToPutOr");
+-
+-    label = new Label(infoGroup, SWT.WRAP);
+-    gridData = new GridData(GridData.FILL_HORIZONTAL);
+-    gridData.horizontalIndent = 10;
+-    label.setLayoutData(gridData);
+-    label.setText(sAppPluginDir);
+-    label.setForeground(Colors.blue);
+-    label.setCursor(Cursors.handCursor);
+-    
+- 
+-    final String _sAppPluginDir = sAppPluginDir;
+-    
+-    //TODO : Fix it for windows
+-    label.addMouseListener(new MouseAdapter() {
+-      public void mouseUp(MouseEvent arg0) {
+-        if(_sAppPluginDir.endsWith("/plugins/") || _sAppPluginDir.endsWith("\\plugins\\")) {
+-          File f = new File(_sAppPluginDir);
+-          if(f.exists() && f.isDirectory()) {
+-            Program.launch(_sAppPluginDir);
+-          } else {
+-            String azureusDir = _sAppPluginDir.substring(0,_sAppPluginDir.length() - 9);
+-            System.out.println(azureusDir);
+-            Program.launch(azureusDir);
+-          }
+-        }
+-      }
+-    });
+-    
+     List pluginIFs = Arrays.asList( azureus_core.getPluginManager().getPlugins());
+     
+     Collections.sort( 
+@@ -609,10 +578,6 @@
+       
+       	user_plugin = true;
+       	
+-      }else if (sDirName.length() > sAppPluginDir.length() && 
+-            sDirName.substring(0, sAppPluginDir.length()).equals(sAppPluginDir)){
+-      	
+-      	sDirName = sDirName.substring(sAppPluginDir.length());
+       }
+       
+       // Blank means it's internal
