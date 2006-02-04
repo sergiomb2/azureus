@@ -1,6 +1,6 @@
 Name:           azureus
 Version:        2.3.0.6
-Release:        21%{?dist}
+Release:        22%{?dist}
 Summary:        A BitTorrent Client
 
 Group:          Applications/Internet
@@ -35,8 +35,8 @@ Patch14:        azureus-no-shared-plugins2.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  ant, jpackage-utils >= 1.5, xml-commons-apis
-BuildRequires:  jakarta-commons-cli, libswt3-gtk2, log4j, gnu-crypto, libgtk-java, glib-java
-Requires:       jakarta-commons-cli, libswt3-gtk2, log4j, gnu-crypto, libgtk-java, glib-java
+BuildRequires:  jakarta-commons-cli, libswt3-gtk2-3.1.2, log4j, gnu-crypto, libgtk-java, glib-java
+Requires:       jakarta-commons-cli, libswt3-gtk2-3.1.2, log4j, gnu-crypto, libgtk-java, glib-java
 Requires:       libgcj >= 4.1.0-0.15
 BuildRequires:    java-gcj-compat-devel >= 1.0.31
 Requires(post):   java-gcj-compat >= 1.0.31
@@ -72,7 +72,7 @@ cp %{SOURCE5} ChangeLog.txt
 
 %build
 mkdir -p build/libs
-build-jar-repository build/libs jakarta-commons-cli swt-gtk-3.1.1 log4j gnu-crypto gtk2.8 glib0.2
+build-jar-repository build/libs jakarta-commons-cli swt-gtk-3.1.2 log4j gnu-crypto gtk2.8 glib0.2
 find ./ -name osx | xargs rm -r
 find ./ -name macosx | xargs rm -r
 find ./ -name [Ww]in32\* | xargs rm -r
@@ -150,6 +150,9 @@ fi
 %{_libdir}/gcj/*
 
 %changelog
+* Sat Feb  4 2006 Anthony Green <green@redhat.com> - 2.3.0.6-22
+- Update libswt3-gtk2 requirements in spec file and azureus.script.
+
 * Fri Jan 27 2006 Anthony Green <green@redhat.com> - 2.3.0.6-21
 - Add azureus-no-shared-plugins.patch.
 - Add azureus-no-shared-plugins2.patch.
