@@ -1,6 +1,6 @@
 Name:           azureus
 Version:        2.3.0.7
-Release:        1.20060207cvs%{?dist}
+Release:        2.20060207cvs%{?dist}
 Summary:        A BitTorrent Client
 
 Group:          Applications/Internet
@@ -33,7 +33,9 @@ BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  ant, jpackage-utils >= 1.5, xml-commons-apis
 BuildRequires:  jakarta-commons-cli, libswt3-gtk2, log4j, gnu-crypto
+BuildRequires:  libgconf-java
 Requires:       jakarta-commons-cli, libswt3-gtk2, log4j, gnu-crypto
+Requires:       libgconf-java
 Requires:       libgcj >= 4.1.0-0.15
 BuildRequires:    java-gcj-compat-devel >= 1.0.31
 Requires(post):   java-gcj-compat >= 1.0.31
@@ -141,6 +143,9 @@ fi
 %{_libdir}/gcj/*
 
 %changelog
+* Thu Feb  9 2006 Anthony Green <green@redhat.com> - 2.3.0.7-2.20060207cvs
+- Add libgconf dependency.
+
 * Thu Feb  9 2006 Anthony Green <green@redhat.com> - 2.3.0.7-1.20060207cvs
 - Replace absolute paths in swt-3.1 patches with relative paths.
 
