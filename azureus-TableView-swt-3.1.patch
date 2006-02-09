@@ -1,5 +1,5 @@
---- /usr/src/redhat/BUILD/azureus2/org/gudy/azureus2/ui/swt/views/TableView.java.~1.81.~	2006-01-23 07:42:54.000000000 -0800
-+++ /usr/src/redhat/BUILD/azureus2/org/gudy/azureus2/ui/swt/views/TableView.java	2006-01-25 14:49:25.000000000 -0800
+--- org/gudy/azureus2/ui/swt/views/TableView.java.~1.81.~	2006-01-23 07:42:54.000000000 -0800
++++ org/gudy/azureus2/ui/swt/views/TableView.java	2006-01-25 14:49:25.000000000 -0800
 @@ -2672,27 +2672,7 @@
  	}
  

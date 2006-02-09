@@ -1,5 +1,5 @@
---- /usr/src/redhat/BUILD/azureus2/org/gudy/azureus2/ui/swt/views/configsections/ConfigSectionPlugins.java.~1.7.~	2005-12-21 07:34:08.000000000 -0800
-+++ /usr/src/redhat/BUILD/azureus2/org/gudy/azureus2/ui/swt/views/configsections/ConfigSectionPlugins.java	2006-01-25 14:40:42.000000000 -0800
+--- org/gudy/azureus2/ui/swt/views/configsections/ConfigSectionPlugins.java.~1.7.~	2005-12-21 07:34:08.000000000 -0800
++++ org/gudy/azureus2/ui/swt/views/configsections/ConfigSectionPlugins.java	2006-01-25 14:40:42.000000000 -0800
 @@ -373,12 +373,6 @@
  			tc.addSelectionListener(new SelectionAdapter() {
  				public void widgetSelected(SelectionEvent e) {
