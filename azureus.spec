@@ -1,6 +1,6 @@
 Name:           azureus
 Version:        2.3.0.7
-Release:        0%{?dist}
+Release:        0.20060207cvs%{?dist}
 Summary:        A BitTorrent Client
 
 Group:          Applications/Internet
@@ -141,6 +141,9 @@ fi
 %{_libdir}/gcj/*
 
 %changelog
+* Thu Feb  9 2006 Anthony Green <green@redhat.com> - 2.3.0.7-0.20060207cvs
+- Fix release number.
+
 * Thu Feb  9 2006 Anthony Green <green@redhat.com> - 2.3.0.7-0
 - Move to 2.3.0.7 snapshot (or will it be 2.4.0.0?).
 - Many related changes.
