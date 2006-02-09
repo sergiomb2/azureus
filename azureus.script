@@ -1,3 +1,8 @@
 #!/bin/sh
 
-CLASSPATH=`build-classpath jakarta-commons-cli log4j swt-gtk-3.1.2 gtk2.8 glib0.2 Azureus2` java -Dgnu.gcj.runtime.VMClassLoader.library_control=never org.gudy.azureus2.ui.swt.Main "$@"
+APPDIR=`(cd ~; pwd)`/.azureus/app
+if ! test -d $APPDIR; then
+  mkdir -p $APPDIR;
+fi
+
+CLASSPATH=`build-classpath jakarta-commons-cli log4j swt-gtk-3.1.1 gtk2.8 glib0.2 Azureus2` java -Dgnu.gcj.runtime.VMClassLoader.library_control=never -Dazureus.install.path=$APPDIR org.gudy.azureus2.ui.swt.Main "$@"

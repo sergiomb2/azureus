@@ -1,21 +1,11 @@
---- org/gudy/azureus2/core3/security/impl/SESecurityManagerImpl.java~	2006-01-17 21:58:55.000000000 -0800
-+++ org/gudy/azureus2/core3/security/impl/SESecurityManagerImpl.java	2006-01-17 22:20:05.000000000 -0800
-@@ -94,7 +94,7 @@
- 		}
- 		
- 		try{
--			SESecurityManagerBC.initialise();
-+		    //			SESecurityManagerBC.initialise();
- 			
- 		}catch( Throwable e ){
- 			
-@@ -505,7 +505,8 @@
+--- org/gudy/azureus2/core3/config/COConfigurationManager.java.orig	2006-01-19 18:27:18.000000000 -0800
++++ org/gudy/azureus2/core3/config/COConfigurationManager.java	2006-01-25 12:14:49.000000000 -0800
+@@ -39,7 +39,7 @@
+ 	public static final int CONFIG_CACHE_SIZE_MAX_MB;
  	
- 		throws Exception
- 	{
--		return( SESecurityManagerBC.createSelfSignedCertificate( this, alias, cert_dn, strength ));
-+	    //		return( SESecurityManagerBC.createSelfSignedCertificate( this, alias, cert_dn, strength ));
-+	    return null;
- 	}
- 	
- 	public boolean
+ 	static{
+-		long max_mem_bytes 	= Runtime.getRuntime().maxMemory();
++	    long max_mem_bytes 	= Math.min (Runtime.getRuntime().maxMemory(), 64*1024*1024);
+ 	    long mb_1			= 1*1024*1024;
+ 	    long mb_32			= 32*mb_1;
+ 	    CONFIG_CACHE_SIZE_MAX_MB = (int)(( max_mem_bytes - mb_32 )/mb_1);

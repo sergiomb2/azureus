@@ -1,5 +1,5 @@
---- build.xml~	2005-10-25 07:21:24.000000000 -0700
-+++ build.xml	2006-01-19 06:39:07.000000000 -0800
+--- build.xml.orig	2005-10-25 05:22:46.000000000 -0700
++++ build.xml	2006-01-25 12:16:32.000000000 -0800
 @@ -39,7 +39,6 @@
        <jar destfile="${root.dir}/${dist.dir}/Azureus2.jar" basedir="${root.dir}" excludes="${dist.jar.excludes}" >
           <manifest>

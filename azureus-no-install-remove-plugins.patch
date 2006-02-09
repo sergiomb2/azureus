@@ -1,0 +1,48 @@
+--- org/gudy/azureus2/ui/swt/mainwindow/MainMenu.java.~1.58.~	2006-01-31 14:43:47.000000000 -0500
++++ org/gudy/azureus2/ui/swt/mainwindow/MainMenu.java	2006-02-09 00:05:11.000000000 -0500
+@@ -347,26 +347,6 @@
+       menu_plugin.setMenu(pluginMenu);
+       if(notMainWindow) {performOneTimeDisable(menu_plugin, true);}
+ 
+-      new MenuItem(pluginMenu, SWT.SEPARATOR);
+-      
+-      MenuItem plugins_install_wizard = new MenuItem(pluginMenu, SWT.NULL);
+-      KeyBindings.setAccelerator(plugins_install_wizard, "MainWindow.menu.plugins.installPlugins");
+-      Messages.setLanguageText(plugins_install_wizard, "MainWindow.menu.plugins.installPlugins"); //$NON-NLS-1$
+-      plugins_install_wizard.addListener(SWT.Selection, new Listener() {
+-        public void handleEvent(Event e) {
+-          new InstallPluginWizard(mainWindow.getAzureusCore(), display);
+-        }
+-      });
+-      
+-      MenuItem plugins_uninstall_wizard = new MenuItem(pluginMenu, SWT.NULL);
+-      KeyBindings.setAccelerator(plugins_uninstall_wizard, "MainWindow.menu.plugins.uninstallPlugins");
+-      Messages.setLanguageText(plugins_uninstall_wizard, "MainWindow.menu.plugins.uninstallPlugins"); //$NON-NLS-1$
+-      plugins_uninstall_wizard.addListener(SWT.Selection, new Listener() {
+-        public void handleEvent(Event e) {
+-          new UnInstallPluginWizard(mainWindow.getAzureusCore(), display);
+-        }
+-      });
+-
+       // standard items
+       if(Constants.isOSX) {
+           // Window menu
+@@ -452,18 +432,6 @@
+       
+       new MenuItem(helpMenu,SWT.SEPARATOR);
+       
+-      if ( !SystemProperties.isJavaWebStartInstance()){
+-        MenuItem help_checkupdate = new MenuItem(helpMenu, SWT.NULL);
+-        KeyBindings.setAccelerator(help_checkupdate, "MainWindow.menu.help.checkupdate");
+-        Messages.setLanguageText(help_checkupdate, "MainWindow.menu.help.checkupdate"); //$NON-NLS-1$
+-        help_checkupdate.addListener(SWT.Selection, new Listener() {
+-        	public void handleEvent(Event e) {
+-        		mainWindow.getShell().setFocus();
+-        		UpdateMonitor.getSingleton( mainWindow.getAzureusCore()).performCheck();
+-        	}
+-        });
+-      }
+-
+       MenuItem help_donate = new MenuItem(helpMenu, SWT.NULL);
+       Messages.setLanguageText(help_donate, "MainWindow.menu.help.donate"); //$NON-NLS-1$
+       help_donate.addListener(SWT.Selection, new Listener() {

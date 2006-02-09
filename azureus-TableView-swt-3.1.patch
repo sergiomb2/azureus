@@ -1,0 +1,31 @@
+--- /usr/src/redhat/BUILD/azureus2/org/gudy/azureus2/ui/swt/views/TableView.java.~1.81.~	2006-01-23 07:42:54.000000000 -0800
++++ /usr/src/redhat/BUILD/azureus2/org/gudy/azureus2/ui/swt/views/TableView.java	2006-01-25 14:49:25.000000000 -0800
+@@ -2672,27 +2672,7 @@
+ 	}
+ 
+ 	private void changeColumnIndicator() {
+-		if (table == null || table.isDisposed())
+-			return;
+-
+-		try {
+-			// can't use TableColumnCore.getPosition, because user may have moved
+-			// columns around, messing up the SWT column indexes.  
+-			// We can either use search columnsOrdered, or search table.getColumns()
+-			TableColumn[] tcs = table.getColumns();
+-			for (int i = 0; i < tcs.length; i++) {
+-				String sName = (String)tcs[i].getData("Name");
+-				if (sName != null && sName.equals(rowSorter.sColumnName)) {
+-					table.setSortDirection(rowSorter.bAscending ? SWT.UP : SWT.DOWN);
+-					table.setSortColumn(tcs[i]);
+-					return;
+-				}
+-			}
+-
+-			table.setSortColumn(null);
+-		} catch (NoSuchMethodError e) {
+-			// sWT < 3.2 doesn't have column indicaters
+-		}
++	    return;
+ 	}
+ 
+ 	private void visibleRowsChanged() {

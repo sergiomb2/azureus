@@ -1,15 +1,15 @@
 Name:           azureus
-Version:        2.3.0.6
-Release:        23%{?dist}
+Version:        2.3.0.7
+Release:        0%{?dist}
 Summary:        A BitTorrent Client
 
 Group:          Applications/Internet
 License:        GPL
 URL:            http://azureus.sourceforge.net
 
-# This is just the upstream Azureus_2.3.0.6_source.zip file with 
-# the crypto code removed (org/bouncycastle).
-Source0:        Azureus_2.3.0.6_source_nocrypto.zip
+# A cvs snapshot with the build and bouncycastle directories
+# removed.
+Source0:        azureus2-cvs-20060207.tar.gz
 
 Source1:        azureus.script
 Source2:        Azureus.desktop
@@ -17,26 +17,23 @@ Source3:        azureus.applications
 Source4:        azureus-License.txt
 Source5:        azureus-ChangeLog.txt
 
-Patch0:         azureus-sun.misc.Cleaner.patch
-Patch1:         azureus-sun.misc.Signal.patch
-Patch2:         azureus-java.beans.XMLEncoder.patch
-Patch3:         azureus-remove-win32-osx-platforms.patch
-Patch4:         azureus-remove-win32-PlatformManagerUpdateChecker.patch
-Patch5:         azureus-jessie.patch
-Patch6:         azureus-GKR.patch
-Patch7:         azureus-ConfigurationManager-improvement.patch
-Patch8:         azureus-base64.patch
-Patch9:         azureus-no-bouncycastle.patch
-Patch10:        azureus-cache-size.patch
-Patch11:        azureus-remove-manifest-classpath.patch
-Patch12:        azureus-themed.patch
-Patch13:        azureus-no-shared-plugins.patch
-Patch14:        azureus-no-shared-plugins2.patch
+Patch0:         azureus-remove-win32-osx-platforms.patch
+Patch1:         azureus-remove-win32-PlatformManagerUpdateChecker.patch
+Patch2:         azureus-cache-size.patch
+Patch3:         azureus-remove-manifest-classpath.patch
+Patch4:         azureus-ConfigSectionPlugins-swt-3.1.patch
+Patch5:         azureus-Messages-swt-3.1.patch
+Patch6:         azureus-TableView-swt-3.1.patch
+Patch7:         azureus-themed.patch
+Patch8:         azureus-rh-bugzilla-180418.patch
+Patch9:         azureus-no-shared-plugins.patch
+Patch10:        azureus-no-install-remove-plugins.patch
+
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  ant, jpackage-utils >= 1.5, xml-commons-apis
-BuildRequires:  jakarta-commons-cli, libswt3-gtk2 >= 3.1.2, log4j, gnu-crypto, libgtk-java, glib-java
-Requires:       jakarta-commons-cli, libswt3-gtk2 >= 3.1.2, log4j, gnu-crypto, libgtk-java, glib-java
+BuildRequires:  jakarta-commons-cli, libswt3-gtk2, log4j, gnu-crypto
+Requires:       jakarta-commons-cli, libswt3-gtk2, log4j, gnu-crypto
 Requires:       libgcj >= 4.1.0-0.15
 BuildRequires:    java-gcj-compat-devel >= 1.0.31
 Requires(post):   java-gcj-compat >= 1.0.31
@@ -51,7 +48,7 @@ comes bundled with many invaluable features for both beginners and
 advanced users.
 
 %prep
-%setup -q -c %{name}-%{version}
+%setup -q -n %{name}2
 %patch0 -p0
 %patch1 -p0
 %patch2 -p0
@@ -63,23 +60,17 @@ advanced users.
 %patch8 -p0
 %patch9 -p0
 %patch10 -p0
-%patch11 -p0
-%patch12 -p0
-%patch13 -p0
-%patch14 -p0
 cp %{SOURCE4} License.txt
 cp %{SOURCE5} ChangeLog.txt
 
 %build
 mkdir -p build/libs
-build-jar-repository build/libs jakarta-commons-cli swt-gtk-3.1.2 log4j gnu-crypto gtk2.8 glib0.2
+build-jar-repository build/libs jakarta-commons-cli swt-gtk-3.1.1 log4j gnu-crypto gtk2.8 glib0.2
+ln -s /usr/share/java/gcj-endorsed/bcprov-131.jar build/libs
 find ./ -name osx | xargs rm -r
 find ./ -name macosx | xargs rm -r
 find ./ -name [Ww]in32\* | xargs rm -r
-# Remove the BouncyCastle security manager.
-rm org/gudy/azureus2/core3/security/impl/SESecurityManagerBC.java
 # Remove test code
-rm org/gudy/azureus2/ui/console/multiuser/TestUserManager.java
 rm org/gudy/azureus2/ui/swt/test/PrintTransferTypes.java
 ant jar
 
@@ -150,6 +141,11 @@ fi
 %{_libdir}/gcj/*
 
 %changelog
+* Thu Feb  9 2006 Anthony Green <green@redhat.com> - 2.3.0.7-0
+- Move to 2.3.0.7 snapshot (or will it be 2.4.0.0?).
+- Many related changes.
+- Remove ability to install plugins.
+
 * Sat Feb  4 2006 Anthony Green <green@redhat.com> - 2.3.0.6-23
 - Fix thinko in last revision.
 
@@ -168,6 +164,10 @@ fi
 - Add libgtk-java and glib-java dependencies to spec file.
 - Add gtk2.8 and glib0.2 to azureus.script.
 - Add missing semi-colon to Azureus.desktop.
+
+* Sat Jan 21 2006 Anthony Green <green@redhat.com> - 2.3.0.6-17
+- Use "$@" instead of $* in azureus.script (thanks ivazquez).
+- Improve .desktop file.
 
 * Sat Jan 21 2006 Anthony Green <green@redhat.com> - 2.3.0.6-17
 - Use "$@" instead of $* in azureus.script (thanks ivazquez).
