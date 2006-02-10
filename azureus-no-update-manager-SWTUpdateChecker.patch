@@ -1,0 +1,80 @@
+--- org/gudy/azureus2/ui/swt/updater2/SWTUpdateChecker.java.orig	2006-02-09 23:23:47.000000000 -0500
++++ org/gudy/azureus2/ui/swt/updater2/SWTUpdateChecker.java	2006-02-09 23:25:02.000000000 -0500
+@@ -57,77 +57,14 @@
+   public static void
+   initialize()
+   {
+-    PluginInitializer.getDefaultInterface().getUpdateManager().registerUpdatableComponent(new SWTUpdateChecker(),true);
+   }
+   
+   public SWTUpdateChecker() {    
+   }
+   
+   public void checkForUpdate(final UpdateChecker checker) {
+-  	try{
+-	    SWTVersionGetter versionGetter = new SWTVersionGetter( checker );
+-	    
+-	    if( versionGetter.needsUpdate() && System.getProperty("azureus.skipSWTcheck") == null ) {
+-        
+-        String[] mirrors = versionGetter.getMirrors();
+-	      
+-	      ResourceDownloader swtDownloader = null;
+-	      
+-          ResourceDownloaderFactory factory = ResourceDownloaderFactoryImpl.getSingleton();
+-          List downloaders =  new ArrayList();
+-          for(int i = 0 ; i < mirrors.length ; i++) {
+-            try {
+-              downloaders.add(factory.getSuffixBasedDownloader(factory.create(new URL(mirrors[i]))));
+-            } catch(MalformedURLException e) {
+-              //Do nothing
+-            	if (Logger.isEnabled())
+-								Logger.log(new LogEvent(LOGID, LogEvent.LT_WARNING,
+-										"Cannot use URL " + mirrors[i] + " (not valid)"));
+-            }
+-          }
+-          ResourceDownloader[] resourceDownloaders = 
+-            (ResourceDownloader[]) 
+-            downloaders.toArray(new ResourceDownloader[downloaders.size()]);
+-          
+-          swtDownloader = factory.getRandomDownloader(resourceDownloaders);
+-          	      
+-	      swtDownloader.addListener(new ResourceDownloaderAdapter() {
+-	        
+-	        public boolean completed(ResourceDownloader downloader, InputStream data) {
+-	          //On completion, process the InputStream to store temp files
+-	          return processData(checker,data);
+-	        }
+-	      });
+-	      
+-	      	// get the size so its cached up
+-	      
+-	      try{
+-	      	swtDownloader.getSize();
+-	      	
+-	      }catch( ResourceDownloaderException e ){
+-	      
+-	      	Debug.printStackTrace( e );
+-	      }
+-	      
+-	      checker.addUpdate("SWT Library for " + versionGetter.getPlatform(),
+-	          new String[] {"SWT is the graphical library used by Azureus"},
+-	          "" + versionGetter.getLatestVersion(),
+-	          swtDownloader,
+-	          Update.RESTART_REQUIRED_YES
+-	          );      
+-	      
+-	    }
+-  	}catch( Throwable e ){
+-  		Logger.log(new LogAlert(LogAlert.UNREPEATABLE,
+-					"SWT Version check failed", e));
+-  		
+-  		checker.failed();
+-  		
+-  	}finally{
+   		
+   		checker.completed();
+-  	}
+-    
+   }
+   
+   private boolean 

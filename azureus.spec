@@ -1,6 +1,6 @@
 Name:           azureus
-Version:        2.3.0.7
-Release:        2.20060207cvs%{?dist}
+Version:        2.4.0.0
+Release:        0.20060209cvs%{?dist}
 Summary:        A BitTorrent Client
 
 Group:          Applications/Internet
@@ -9,13 +9,16 @@ URL:            http://azureus.sourceforge.net
 
 # A cvs snapshot with the build and bouncycastle directories
 # removed.
-Source0:        azureus2-cvs-20060207.tar.gz
+Source0:        azureus2-cvs-20060209.tar.gz
 
 Source1:        azureus.script
 Source2:        Azureus.desktop
 Source3:        azureus.applications
 Source4:        azureus-License.txt
 Source5:        azureus-ChangeLog.txt
+
+Source6:	azplugins_1.8.8.jar
+Source7:	bdcc_2.2.2.zip
 
 Patch0:         azureus-remove-win32-osx-platforms.patch
 Patch1:         azureus-remove-win32-PlatformManagerUpdateChecker.patch
@@ -28,6 +31,19 @@ Patch7:         azureus-themed.patch
 Patch8:         azureus-rh-bugzilla-180418.patch
 Patch9:         azureus-no-shared-plugins.patch
 Patch10:        azureus-no-install-remove-plugins.patch
+Patch11:        azureus-no-restart.patch
+Patch12:        azureus-no-updates-PluginInitializer.patch
+Patch13:        azureus-no-updates-PluginInterfaceImpl.patch
+Patch14:        azureus-no-update-manager-AzureusCoreImpl.patch
+Patch15:        azureus-no-update-manager-CorePatchChecker.patch
+Patch16:        azureus-no-update-manager-CoreUpdateChecker.patch
+Patch17:        azureus-no-update-manager-MainWindow.patch
+Patch18:        azureus-no-update-manager-PluginInstallerImpl.patch
+Patch19:        azureus-no-update-manager-PluginUpdatePlugin.patch
+Patch20:        azureus-no-update-manager-SWTUpdateChecker.patch
+#Patch21:        azureus-no-update-manager-TableView.patch
+Patch22:        azureus-no-update-manager-UpdateMonitor.patch
+Patch23:        azureus-no-update-manager-PluginInstallerImpl-2.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -62,6 +78,19 @@ advanced users.
 %patch8 -p0
 %patch9 -p0
 %patch10 -p0
+%patch11 -p0
+%patch12 -p0
+%patch13 -p0
+%patch14 -p0
+%patch15 -p0
+%patch16 -p0
+%patch17 -p0
+%patch18 -p0
+%patch19 -p0
+%patch20 -p0
+#%patch21 -p0
+%patch22 -p0
+%patch23 -p0
 cp %{SOURCE4} License.txt
 cp %{SOURCE5} ChangeLog.txt
 
@@ -74,14 +103,41 @@ find ./ -name macosx | xargs rm -r
 find ./ -name [Ww]in32\* | xargs rm -r
 # Remove test code
 rm org/gudy/azureus2/ui/swt/test/PrintTransferTypes.java
+
 ant jar
+
+mkdir -p plugins/azplugins
+cd plugins/azplugins
+unzip -q %{SOURCE6}
+rm -f *.jar `find ./ -name \*class`
+find ./ -name \*java | xargs javac -cp `build-classpath swt-gtk-3.1.1`:../..:.
+find ./ -name \*java | xargs rm
+jar cvf azplugins_1.8.8.jar .
+cd ../..
+
+unzip -q %{SOURCE7}
+cd plugins/bdcc
+unzip *.jar
+rm -f *.jar `find ./ -name \*class`
+find ./ -name \*java | xargs javac -cp `build-classpath swt-gtk-3.1.1`:../..:.
+find ./ -name \*java | xargs rm
+jar cvf bdcc_2.2.2.jar .
+cd ../..
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-install -dm 755 $RPM_BUILD_ROOT%{_javadir}
-install -pm 644 dist/Azureus2.jar $RPM_BUILD_ROOT%{_javadir}/Azureus2.jar
+install -dm 755 $RPM_BUILD_ROOT%{_datadir}/azureus/plugins
+install -pm 644 dist/Azureus2.jar $RPM_BUILD_ROOT%{_datadir}/azureus/Azureus2.jar
 install -p -D -m 0755 %{SOURCE1} $RPM_BUILD_ROOT%{_bindir}/azureus
+
+install -dm 755 $RPM_BUILD_ROOT%{_datadir}/azureus/plugins/azplugins
+install -pm 644 plugins/azplugins/azplugins_1.8.8.jar $RPM_BUILD_ROOT%{_datadir}/azureus/plugins/azplugins/azplugins_1.8.8.jar
+install -pm 644 plugins/azplugins/plugin.properties $RPM_BUILD_ROOT%{_datadir}/azureus/plugins/azplugins/plugin.properties
+
+install -dm 755 $RPM_BUILD_ROOT%{_datadir}/azureus/plugins/bdcc
+install -pm 644 plugins/bdcc/bdcc_2.2.2.jar $RPM_BUILD_ROOT%{_datadir}/azureus/plugins/bdcc/bdcc_2.2.2.jar
+install -pm 644 plugins/bdcc/plugin.properties $RPM_BUILD_ROOT%{_datadir}/azureus/plugins/bdcc/plugin.properties
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/pixmaps
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/16x16/apps
@@ -139,10 +195,17 @@ fi
 %{_datadir}/icons/hicolor/32x32/apps/azureus.png
 %{_datadir}/icons/hicolor/64x64/apps/azureus.png
 %{_bindir}/azureus
-%{_javadir}/*.jar
+%{_datadir}/azureus
 %{_libdir}/gcj/*
 
 %changelog
+* Fri Feb 10 2006 Anthony Green <green@redhat.com> - 2.4.0.0-0.20060207cvs
+- Update cvs sources.  Boost version number.
+- Move all jar files to /usr/share/azureus.
+- Add azplugins and bdcc.
+- Remove update and restart menu items.
+- Disable all updating.
+
 * Thu Feb  9 2006 Anthony Green <green@redhat.com> - 2.3.0.7-2.20060207cvs
 - Add libgconf dependency.
 

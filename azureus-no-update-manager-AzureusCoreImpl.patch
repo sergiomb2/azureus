@@ -1,0 +1,16 @@
+--- com/aelitis/azureus/core/impl/AzureusCoreImpl.java.orig	2006-02-09 23:23:01.000000000 -0500
++++ com/aelitis/azureus/core/impl/AzureusCoreImpl.java	2006-02-09 23:23:19.000000000 -0500
+@@ -391,13 +391,6 @@
+ 			if (Logger.isEnabled())
+ 				Logger.log(new LogEvent(LOGID, "Stop operation completes"));
+ 	
+-				// if any installers exist then we need to closedown via the updater
+-			
+-			if ( 	apply_updates && 
+-					getPluginManager().getDefaultPluginInterface().getUpdateManager().getInstallers().length > 0 ){
+-				
+-				AzureusRestarterFactory.create( this ).restart( true );
+-			}
+ 		}finally{
+ 			
+ 			stopping_sem.releaseForever();

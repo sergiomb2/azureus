@@ -1,8 +1,18 @@
 #!/bin/sh
 
+# Create the fake application dir.
 APPDIR=`(cd ~; pwd)`/.azureus/app
 if ! test -d $APPDIR; then
   mkdir -p $APPDIR;
 fi
 
-CLASSPATH=`build-classpath jakarta-commons-cli log4j swt-gtk-3.1.1 gtk2.8 glib0.2 Azureus2` java -Dgnu.gcj.runtime.VMClassLoader.library_control=never -Dazureus.install.path=$APPDIR org.gudy.azureus2.ui.swt.Main "$@"
+# Reconstruct the plugins dir.
+rm -rf $APPDIR/plugins
+mkdir -p $APPDIR/plugins
+pushd $APPDIR/plugins
+for pdir in /usr/share/azureus/plugins/*; do
+  ln -s $pdir .;
+done;
+popd
+
+CLASSPATH=`build-classpath jakarta-commons-cli log4j swt-gtk-3.1.1 gtk2.8 glib0.2`:/usr/share/azureus/Azureus2.jar java -Dgnu.gcj.runtime.VMClassLoader.library_control=never -Dazureus.install.path=$APPDIR org.gudy.azureus2.ui.swt.Main "$@"

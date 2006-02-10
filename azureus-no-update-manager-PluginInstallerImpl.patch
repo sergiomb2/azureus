@@ -1,0 +1,191 @@
+--- org/gudy/azureus2/pluginsimpl/local/installer/PluginInstallerImpl.java.orig	2006-02-09 23:30:18.000000000 -0500
++++ org/gudy/azureus2/pluginsimpl/local/installer/PluginInstallerImpl.java	2006-02-09 23:32:16.000000000 -0500
+@@ -177,13 +177,6 @@
+ 	{
+ 		PluginUpdatePlugin	pup = (PluginUpdatePlugin)manager.getPluginInterfaceByClass( PluginUpdatePlugin.class ).getPlugin();
+ 		
+-		UpdateManager	uman = manager.getDefaultPluginInterface().getUpdateManager();
+-		
+-		UpdateCheckInstance	inst = 
+-			uman.createEmptyUpdateCheckInstance( 
+-					UpdateCheckInstance.UCI_INSTALL,
+-					"update.instance.install" );
+-		
+ 		try{
+ 			
+ 			for (int i=0;i<plugins.length;i++){
+@@ -247,23 +240,6 @@
+ 					
+ 					((InstallablePluginImpl)plugin).addUpdate( inst, pup, dummy_plugin, dummy_plugin_interface );
+ 							
+-					inst.addListener(
+-						new UpdateCheckInstanceListener()
+-						{
+-							public void
+-							cancelled(
+-								UpdateCheckInstance		instance )
+-							{
+-								dummy_plugin.requestUnload();
+-							}
+-							
+-							public void
+-							complete(
+-								UpdateCheckInstance		instance )
+-							{
+-								dummy_plugin.requestUnload();
+-							}
+-						});
+ 				}else{
+ 					
+ 					((InstallablePluginImpl)plugin).addUpdate( inst, pup, existing_plugin, existing_plugin_interface );
+@@ -271,12 +247,8 @@
+ 				}
+ 			}
+ 		
+-			inst.start();
+-			
+ 		}catch( Throwable e ){
+ 			
+-			inst.cancel();
+-			
+ 			if ( e instanceof PluginException ){
+ 				
+ 				throw((PluginException)e);
+@@ -339,137 +311,6 @@
+ 				throw( new PluginException( "Plugin '" + pi.getPluginID() + "' is not loaded from the file system, can't uninstall" ));
+ 			}
+ 		}
+-		
+-		try{
+-			UpdateManager	uman = manager.getDefaultPluginInterface().getUpdateManager();
+-			
+-			UpdateCheckInstance	inst = 
+-				uman.createEmptyUpdateCheckInstance(
+-						UpdateCheckInstance.UCI_UNINSTALL,
+-						"update.instance.uninstall");
+-
+-			for (int i=0;i<pis.length;i++){
+-				
+-				final PluginInterface	pi = pis[i];
+-				
+-				final String	plugin_dir = pi.getPluginDirectoryName();
+-
+-				inst.addUpdatableComponent(
+-					new UpdatableComponent()
+-					{
+-						public String
+-						getName()
+-						{
+-							return( pi.getPluginName());
+-						}
+-					
+-						public int
+-						getMaximumCheckTime()
+-						{
+-							return( 0 );
+-						}
+-						
+-						public void
+-						checkForUpdate(
+-							final UpdateChecker	checker )
+-						{
+-							try{
+-								ResourceDownloader rd = 
+-									manager.getDefaultPluginInterface().getUtilities().getResourceDownloaderFactory().create( new File( plugin_dir ));
+-								
+-								rd.addListener(
+-									new ResourceDownloaderAdapter()
+-									{
+-										public boolean
+-										completed(
+-											ResourceDownloader	downloader,
+-											InputStream			data )
+-										{
+-											try{
+-												if ( pi.isUnloadable()){
+-											
+-													pi.unload();
+-													
+-													FileUtil.recursiveDelete( new File( plugin_dir ));
+-												
+-												}else{
+-																
+-													UpdateInstaller installer = checker.createInstaller();
+-													
+-													installer.addRemoveAction( new File( plugin_dir ).getCanonicalPath());
+-												}
+-												
+-											}catch( Throwable e ){
+-												
+-												Debug.printStackTrace(e);
+-												Logger.log(new LogAlert(LogAlert.REPEATABLE,
+-														"Plugin uninstall failed", e));
+-											}
+-												
+-											return( true );
+-										}
+-										
+-										public void
+-										failed(
+-											ResourceDownloader			downloader,
+-											ResourceDownloaderException e )
+-										{
+-											if ( !downloader.isCancelled()){
+-												Logger.log(new LogAlert(LogAlert.REPEATABLE,
+-														"Plugin uninstall failed", e));
+-											}
+-										}
+-									});
+-	
+-									// the plugin may have > 1 plugin interfaces, make the name up appropriately
+-								
+-								String	update_name = "";
+-									
+-								PluginInterface[]	ifs = manager.getPluginInterfaces();
+-								
+-							    Arrays.sort( 
+-							    		ifs,
+-									  	new Comparator()
+-										{
+-								      		public int 
+-											compare(
+-												Object o1, 
+-												Object o2)
+-								      		{
+-								      			return(((PluginInterface)o1).getPluginName().compareTo(((PluginInterface)o2).getPluginName()));
+-								      		}
+-										});
+-							    
+-								for (int i=0;i<ifs.length;i++){
+-									
+-									if ( ifs[i].getPluginID().equals(pi.getPluginID())){
+-									
+-										update_name += (update_name.length()==0?"":",") + ifs[i].getPluginName();
+-									}
+-								}
+-								
+-								checker.addUpdate(
+-									update_name,
+-									new String[]{ "Uninstall: " + plugin_dir},
+-									pi.getPluginVersion(),
+-									rd,
+-									pi.isUnloadable()?Update.RESTART_REQUIRED_NO:Update.RESTART_REQUIRED_YES );
+-									
+-							}finally{
+-								
+-								checker.completed();
+-							}
+-								
+-						}
+-					}, false );
+-			}
+-
+-			inst.start();
+-			
+-		}catch( Throwable e ){
+-			
+-			Debug.printStackTrace(e);
+-		}
+ 	}
+ 	
+ 	protected PluginInterface

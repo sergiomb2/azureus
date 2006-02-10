@@ -1,0 +1,31 @@
+--- org/gudy/azureus2/update/CorePatchChecker.java.orig	2006-02-09 23:29:16.000000000 -0500
++++ org/gudy/azureus2/update/CorePatchChecker.java	2006-02-09 23:29:53.000000000 -0500
+@@ -64,8 +64,6 @@
+ 				
+ 				System.out.println( "CorePatchChecker: TESTING !!!!" );
+ 			}
+-			
+-			plugin_interface.getUpdateManager().registerUpdatableComponent( this, false );
+ 		}
+ 	}
+ 	
+@@ -86,18 +84,7 @@
+ 	checkForUpdate(
+ 		UpdateChecker	checker )
+ 	{
+-		try{
+-			UpdateCheckInstance	inst = checker.getCheckInstance();
+-		
+-			inst.addListener( this );
+-		
+-			checker.addUpdate( "Core Patch Checker", new String[0], "",
+-								new ResourceDownloader[0],
+-								Update.RESTART_REQUIRED_MAYBE );
+-		}finally{
+-			
+-			checker.completed();
+-		}
++	    checker.completed();
+ 	}
+ 	
+ 	public void

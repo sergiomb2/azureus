@@ -1,0 +1,19 @@
+--- /usr/src/redhat/BUILD/azureus2/org/gudy/azureus2/pluginsimpl/local/PluginInterfaceImpl.java.orig	2006-02-09 23:03:10.000000000 -0500
++++ /usr/src/redhat/BUILD/azureus2/org/gudy/azureus2/pluginsimpl/local/PluginInterfaceImpl.java	2006-02-09 23:03:41.000000000 -0500
+@@ -47,7 +47,6 @@
+ import org.gudy.azureus2.pluginsimpl.local.ui.config.ParameterRepository;
+ import org.gudy.azureus2.pluginsimpl.local.ui.config.PluginConfigUIFactoryImpl;
+ import org.gudy.azureus2.pluginsimpl.local.utils.*;
+-import org.gudy.azureus2.pluginsimpl.local.update.*;
+ import org.gudy.azureus2.plugins.ipfilter.IPFilter;
+ import org.gudy.azureus2.plugins.tracker.Tracker;
+ import org.gudy.azureus2.plugins.ui.config.Parameter;
+@@ -409,7 +408,7 @@
+   public UpdateManager
+   getUpdateManager()
+   {
+-  	return( UpdateManagerImpl.getSingleton( initialiser.getAzureusCore()));
++      return( null );
+   }
+ 
+   public PeerProtocolManager

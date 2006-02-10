@@ -1,0 +1,150 @@
+--- org/gudy/azureus2/ui/swt/update/UpdateMonitor.java.orig	2006-02-09 23:25:26.000000000 -0500
++++ org/gudy/azureus2/ui/swt/update/UpdateMonitor.java	2006-02-09 23:26:30.000000000 -0500
+@@ -87,147 +87,18 @@
+ 	{
+ 		azureus_core	= _azureus_core;
+ 		
+-	  	UpdateManager um = azureus_core.getPluginManager().getDefaultPluginInterface().getUpdateManager(); 
+-
+-	  	um.addListener(
+-	  		new UpdateManagerListener()
+-			{
+-	  			public void
+-				checkInstanceCreated(
+-					UpdateCheckInstance	instance )
+-	  			{
+-	  				instance.addListener( UpdateMonitor.this );
+-	  			}
+-			});
+-	  	
+-	    SimpleTimer.addPeriodicEvent( 
+-	            AUTO_UPDATE_CHECK_PERIOD,
+-	            new TimerEventPerformer()
+-	            {
+-	            	public void
+-					perform(
+-						TimerEvent  ev )
+-					{
+-	            		performAutoCheck(false);
+-					}
+-	            });
+-	      
+-	    	// wait a bit before starting check to give rest of AZ time to initialise 
+-	    
+-		new DelayedEvent(
+-				2500,
+-				new AERunnable()
+-				{
+-					public void
+-					runSupport()
+-					{
+-						performAutoCheck(true);
+-					}
+-				});
+ 	}
+   
+ 	protected void
+ 	performAutoCheck(
+ 		final boolean		start_of_day )
+ 	{
+-		boolean check_at_start	= false;
+-		boolean check_periodic	= false;
+-	
+-			// no update checks for java web start
+-		
+-		if ( !SystemProperties.isJavaWebStartInstance()){
+-					
+-			check_at_start	= COConfigurationManager.getBooleanParameter( "update.start", true );
+-			check_periodic	= COConfigurationManager.getBooleanParameter( "update.periodic", true );
+-		}
+-		
+-			// periodic -> check at start as well
+-		
+-		check_at_start = check_at_start || check_periodic;
+-		
+-		if (	( check_at_start && start_of_day) ||
+-				( check_periodic && !start_of_day )){
+-			
+-			performCheck();	// this will implicitly do usage stats
+-			
+-		}else{
+-
+-			new DelayedEvent(
+-					5000,
+-					new AERunnable()
+-					{
+-						public void
+-						runSupport()
+-						{
+-							if ( start_of_day ){
+-                                MainWindow.getWindow().setStatusText("");
+-							}
+-
+-							CoreUpdateChecker.doUsageStats();
+-						}
+-					});
+-		}
+ 	}
+ 	
+ 	public void
+ 	performCheck()
+ 	{
+-		if ( SystemProperties.isJavaWebStartInstance()){
+-			
+-				// just in case we get here somehome!
+-			if (Logger.isEnabled())
+-				Logger.log(new LogEvent(LOGID,
+-						"skipping update check as java web start"));
+-			
+-			return;
+-		}
+ 
+-			// kill any existing update window
+-		
+-	    if ( current_update_window != null && ! current_update_window.isDisposed()){
+-	    	
+-	      SWTThread.getInstance().getDisplay().syncExec(
+-	      		new AERunnable() 
+-				{
+-	      			public void 
+-					runSupport() 
+-	      			{               
+-	      				current_update_window.dispose();
+-	      			}
+-	      		});
+-	    }
+-	    
+-	    if ( current_update_instance != null ){
+-	    	
+-	    	current_update_instance.cancel();
+-	    }
+-	    
+-		MainWindow mainWindow = MainWindow.getWindow();
+-		
+-	    mainWindow.setStatusText("MainWindow.status.checking ...");
+-	    
+-	    	// take this off this GUI thread in case it blocks for a while
+-	    
+-	   AEThread t = 
+-		   	new AEThread( "UpdateMonitor:kickoff")
+-				{
+-			    	public void
+-					runSupport()
+-			    	{
+-			    		UpdateManager um = azureus_core.getPluginManager().getDefaultPluginInterface().getUpdateManager(); 
+-				
+-			    		current_update_instance = 
+-			    			um.createUpdateCheckInstance(
+-			    				UpdateCheckInstance.UCI_UPDATE,
+-			  					"update.instance.update" );
+-			  	
+-			    		current_update_instance.start();
+-			    	}
+-				};
+-			
+-		t.setDaemon( true );
+-		
+-		t.start();
+ 	}
+ 	
+ 	public void
