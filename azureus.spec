@@ -199,6 +199,9 @@ fi
 %{_libdir}/gcj/*
 
 %changelog
+* Mon Feb 13 2006 Anthony Green <green@redhat.com> - 2.4.0.0-0.20060207cvs_1
+- Remove absolute path from azureus-no-updates-PluginInterfaceImpl.patch.
+
 * Fri Feb 10 2006 Anthony Green <green@redhat.com> - 2.4.0.0-0.20060207cvs
 - Update cvs sources.  Boost version number.
 - Move all jar files to /usr/share/azureus.
