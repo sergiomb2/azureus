@@ -1,6 +1,6 @@
 Name:           azureus
 Version:        2.4.0.0
-Release:        0.20060209cvs%{?dist}
+Release:        0.20060209cvs_1%{?dist}
 Summary:        A BitTorrent Client
 
 Group:          Applications/Internet
