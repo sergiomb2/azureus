@@ -1,6 +1,6 @@
---- org/gudy/azureus2/update/CoreUpdateChecker.java.orig	2006-02-09 23:27:55.000000000 -0500
-+++ org/gudy/azureus2/update/CoreUpdateChecker.java	2006-02-09 23:28:47.000000000 -0500
-@@ -124,8 +124,6 @@
+--- org/gudy/azureus2/update/CoreUpdateChecker.java.orig	2006-03-25 14:18:45.000000000 -0800
++++ org/gudy/azureus2/update/CoreUpdateChecker.java	2006-03-25 17:19:32.000000000 -0800
+@@ -122,8 +122,6 @@
  		props.setProperty( "plugin.version", plugin_interface.getAzureusVersion());
  		
  		rdf = plugin_interface.getUtilities().getResourceDownloaderFactory();
@@ -9,7 +9,7 @@
  	}
  	
  	public String
-@@ -144,178 +142,9 @@
+@@ -142,155 +140,9 @@
  	checkForUpdate(
  		final UpdateChecker	checker )
  	{
@@ -17,15 +17,7 @@
 -			String	current_version = plugin_interface.getAzureusVersion();
 -			
 -			log.log( "Update check starts: current = " + current_version );
--									
--			boolean	TESTING = false;	// !!!!TODO: REMOVE THIS
--			
--			if ( TESTING ){
--			
--				System.out.println( "CoreUpdater: !!!! Testing mode !!!!" );
--				
--			}
--				
+-													
 -			Map	decoded = VersionCheckClient.getSingleton().getVersionCheckInfo(
 -		  			first_check?VersionCheckClient.REASON_UPDATE_CHECK_START:VersionCheckClient.REASON_UPDATE_CHECK_PERIODIC);
 -
@@ -61,26 +53,11 @@
 -			
 -			log.log( msg );
 -			
--			boolean	latest_is_cvs	= Constants.isCVSVersion( latest_version );
--			String	latest_base		= Constants.getBaseVersion( latest_version );
--			
--			String	current_base	= Constants.getBaseVersion();
--				
--				// currently we upgrade from, for example
--				//  1) 2.0.8.4     -> 2.0.8.6
--				//	2) 2.0.8.5_CVS -> 2.0.8.6
--				// but not to a CVS version (also currently never reported as latest...)
--				
--			if ( latest_is_cvs && !TESTING ){
+-			if ( !shouldUpdate( current_version, latest_version )){
 -				
 -				return;
 -			}
--
--			if ( Constants.compareVersions( current_base, latest_base ) >= 0 && !TESTING){
 -				
--				return;
--			}
--			
 -			final String	f_latest_version	= latest_version;
 -			final String	f_latest_file_name	= latest_file_name;
 -			

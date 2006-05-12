@@ -1,0 +1,31 @@
+--- org/gudy/azureus2/ui/swt/shells/MessageSlideShell.java.~1.15.~	2006-03-20 23:10:27.000000000 -0800
++++ org/gudy/azureus2/ui/swt/shells/MessageSlideShell.java	2006-03-25 17:30:47.000000000 -0800
+@@ -269,13 +269,7 @@
+ 
+ 		// Create shell & widgets
+ 		shell = new Shell(display, SWT.ON_TOP);
+-		if (USE_SWT32_BG_SET) {
+-			try {
+-				shell.setBackgroundMode(SWT.INHERIT_DEFAULT);
+-			} catch (NoSuchMethodError e) {
+-				// Ignore
+-			}
+-		}
++
+ 		Utils.setShellIcon(shell);
+ 		shell.setText(popupParams.title);
+ 
+@@ -507,13 +501,6 @@
+ 			gc.dispose();
+ 
+ 			boolean bAlternateDrawing = true;
+-			if (USE_SWT32_BG_SET) {
+-				try {
+-					shell.setBackgroundImage(imgBackground);
+-					bAlternateDrawing = false;
+-				} catch (NoSuchMethodError e) {
+-				}
+-			}
+ 
+ 			if (bAlternateDrawing) {
+ 				// Drawing of BG Image for pre SWT 3.2

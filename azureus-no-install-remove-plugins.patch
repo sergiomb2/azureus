@@ -1,8 +1,8 @@
---- org/gudy/azureus2/ui/swt/mainwindow/MainMenu.java.~1.58.~	2006-01-31 14:43:47.000000000 -0500
-+++ org/gudy/azureus2/ui/swt/mainwindow/MainMenu.java	2006-02-09 00:05:11.000000000 -0500
+--- org/gudy/azureus2/ui/swt/mainwindow/MainMenu.java.orig	2006-03-28 04:35:35.000000000 -0800
++++ org/gudy/azureus2/ui/swt/mainwindow/MainMenu.java	2006-03-28 04:41:30.000000000 -0800
 @@ -347,26 +347,6 @@
-       menu_plugin.setMenu(pluginMenu);
-       if(notMainWindow) {performOneTimeDisable(menu_plugin, true);}
+ 			menu_plugin_logViews.setMenu(pluginLogsMenu);
+ 			menu_plugin_logViews.setData("EOL", "1");
  
 -      new MenuItem(pluginMenu, SWT.SEPARATOR);
 -      
@@ -38,7 +38,7 @@
 -        help_checkupdate.addListener(SWT.Selection, new Listener() {
 -        	public void handleEvent(Event e) {
 -        		mainWindow.getShell().setFocus();
--        		UpdateMonitor.getSingleton( mainWindow.getAzureusCore()).performCheck();
+-        		UpdateMonitor.getSingleton( mainWindow.getAzureusCore()).performCheck(true);
 -        	}
 -        });
 -      }

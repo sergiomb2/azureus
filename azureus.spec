@@ -1,49 +1,52 @@
-Name:           azureus
-Version:        2.4.0.0
-Release:        0.20060209cvs_1%{?dist}
-Summary:        A BitTorrent Client
+Name:		azureus
+Version:	2.4.0.3
+Release:	0.20060328cvs_5%{?dist}
+Summary:	A BitTorrent Client
 
-Group:          Applications/Internet
-License:        GPL
-URL:            http://azureus.sourceforge.net
+Group:		Applications/Internet
+License:	GPL
+URL:		http://azureus.sourceforge.net
 
 # A cvs snapshot with the build and bouncycastle directories
 # removed.
-Source0:        azureus2-cvs-20060209.tar.gz
+Source0:	azureus2-cvs-20060325.tar.gz
 
-Source1:        azureus.script
-Source2:        Azureus.desktop
-Source3:        azureus.applications
-Source4:        azureus-License.txt
-Source5:        azureus-ChangeLog.txt
+Source1:	azureus.script
+Source2:	Azureus.desktop
+Source3:	azureus.applications
+Source4:	azureus-License.txt
+Source5:	azureus-ChangeLog.txt
 
 Source6:	azplugins_1.8.8.jar
 Source7:	bdcc_2.2.2.zip
 
-Patch0:         azureus-remove-win32-osx-platforms.patch
-Patch1:         azureus-remove-win32-PlatformManagerUpdateChecker.patch
-Patch2:         azureus-cache-size.patch
-Patch3:         azureus-remove-manifest-classpath.patch
-Patch4:         azureus-ConfigSectionPlugins-swt-3.1.patch
-Patch5:         azureus-Messages-swt-3.1.patch
-Patch6:         azureus-TableView-swt-3.1.patch
-Patch7:         azureus-themed.patch
-Patch8:         azureus-rh-bugzilla-180418.patch
-Patch9:         azureus-no-shared-plugins.patch
-Patch10:        azureus-no-install-remove-plugins.patch
-Patch11:        azureus-no-restart.patch
-Patch12:        azureus-no-updates-PluginInitializer.patch
-Patch13:        azureus-no-updates-PluginInterfaceImpl.patch
-Patch14:        azureus-no-update-manager-AzureusCoreImpl.patch
-Patch15:        azureus-no-update-manager-CorePatchChecker.patch
-Patch16:        azureus-no-update-manager-CoreUpdateChecker.patch
-Patch17:        azureus-no-update-manager-MainWindow.patch
-Patch18:        azureus-no-update-manager-PluginInstallerImpl.patch
-Patch19:        azureus-no-update-manager-PluginUpdatePlugin.patch
-Patch20:        azureus-no-update-manager-SWTUpdateChecker.patch
-#Patch21:        azureus-no-update-manager-TableView.patch
-Patch22:        azureus-no-update-manager-UpdateMonitor.patch
-Patch23:        azureus-no-update-manager-PluginInstallerImpl-2.patch
+Patch0:		azureus-remove-win32-osx-platforms.patch
+Patch1:		azureus-remove-win32-PlatformManagerUpdateChecker.patch
+Patch2:		azureus-cache-size.patch
+Patch3:		azureus-remove-manifest-classpath.patch
+Patch4:		azureus-ConfigSectionPlugins-swt-3.1.patch
+Patch5:		azureus-Messages-swt-3.1.patch
+Patch6:		azureus-TableView-swt-3.1.patch
+Patch7:		azureus-themed.patch
+Patch8:		azureus-rh-bugzilla-180418.patch
+Patch9:		azureus-no-shared-plugins.patch
+Patch10:	azureus-no-install-remove-plugins.patch
+Patch11:	azureus-no-restart.patch
+Patch12:	azureus-no-updates-PluginInitializer.patch
+Patch13:	azureus-no-updates-PluginInterfaceImpl.patch
+Patch14:	azureus-no-update-manager-AzureusCoreImpl.patch
+Patch15:	azureus-no-update-manager-CorePatchChecker.patch
+Patch16:	azureus-no-update-manager-CoreUpdateChecker.patch
+Patch17:	azureus-no-update-manager-MainWindow.patch
+Patch18:	azureus-no-update-manager-PluginInstallerImpl.patch
+Patch19:	azureus-no-update-manager-PluginUpdatePlugin.patch
+Patch20:	azureus-no-update-manager-SWTUpdateChecker.patch
+#Patch21:	 azureus-no-update-manager-TableView.patch
+Patch22:	azureus-no-update-manager-UpdateMonitor.patch
+Patch23:	azureus-no-update-manager-PluginInstallerImpl-2.patch
+Patch24:	azureus-MessageSlideShell-swt-3.1.patch
+Patch25:	azureus-no-update-manager-MainStatusBar.patch
+Patch26:	azureus-nativetabs.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -74,7 +77,7 @@ advanced users.
 %patch4 -p0
 %patch5 -p0
 %patch6 -p0
-%patch7 -p0
+%patch7 -p1
 %patch8 -p0
 %patch9 -p0
 %patch10 -p0
@@ -84,20 +87,23 @@ advanced users.
 %patch14 -p0
 %patch15 -p0
 %patch16 -p0
-%patch17 -p0
+#%patch17 -p0
 %patch18 -p0
 %patch19 -p0
 %patch20 -p0
 #%patch21 -p0
 %patch22 -p0
 %patch23 -p0
+%patch24 -p0
+%patch25 -p0
+%patch26 -p1
 cp %{SOURCE4} License.txt
 cp %{SOURCE5} ChangeLog.txt
 
 %build
 mkdir -p build/libs
 build-jar-repository build/libs jakarta-commons-cli swt-gtk-3.1.1 log4j gnu-crypto gtk2.8 glib0.2
-ln -s /usr/share/java/gcj-endorsed/bcprov-131.jar build/libs
+ln -s /usr/share/java/gcj-endorsed/bcprov-1.31.jar build/libs
 find ./ -name osx | xargs rm -r
 find ./ -name macosx | xargs rm -r
 find ./ -name [Ww]in32\* | xargs rm -r
@@ -130,6 +136,7 @@ rm -rf $RPM_BUILD_ROOT
 install -dm 755 $RPM_BUILD_ROOT%{_datadir}/azureus/plugins
 install -pm 644 dist/Azureus2.jar $RPM_BUILD_ROOT%{_datadir}/azureus/Azureus2.jar
 install -p -D -m 0755 %{SOURCE1} $RPM_BUILD_ROOT%{_bindir}/azureus
+sed --in-place "s:/usr/lib:%{_libdir}:g" $RPM_BUILD_ROOT%{_bindir}/azureus
 
 install -dm 755 $RPM_BUILD_ROOT%{_datadir}/azureus/plugins/azplugins
 install -pm 644 plugins/azplugins/azplugins_1.8.8.jar $RPM_BUILD_ROOT%{_datadir}/azureus/plugins/azplugins/azplugins_1.8.8.jar
@@ -199,6 +206,24 @@ fi
 %{_libdir}/gcj/*
 
 %changelog
+* Mon Apr 24 2006 Anthony Green <green@redhat.com> - 2.4.0.3-0.20060328cvs_5
+- Two patches from Stephan Michels: nativetabs (for native GTK+ tabs), and 
+an updated azureus-themed.patch to work around GCC PR 27271.
+
+* Thu Apr 06 2006 Anthony Green <green@redhat.com> - 2.4.0.3-0.20060328cvs_4
+- Yet another correction to LD_LIBRARY_PATH.  Bugzilla #186152.
+
+* Mon Apr 03 2006 Anthony Green <green@redhat.com> - 2.4.0.3-0.20060328cvs_3
+- One more correction to LD_LIBRARY_PATH.  Bugzilla #186152.
+
+* Sat Apr 01 2006 Anthony Green <green@redhat.com> - 2.4.0.3-0.20060328cvs_2
+- Set LD_LIBRARY_PATH for Sun java alternative.  Bugzilla #186152.
+- Remove pushd/popd noise from startup script.
+
+* Tue Mar 28 2006 Anthony Green <green@redhat.com> - 2.4.0.3-0.20060328cvs_1
+- Update sources.
+- Fix bcprov jar file reference.
+
 * Mon Feb 13 2006 Anthony Green <green@redhat.com> - 2.4.0.0-0.20060207cvs_1
 - Remove absolute path from azureus-no-updates-PluginInterfaceImpl.patch.
 

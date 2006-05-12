@@ -1,0 +1,33 @@
+--- azureus/org/gudy/azureus2/ui/swt/views/configsections/ConfigSectionInterfaceDisplay.java.orig	2006-04-17 16:00:58.000000000 +0200
++++ azureus/org/gudy/azureus2/ui/swt/views/configsections/ConfigSectionInterfaceDisplay.java	2006-04-17 16:01:21.000000000 +0200
+@@ -78,8 +78,8 @@
+ 		cLook.setLayout(layout);
+ 
+ 		BooleanParameter bpCustomTab = new BooleanParameter(cLook, "useCustomTab",
+-				true, MSG_PREFIX + "useCustomTabs");
+-		Control cFancyTab = new BooleanParameter(cLook, "GUI_SWT_bFancyTab", true,
++				false, MSG_PREFIX + "useCustomTabs");
++		Control cFancyTab = new BooleanParameter(cLook, "GUI_SWT_bFancyTab", false,
+ 				MSG_PREFIX + "useFancyTabs").getControl();
+ 
+ 		Control[] controls = { cFancyTab };
+--- azureus/org/gudy/azureus2/core3/config/impl/ConfigurationDefaults.java.orig	2006-04-17 17:25:18.000000000 +0200
++++ azureus/org/gudy/azureus2/core3/config/impl/ConfigurationDefaults.java	2006-04-17 17:26:19.000000000 +0200
+@@ -154,7 +154,7 @@
+     
+     def.put("User Mode", new Long(0));
+     
+-    def.put("useCustomTab",TRUE);    
++    def.put("useCustomTab",FALSE);    
+     def.put("GUI Refresh",new Long(1000));
+     def.put("Graphics Update",new Long(4));
+     def.put("ReOrder Delay",new Long(0));
+@@ -167,7 +167,7 @@
+     def.put("Use default data dir", FALSE);	
+     def.put("Default save path", "" );
+     
+-    def.put("GUI_SWT_bFancyTab", TRUE);
++    def.put("GUI_SWT_bFancyTab", FALSE);
+     def.put("GUI_SWT_bAlternateTablePainting", FALSE);
+     def.put("update.start",TRUE);
+     def.put("update.periodic",TRUE);

@@ -1,6 +1,6 @@
---- org/gudy/azureus2/ui/swt/update/UpdateMonitor.java.orig	2006-02-09 23:25:26.000000000 -0500
-+++ org/gudy/azureus2/ui/swt/update/UpdateMonitor.java	2006-02-09 23:26:30.000000000 -0500
-@@ -87,147 +87,18 @@
+--- org/gudy/azureus2/ui/swt/update/UpdateMonitor.java.orig	2006-03-28 04:35:36.000000000 -0800
++++ org/gudy/azureus2/ui/swt/update/UpdateMonitor.java	2006-03-28 04:44:37.000000000 -0800
+@@ -88,149 +88,19 @@
  	{
  		azureus_core	= _azureus_core;
  		
@@ -49,12 +49,14 @@
  	{
 -		boolean check_at_start	= false;
 -		boolean check_periodic	= false;
+-		boolean bOldSWT = SWT.getVersion() < 3139;
 -	
 -			// no update checks for java web start
 -		
 -		if ( !SystemProperties.isJavaWebStartInstance()){
 -					
--			check_at_start	= COConfigurationManager.getBooleanParameter( "update.start", true );
+-			// force check when SWT is really old
+-			check_at_start	= COConfigurationManager.getBooleanParameter( "update.start", true ) || bOldSWT;
 -			check_periodic	= COConfigurationManager.getBooleanParameter( "update.periodic", true );
 -		}
 -		
@@ -65,7 +67,7 @@
 -		if (	( check_at_start && start_of_day) ||
 -				( check_periodic && !start_of_day )){
 -			
--			performCheck();	// this will implicitly do usage stats
+-			performCheck(bOldSWT);	// this will implicitly do usage stats
 -			
 -		}else{
 -
@@ -84,10 +86,11 @@
 -						}
 -					});
 -		}
++
  	}
  	
  	public void
- 	performCheck()
+ 	performCheck(final boolean bForce)
  	{
 -		if ( SystemProperties.isJavaWebStartInstance()){
 -			
@@ -135,7 +138,7 @@
 -				
 -			    		current_update_instance = 
 -			    			um.createUpdateCheckInstance(
--			    				UpdateCheckInstance.UCI_UPDATE,
+-			    				bForce ? UpdateCheckInstance.UCI_INSTALL : UpdateCheckInstance.UCI_UPDATE,
 -			  					"update.instance.update" );
 -			  	
 -			    		current_update_instance.start();
