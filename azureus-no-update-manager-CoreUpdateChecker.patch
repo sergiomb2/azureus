@@ -1,6 +1,6 @@
---- org/gudy/azureus2/update/CoreUpdateChecker.java.orig	2006-03-25 14:18:45.000000000 -0800
-+++ org/gudy/azureus2/update/CoreUpdateChecker.java	2006-03-25 17:19:32.000000000 -0800
-@@ -122,8 +122,6 @@
+--- org/gudy/azureus2/update/CoreUpdateChecker.java.orig	2006-05-14 08:10:03.000000000 -0700
++++ org/gudy/azureus2/update/CoreUpdateChecker.java	2006-05-26 09:23:28.000000000 -0700
+@@ -123,8 +123,6 @@
  		props.setProperty( "plugin.version", plugin_interface.getAzureusVersion());
  		
  		rdf = plugin_interface.getUtilities().getResourceDownloaderFactory();
@@ -9,7 +9,7 @@
  	}
  	
  	public String
-@@ -142,155 +140,9 @@
+@@ -143,156 +141,9 @@
  	checkForUpdate(
  		final UpdateChecker	checker )
  	{
@@ -101,19 +101,6 @@
 -			
 -			top_downloader.getSize();		
 -							
--			top_downloader.addListener( 
--					new ResourceDownloaderAdapter()
--					{
--						public boolean
--						completed(
--							final ResourceDownloader	downloader,
--							InputStream					data )
--						{	
--							installUpdate( checker, downloader, f_latest_version, data );
--									
--							return( true );
--						}
--					});
 -
 -			byte[]	info_b = (byte[])decoded.get( "info" );
 -			
@@ -141,13 +128,27 @@
 -				desc = new String[]{"Core Azureus Version", info };
 -			}
 -			
--			checker.addUpdate(
+-			final Update update = 
+-				checker.addUpdate(
 -						"Core Azureus Version",
 -						desc,
 -						latest_version,
 -						top_downloader,
 -						Update.RESTART_REQUIRED_YES );
 -			
+-			top_downloader.addListener( 
+-					new ResourceDownloaderAdapter()
+-					{
+-						public boolean
+-						completed(
+-							final ResourceDownloader	downloader,
+-							InputStream					data )
+-						{	
+-							installUpdate( checker, update, downloader, f_latest_version, data );
+-									
+-							return( true );
+-						}
+-					});
 -		}catch( Throwable e ){
 -			
 -			log.log( e );

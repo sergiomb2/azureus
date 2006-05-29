@@ -1,6 +1,6 @@
 Name:		azureus
 Version:	2.4.0.3
-Release:	0.20060328cvs_5%{?dist}
+Release:	0.20060529cvs_1%{?dist}
 Summary:	A BitTorrent Client
 
 Group:		Applications/Internet
@@ -9,16 +9,15 @@ URL:		http://azureus.sourceforge.net
 
 # A cvs snapshot with the build and bouncycastle directories
 # removed.
-Source0:	azureus2-cvs-20060325.tar.gz
+Source0:	azureus2-cvs-20060529.tar.bz2
 
 Source1:	azureus.script
 Source2:	Azureus.desktop
 Source3:	azureus.applications
 Source4:	azureus-License.txt
-Source5:	azureus-ChangeLog.txt
 
-Source6:	azplugins_1.8.8.jar
-Source7:	bdcc_2.2.2.zip
+Source5:	azplugins_1.8.8.jar
+Source6:	bdcc_2.2.2.zip
 
 Patch0:		azureus-remove-win32-osx-platforms.patch
 Patch1:		azureus-remove-win32-PlatformManagerUpdateChecker.patch
@@ -47,6 +46,8 @@ Patch23:	azureus-no-update-manager-PluginInstallerImpl-2.patch
 Patch24:	azureus-MessageSlideShell-swt-3.1.patch
 Patch25:	azureus-no-update-manager-MainStatusBar.patch
 Patch26:	azureus-nativetabs.patch
+#Patch27:	azureus-debug3.patch
+#Patch28:	azureus-debug4.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -77,7 +78,7 @@ advanced users.
 %patch4 -p0
 %patch5 -p0
 %patch6 -p0
-%patch7 -p1
+%patch7 -p0
 %patch8 -p0
 %patch9 -p0
 %patch10 -p0
@@ -96,9 +97,10 @@ advanced users.
 %patch23 -p0
 %patch24 -p0
 %patch25 -p0
-%patch26 -p1
+%patch26 -p0
+#%patch27 -p0
+#%patch28 -p0
 cp %{SOURCE4} License.txt
-cp %{SOURCE5} ChangeLog.txt
 
 %build
 mkdir -p build/libs
@@ -114,14 +116,14 @@ ant jar
 
 mkdir -p plugins/azplugins
 cd plugins/azplugins
-unzip -q %{SOURCE6}
+unzip -q %{SOURCE5}
 rm -f *.jar `find ./ -name \*class`
 find ./ -name \*java | xargs javac -cp `build-classpath swt-gtk-3.1.1`:../..:.
 find ./ -name \*java | xargs rm
 jar cvf azplugins_1.8.8.jar .
 cd ../..
 
-unzip -q %{SOURCE7}
+unzip -q %{SOURCE6}
 cd plugins/bdcc
 unzip *.jar
 rm -f *.jar `find ./ -name \*class`
@@ -206,6 +208,14 @@ fi
 %{_libdir}/gcj/*
 
 %changelog
+* Wed May 29 2006 Anthony Green <green@redhat.com> - 2.4.0.3-0.20060529cvs_1
+- Updated sources.
+- Re-enable close button on tabs in nativetabs patch.
+- Use proper ChangeLog.txt file.
+
+* Wed May 03 2006 Anthony Green <green@redhat.com> - 2.4.0.3-0.20060503cvs_1
+- Updated sources.
+
 * Mon Apr 24 2006 Anthony Green <green@redhat.com> - 2.4.0.3-0.20060328cvs_5
 - Two patches from Stephan Michels: nativetabs (for native GTK+ tabs), and 
 an updated azureus-themed.patch to work around GCC PR 27271.

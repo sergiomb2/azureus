@@ -1,6 +1,6 @@
---- org/gudy/azureus2/ui/swt/updater2/SWTUpdateChecker.java.orig	2006-02-09 23:23:47.000000000 -0500
-+++ org/gudy/azureus2/ui/swt/updater2/SWTUpdateChecker.java	2006-02-09 23:25:02.000000000 -0500
-@@ -57,77 +57,14 @@
+--- org/gudy/azureus2/ui/swt/updater2/SWTUpdateChecker.java.orig	2006-05-14 08:10:01.000000000 -0700
++++ org/gudy/azureus2/ui/swt/updater2/SWTUpdateChecker.java	2006-05-26 09:25:21.000000000 -0700
+@@ -57,77 +57,13 @@
    public static void
    initialize()
    {
@@ -37,14 +37,6 @@
 -            downloaders.toArray(new ResourceDownloader[downloaders.size()]);
 -          
 -          swtDownloader = factory.getRandomDownloader(resourceDownloaders);
--          	      
--	      swtDownloader.addListener(new ResourceDownloaderAdapter() {
--	        
--	        public boolean completed(ResourceDownloader downloader, InputStream data) {
--	          //On completion, process the InputStream to store temp files
--	          return processData(checker,data);
--	        }
--	      });
 -	      
 -	      	// get the size so its cached up
 -	      
@@ -56,13 +48,21 @@
 -	      	Debug.printStackTrace( e );
 -	      }
 -	      
--	      checker.addUpdate("SWT Library for " + versionGetter.getPlatform(),
--	          new String[] {"SWT is the graphical library used by Azureus"},
--	          "" + versionGetter.getLatestVersion(),
--	          swtDownloader,
--	          Update.RESTART_REQUIRED_YES
+-	      final Update update = 
+-	    	  checker.addUpdate("SWT Library for " + versionGetter.getPlatform(),
+-		          new String[] {"SWT is the graphical library used by Azureus"},
+-		          "" + versionGetter.getLatestVersion(),
+-		          swtDownloader,
+-		          Update.RESTART_REQUIRED_YES
 -	          );      
 -	      
+-	      swtDownloader.addListener(new ResourceDownloaderAdapter() {
+-		        
+-		        public boolean completed(ResourceDownloader downloader, InputStream data) {
+-		          //On completion, process the InputStream to store temp files
+-		          return processData(checker,update,downloader,data);
+-		        }
+-		      });
 -	    }
 -  	}catch( Throwable e ){
 -  		Logger.log(new LogAlert(LogAlert.UNREPEATABLE,
@@ -71,7 +71,7 @@
 -  		checker.failed();
 -  		
 -  	}finally{
-   		
+-  		
    		checker.completed();
 -  	}
 -    
