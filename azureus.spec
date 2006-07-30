@@ -1,6 +1,6 @@
 Name:		azureus
 Version:	2.4.0.3
-Release:	0.20060702cvs_4%{?dist}
+Release:	0.20060702cvs_5%{?dist}
 Summary:	A BitTorrent Client
 
 Group:		Applications/Internet
@@ -212,6 +212,9 @@ fi
 %{_libdir}/gcj/*
 
 %changelog
+* Sat Jul 29 2006 Anthony Green <green@redhat.com> - 2.4.0.3-0.20060702cvs_5
+- Fix patch with absolute path.
+
 * Sat Jul 29 2006 Anthony Green <green@redhat.com> - 2.4.0.3-0.20060702cvs_4
 - Turn optimization back on.  gcc has been fixed.
 

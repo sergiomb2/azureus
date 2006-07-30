@@ -1,5 +1,5 @@
---- /usr/src/redhat/BUILD/azureus2/com/aelitis/azureus/core/security/impl/CryptoSTSEngineImpl.java.~1.2.~	2006-07-08 12:02:26.000000000 -0700
-+++ /usr/src/redhat/BUILD/azureus2/com/aelitis/azureus/core/security/impl/CryptoSTSEngineImpl.java	2006-07-08 12:01:51.000000000 -0700
+--- com/aelitis/azureus/core/security/impl/CryptoSTSEngineImpl.java.~1.2.~	2006-07-08 12:02:26.000000000 -0700
++++ com/aelitis/azureus/core/security/impl/CryptoSTSEngineImpl.java	2006-07-08 12:01:51.000000000 -0700
 @@ -28,6 +28,9 @@
  import java.security.PublicKey;
  import java.security.SecureRandom;
