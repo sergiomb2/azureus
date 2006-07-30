@@ -1,6 +1,6 @@
---- org/gudy/azureus2/pluginsimpl/local/PluginInitializer.java.orig	2006-01-11 09:05:48.000000000 -0800
-+++ org/gudy/azureus2/pluginsimpl/local/PluginInitializer.java	2006-01-25 11:51:54.000000000 -0800
-@@ -133,11 +133,6 @@
+--- org/gudy/azureus2/pluginsimpl/local/PluginInitializer.java.orig	2006-07-02 19:38:37.000000000 -0700
++++ org/gudy/azureus2/pluginsimpl/local/PluginInitializer.java	2006-07-02 21:15:16.000000000 -0700
+@@ -136,11 +136,6 @@
     					"azbpcorepatcher", 
     					"CorePatcher",
  					"true" },
@@ -9,6 +9,6 @@
 -   					"azplatform2", 
 -   					"azplatform2",
 -					"true" },
- 	   		{	 PluginManagerDefaults.PID_JPC, 
- 					"com.aelitis.azureus.plugins.jpc.JPCPlugin", 
- 					"azjpc", 
+ 	   		//{	 PluginManagerDefaults.PID_JPC, 
+ 				//	"com.aelitis.azureus.plugins.jpc.JPCPlugin", 
+ 				//	"azjpc", 

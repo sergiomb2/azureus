@@ -1,6 +1,6 @@
---- org/gudy/azureus2/ui/swt/mainwindow/MainMenu.java~	2006-02-09 20:09:11.000000000 -0500
-+++ org/gudy/azureus2/ui/swt/mainwindow/MainMenu.java	2006-02-09 20:09:17.000000000 -0500
-@@ -171,17 +171,6 @@
+--- org/gudy/azureus2/ui/swt/mainwindow/MainMenu.java.orig	2006-07-02 19:39:25.000000000 -0700
++++ org/gudy/azureus2/ui/swt/mainwindow/MainMenu.java	2006-07-08 12:51:28.000000000 -0700
+@@ -196,17 +196,6 @@
        if(!Constants.isOSX) {
          new MenuItem(fileMenu, SWT.SEPARATOR);
  
@@ -18,3 +18,47 @@
          final MenuItem file_exit = new MenuItem(fileMenu, SWT.NULL);
          if(!COConfigurationManager.getBooleanParameter("Enable System Tray") || !COConfigurationManager.getBooleanParameter("Close To Tray")) {
              KeyBindings.setAccelerator(file_exit, "MainWindow.menu.file.exit");
+@@ -372,24 +361,6 @@
+ 
+       new MenuItem(pluginMenu, SWT.SEPARATOR);
+       
+-      MenuItem plugins_install_wizard = new MenuItem(pluginMenu, SWT.NULL);
+-      KeyBindings.setAccelerator(plugins_install_wizard, "MainWindow.menu.plugins.installPlugins");
+-      Messages.setLanguageText(plugins_install_wizard, "MainWindow.menu.plugins.installPlugins"); //$NON-NLS-1$
+-      plugins_install_wizard.addListener(SWT.Selection, new Listener() {
+-        public void handleEvent(Event e) {
+-          new InstallPluginWizard(core, display);
+-        }
+-      });
+-      
+-      MenuItem plugins_uninstall_wizard = new MenuItem(pluginMenu, SWT.NULL);
+-      KeyBindings.setAccelerator(plugins_uninstall_wizard, "MainWindow.menu.plugins.uninstallPlugins");
+-      Messages.setLanguageText(plugins_uninstall_wizard, "MainWindow.menu.plugins.uninstallPlugins"); //$NON-NLS-1$
+-      plugins_uninstall_wizard.addListener(SWT.Selection, new Listener() {
+-        public void handleEvent(Event e) {
+-          new UnInstallPluginWizard(core, display);
+-        }
+-      });
+-
+       // standard items
+       if(Constants.isOSX) {
+           // Window menu
+@@ -475,18 +446,6 @@
+       
+       new MenuItem(helpMenu,SWT.SEPARATOR);
+       
+-      if ( !SystemProperties.isJavaWebStartInstance()){
+-        MenuItem help_checkupdate = new MenuItem(helpMenu, SWT.NULL);
+-        KeyBindings.setAccelerator(help_checkupdate, "MainWindow.menu.help.checkupdate");
+-        Messages.setLanguageText(help_checkupdate, "MainWindow.menu.help.checkupdate"); //$NON-NLS-1$
+-        help_checkupdate.addListener(SWT.Selection, new Listener() {
+-        	public void handleEvent(Event e) {
+-        		mainWindow.getShell().setFocus();
+-        		UpdateMonitor.getSingleton(core, mainWindow).performCheck(true);
+-        	}
+-        });
+-      }
+-
+       MenuItem help_donate = new MenuItem(helpMenu, SWT.NULL);
+       Messages.setLanguageText(help_donate, "MainWindow.menu.help.donate"); //$NON-NLS-1$
+       help_donate.addListener(SWT.Selection, new Listener() {
