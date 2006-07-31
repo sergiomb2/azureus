@@ -2,7 +2,7 @@ ExclusiveArch: %{ix86} x86_64
 
 Name:		azureus
 Version:	2.4.0.3
-Release:	0.20060702cvs_6%{?dist}
+Release:	0.20060702cvs_7%{?dist}
 Summary:	A BitTorrent Client
 
 Group:		Applications/Internet
@@ -101,13 +101,7 @@ cp %{SOURCE4} License.txt
 
 %build
 mkdir -p build/libs
-#build-jar-repository build/libs jakarta-commons-cli swt-gtk-3.2 log4j gnu-crypto gtk2.8 glib0.2
-ln -s /usr/share/java/jakarta-commons-cli.jar build/libs
-ln -s /usr/share/eclipse/plugins/org.eclipse.swt.gtk.linux.x86_3.2.0.v3232m.jar build/libs
-ln -s /usr/share/java/log4j.jar build/libs
-ln -s /usr/share/java/gnu-crypto.jar build/libs
-ln -s /usr/share/java/gtk2.8.jar build/libs
-ln -s /usr/share/java/glib0.2.jar build/libs
+build-jar-repository -p build/libs jakarta-commons-cli swt-gtk-3.2 log4j gnu-crypto gtk2.8 glib0.2
 ln -s /usr/share/java/gcj-endorsed/bcprov-1.33.jar build/libs
 find ./ -name osx | xargs rm -r
 find ./ -name macosx | xargs rm -r
@@ -214,6 +208,9 @@ fi
 %{_libdir}/gcj/*
 
 %changelog
+* Sat Jul 29 2006 Anthony Green <green@redhat.com> - 2.4.0.3-0.20060702cvs_7
+- Enable ppc builds.  Fix classpath with -p option to build-jar-repository.
+
 * Sat Jul 29 2006 Anthony Green <green@redhat.com> - 2.4.0.3-0.20060702cvs_6
 - Temporarily disable ppc builds.
 
