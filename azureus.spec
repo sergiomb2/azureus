@@ -2,7 +2,7 @@ ExclusiveArch: %{ix86} x86_64
 
 Name:		azureus
 Version:	2.4.0.3
-Release:	0.20060702cvs_7%{?dist}
+Release:	0.20060702cvs_8%{?dist}
 Summary:	A BitTorrent Client
 
 Group:		Applications/Internet
@@ -115,8 +115,7 @@ mkdir -p plugins/azplugins
 cd plugins/azplugins
 unzip -q %{SOURCE5}
 rm -f *.jar `find ./ -name \*class`
-#find ./ -name \*java | xargs javac -cp `build-classpath swt-gtk-3.2`:../..:.
-find ./ -name \*java | xargs javac -cp /usr/share/eclipse/plugins/org.eclipse.swt.gtk.linux.x86_3.2.0.v3232m.jar:../..:.
+find ./ -name \*java | xargs javac -cp `build-classpath swt-gtk-3.2`:../..:.
 find ./ -name \*java | xargs rm
 jar cvf azplugins_1.9.jar .
 cd ../..
@@ -125,8 +124,7 @@ unzip -q %{SOURCE6}
 cd plugins/bdcc
 unzip *.jar
 rm -f *.jar `find ./ -name \*class`
-#find ./ -name \*java | xargs javac -cp `build-classpath swt-gtk-3.2`:../..:.
-find ./ -name \*java | xargs javac -cp /usr/share/eclipse/plugins/org.eclipse.swt.gtk.linux.x86_3.2.0.v3232m.jar:../..:.
+find ./ -name \*java | xargs javac -cp `build-classpath swt-gtk-3.2`:../..:.
 find ./ -name \*java | xargs rm
 jar cvf bdcc_2.2.2.jar .
 cd ../..
@@ -208,6 +206,9 @@ fi
 %{_libdir}/gcj/*
 
 %changelog
+* Sat Jul 29 2006 Anthony Green <green@redhat.com> - 2.4.0.3-0.20060702cvs_8
+- Fix swt jar reference for plugins builds.
+
 * Sat Jul 29 2006 Anthony Green <green@redhat.com> - 2.4.0.3-0.20060702cvs_7
 - Enable ppc builds.  Fix classpath with -p option to build-jar-repository.
 
