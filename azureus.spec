@@ -1,8 +1,8 @@
-ExclusiveArch: %{ix86} x86_64
+# ExclusiveArch: %{ix86} x86_64
 
 Name:		azureus
 Version:	2.5.0.0
-Release:	1.1%{?dist}
+Release:	1.2%{?dist}
 Summary:	A BitTorrent Client
 
 Group:		Applications/Internet
@@ -206,7 +206,10 @@ fi
 %{_libdir}/gcj/*
 
 %changelog
-* Sat Aug 26 2006 Anthony Green <green@redhat.com> - 2.5.0.0-1
+* Sat Aug 26 2006 Anthony Green <green@redhat.com> - 2.5.0.0-1.2
+- Don't exclude ppc.
+
+* Sat Aug 26 2006 Anthony Green <green@redhat.com> - 2.5.0.0-1.1
 - Update sources.
 
 * Sun Aug 13 2006 Anthony Green <green@redhat.com> - 2.4.0.3-0.20060730cvs_1
