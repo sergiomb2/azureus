@@ -1,6 +1,6 @@
---- org/gudy/azureus2/ui/swt/update/UpdateMonitor.java.orig	2006-05-14 08:10:01.000000000 -0700
-+++ org/gudy/azureus2/ui/swt/update/UpdateMonitor.java	2006-05-26 09:27:25.000000000 -0700
-@@ -90,206 +90,19 @@
+--- org/gudy/azureus2/ui/swt/update/UpdateMonitor.java.orig	2006-08-21 19:13:04.000000000 -0700
++++ org/gudy/azureus2/ui/swt/update/UpdateMonitor.java	2006-08-23 12:22:40.000000000 -0700
+@@ -90,213 +90,17 @@
  	{
  		azureus_core	= _azureus_core;
  		
@@ -37,7 +37,7 @@
 -											SWT.YES | SWT.NO,
 -											SWT.NULL,
 -											false,
--											_main_window.getDisplay(), 
+-											SWTThread.getInstance().getDisplay(),
 -											MessageBoxWindow.ICON_WARNING,
 -											MessageText.getString( "UpdateMonitor.messagebox.accept.unverified.title" ),
 -											MessageText.getString( 
@@ -64,8 +64,7 @@
 -									public void
 -									run()
 -									{
--										Utils.openMessageBox(
--											_main_window.getShell(),
+-										Utils.openMessageBox(Utils.findAnyShell(),
 -											SWT.OK,
 -											"UpdateMonitor.messagebox.verification.failed",
 -											new String[]{ update.getName(), cause_str });
@@ -75,6 +74,7 @@
 -	  			});
 -	  	
 -	    SimpleTimer.addPeriodicEvent( 
+-	    		"UpdateMon:autocheck",
 -	            AUTO_UPDATE_CHECK_PERIOD,
 -	            new TimerEventPerformer()
 -	            {
@@ -89,6 +89,7 @@
 -	    	// wait a bit before starting check to give rest of AZ time to initialise 
 -	    
 -		new DelayedEvent(
+-				"UpdateMon:wait",
 -				2500,
 -				new AERunnable()
 -				{
@@ -129,6 +130,7 @@
 -		}else{
 -
 -			new DelayedEvent(
+-					"UpdateMon:wait2",
 -					5000,
 -					new AERunnable()
 -					{
@@ -136,9 +138,12 @@
 -						runSupport()
 -						{
 -							if ( start_of_day ){
--                                MainWindow.getWindow().setStatusText("");
+-						  	UIFunctions uiFunctions = UIFunctionsManager.getUIFunctions();
+-						  	if (uiFunctions != null) {
+-						  		uiFunctions.setStatusText("");
+-						  	}
 -							}
- 
+-
 -							CoreUpdateChecker.doUsageStats();
 -						}
 -					});
@@ -157,7 +162,7 @@
 -			
 -			return;
 -		}
- 
+-
 -			// kill any existing update window
 -		
 -	    if ( current_update_window != null && ! current_update_window.isDisposed()){
@@ -178,9 +183,11 @@
 -	    	current_update_instance.cancel();
 -	    }
 -	    
--		MainWindow mainWindow = MainWindow.getWindow();
--		
--	    mainWindow.setStatusText("MainWindow.status.checking ...");
+-	  	UIFunctions uiFunctions = UIFunctionsManager.getUIFunctions();
+-	  	if (uiFunctions != null) {
+-	  		// XXX What kind of format is this!?
+-	  		uiFunctions.setStatusText("MainWindow.status.checking ...");
+-	  	}
 -	    
 -	    	// take this off this GUI thread in case it blocks for a while
 -	    

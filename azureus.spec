@@ -1,8 +1,8 @@
 ExclusiveArch: %{ix86} x86_64
 
 Name:		azureus
-Version:	2.4.0.3
-Release:	0.20060730cvs_1%{?dist}
+Version:	2.5.0.0
+Release:	1%{?dist}
 Summary:	A BitTorrent Client
 
 Group:		Applications/Internet
@@ -11,7 +11,7 @@ URL:		http://azureus.sourceforge.net
 
 # A cvs snapshot with the build and bouncycastle directories
 # removed.
-Source0:	azureus2-cvs-20060702.tar.bz2
+Source0:	azureus2-2.5.0.0.tar.gz
 
 Source1:	azureus.script
 Source2:	Azureus.desktop
@@ -28,13 +28,11 @@ Patch3:		azureus-remove-manifest-classpath.patch
 Patch7:		azureus-themed.patch
 Patch8:		azureus-rh-bugzilla-180418.patch
 Patch9:		azureus-no-shared-plugins.patch
-Patch11:	azureus-no-restart.patch
 Patch12:	azureus-no-updates-PluginInitializer.patch
 Patch13:	azureus-no-updates-PluginInterfaceImpl.patch
 Patch14:	azureus-no-update-manager-AzureusCoreImpl.patch
 Patch15:	azureus-no-update-manager-CorePatchChecker.patch
 Patch16:	azureus-no-update-manager-CoreUpdateChecker.patch
-#Patch17:	azureus-no-update-manager-MainWindow.patch
 Patch18:	azureus-no-update-manager-PluginInstallerImpl.patch
 Patch19:	azureus-no-update-manager-PluginUpdatePlugin.patch
 Patch20:	azureus-no-update-manager-SWTUpdateChecker.patch
@@ -46,6 +44,7 @@ Patch27:	azureus-SecureMessageServiceClientHelper-bcprov.patch
 Patch28:	azureus-UDPConnectionSet-bcprov.patch
 Patch29:	azureus-CryptoHandlerECC-bcprov.patch
 Patch30:	azureus-CryptoSTSEngineImpl-bcprov.patch
+Patch31:	azureus-fix-menu-MainMenu.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -80,7 +79,7 @@ advanced users.
 %patch7 -p0
 %patch8 -p0
 %patch9 -p0
-%patch11 -p0
+#%patch11 -p0
 %patch12 -p0
 %patch13 -p0
 %patch14 -p0
@@ -94,9 +93,10 @@ advanced users.
 %patch25 -p0
 %patch26 -p0
 %patch27 -p0
-%patch28 -p0
-%patch29 -p0
-%patch30 -p0
+#%patch28 -p0
+#%patch29 -p0
+#%patch30 -p0
+%patch31 -p0
 cp %{SOURCE4} License.txt
 
 %build
@@ -206,6 +206,9 @@ fi
 %{_libdir}/gcj/*
 
 %changelog
+* Sat Aug 26 2006 Anthony Green <green@redhat.com> - 2.5.0.0-1
+- Update sources.
+
 * Sun Aug 13 2006 Anthony Green <green@redhat.com> - 2.4.0.3-0.20060730cvs_1
 - Update release.
 

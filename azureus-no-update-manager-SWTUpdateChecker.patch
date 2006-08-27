@@ -1,6 +1,6 @@
---- org/gudy/azureus2/ui/swt/updater2/SWTUpdateChecker.java.orig	2006-05-14 08:10:01.000000000 -0700
-+++ org/gudy/azureus2/ui/swt/updater2/SWTUpdateChecker.java	2006-05-26 09:25:21.000000000 -0700
-@@ -57,77 +57,13 @@
+--- org/gudy/azureus2/ui/swt/updater2/SWTUpdateChecker.java.orig	2006-07-29 16:23:50.000000000 -0700
++++ org/gudy/azureus2/ui/swt/updater2/SWTUpdateChecker.java	2006-08-23 12:18:50.000000000 -0700
+@@ -63,164 +63,13 @@
    public static void
    initialize()
    {
@@ -14,9 +14,96 @@
 -  	try{
 -	    SWTVersionGetter versionGetter = new SWTVersionGetter( checker );
 -	    
--	    if( versionGetter.needsUpdate() && System.getProperty("azureus.skipSWTcheck") == null ) {
--        
--        String[] mirrors = versionGetter.getMirrors();
+-     	boolean	update_required  = 	versionGetter.needsUpdate() && 
+-     								System.getProperty("azureus.skipSWTcheck") == null ;
+-    	
+-	    if ( update_required ){
+-        	    
+-	       	int	update_prevented_version = COConfigurationManager.getIntParameter( "swt.update.prevented.version", -1 );
+-
+-	    	try{
+-		        URL	swt_url = SWT.class.getClassLoader().getResource("org/eclipse/swt/SWT.class");
+-		        
+-		        if ( swt_url != null ){
+-		        	
+-		        	String	url_str = swt_url.toExternalForm();
+-	
+-		        	if ( url_str.startsWith("jar:file:")){
+-	
+-		        		File jar_file = FileUtil.getJarFileFromURL(url_str);
+-		        		
+-		        		String	expected_location;
+-		        		
+-		        	    if ( Constants.isOSX ){
+-		        	        	  
+-		        	    	expected_location = checker.getCheckInstance().getManager().getInstallDir() + OSX_APP + "/Contents/Resources/Java";
+-		        	            
+-		        	    }else{ 
+-		        	        	  
+-		        	    	expected_location = checker.getCheckInstance().getManager().getInstallDir();
+-		        	    }
+-		        	    
+-		        	    File	expected_dir = new File( expected_location );
+-		        	    
+-		        	    File	jar_file_dir = jar_file.getParentFile();
+-		        	    
+-		        	    	// sanity check
+-		        	    
+-		        	    if ( expected_dir.exists() && jar_file_dir.exists() ){
+-		        	    	
+-		        	    	expected_dir	= expected_dir.getCanonicalFile();
+-		        	    	jar_file_dir	= jar_file_dir.getCanonicalFile();
+-		        	    	
+-		        	    	if ( expected_dir.equals( jar_file_dir )){
+-		        	    	
+-		        	    			// everything looks ok
+-		        	    		
+-		        	    		if ( update_prevented_version != -1 ){
+-		        	    			
+-		        	    			update_prevented_version	= -1;
+-		        	    			
+-			        	    		COConfigurationManager.setParameter( "swt.update.prevented.version", update_prevented_version );
+-		        	    		}
+-		        	    	}else{
+-		        	    		
+-		        		    	if ( update_prevented_version != versionGetter.getCurrentVersion()){
+-			        		    		
+-			        	    		String	alert = 
+-			        	    			MessageText.getString( 
+-			        	    					"swt.alert.cant.update", 
+-			        	    					new String[]{
+-				        	    					String.valueOf( versionGetter.getCurrentVersion()),
+-				        	    					String.valueOf( versionGetter.getLatestVersion()),
+-			        	    						jar_file_dir.toString(), 
+-			        	    						expected_dir.toString()});
+-			        	    		
+-			        	     		Logger.log(	new LogAlert(LogAlert.UNREPEATABLE, LogEvent.LT_ERROR, alert ));
+-			        						
+-			        	     		update_prevented_version = versionGetter.getCurrentVersion();
+-			        	     		
+-			        	    		COConfigurationManager.setParameter( "swt.update.prevented.version", update_prevented_version );
+-		        		    	}
+-		        	    	}
+-		        	    }
+-		        	}
+-		        }
+-	    	}catch( Throwable e ){
+-		    	
+-		    	Debug.printStackTrace(e);		    	
+-	    	}
+-	    
+-		    if ( update_prevented_version == versionGetter.getCurrentVersion()){
+-			
+-		    	Logger.log(new LogEvent(LOGID, LogEvent.LT_ERROR, "SWT update aborted due to previously reported issues regarding its install location" ));
+-		    			
+-				checker.failed();
+-				
+-				checker.getCheckInstance().cancel();
+-				
+-				return;
+-		    }
+-	    	    	 
+-	      String[] mirrors = versionGetter.getMirrors();
 -	      
 -	      ResourceDownloader swtDownloader = null;
 -	      
@@ -72,9 +159,10 @@
 -  		
 -  	}finally{
 -  		
-   		checker.completed();
+-  		checker.completed();
 -  	}
 -    
++      checker.completed();
    }
    
    private boolean 
