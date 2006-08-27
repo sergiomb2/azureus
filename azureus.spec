@@ -2,7 +2,7 @@ ExclusiveArch: %{ix86} x86_64
 
 Name:		azureus
 Version:	2.5.0.0
-Release:	1%{?dist}
+Release:	1.1%{?dist}
 Summary:	A BitTorrent Client
 
 Group:		Applications/Internet
