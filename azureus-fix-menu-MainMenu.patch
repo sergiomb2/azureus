@@ -1,0 +1,95 @@
+--- org/gudy/azureus2/ui/swt/mainwindow/MainMenu.java.orig	2006-08-26 17:09:20.000000000 -0700
++++ org/gudy/azureus2/ui/swt/mainwindow/MainMenu.java	2006-08-26 17:10:24.000000000 -0700
+@@ -195,21 +195,10 @@
+       addCloseDetailsMenuItem(fileMenu);
+       addCloseDownloadBarsToMenu(fileMenu);
+ 
+-
+       //No need for restart and exit on OS X
+       if(!Constants.isOSX) {
+         new MenuItem(fileMenu, SWT.SEPARATOR);
+ 
+-        MenuItem file_restart = new MenuItem(fileMenu, SWT.NULL);
+-        Messages.setLanguageText(file_restart, "MainWindow.menu.file.restart"); //$NON-NLS-1$
+-
+-        file_restart.addListener(SWT.Selection, new Listener() {
+-
+-        public void handleEvent(Event event) {
+-						UIFunctionsManagerSWT.getUIFunctionsSWT().dispose(true, false);
+-					}
+-				});
+-
+         final MenuItem file_exit = new MenuItem(fileMenu, SWT.NULL);
+         if(!COConfigurationManager.getBooleanParameter("Enable System Tray") || !COConfigurationManager.getBooleanParameter("Close To Tray")) {
+             KeyBindings.setAccelerator(file_exit, "MainWindow.menu.file.exit");
+@@ -376,26 +365,6 @@
+ 			menu_plugin_logViews.setMenu(pluginLogsMenu);
+ 			menu_plugin_logViews.setData("EOL", "1");
+ 
+-      new MenuItem(pluginMenu, SWT.SEPARATOR);
+-      
+-      MenuItem plugins_install_wizard = new MenuItem(pluginMenu, SWT.NULL);
+-      KeyBindings.setAccelerator(plugins_install_wizard, "MainWindow.menu.plugins.installPlugins");
+-      Messages.setLanguageText(plugins_install_wizard, "MainWindow.menu.plugins.installPlugins"); //$NON-NLS-1$
+-      plugins_install_wizard.addListener(SWT.Selection, new Listener() {
+-        public void handleEvent(Event e) {
+-          new InstallPluginWizard(core, display);
+-        }
+-      });
+-      
+-      MenuItem plugins_uninstall_wizard = new MenuItem(pluginMenu, SWT.NULL);
+-      KeyBindings.setAccelerator(plugins_uninstall_wizard, "MainWindow.menu.plugins.uninstallPlugins");
+-      Messages.setLanguageText(plugins_uninstall_wizard, "MainWindow.menu.plugins.uninstallPlugins"); //$NON-NLS-1$
+-      plugins_uninstall_wizard.addListener(SWT.Selection, new Listener() {
+-        public void handleEvent(Event e) {
+-          new UnInstallPluginWizard(core, display);
+-        }
+-      });
+-      
+       // standard items
+       if(Constants.isOSX) {
+           // Window menu
+@@ -470,32 +439,8 @@
+       });
+ 
+ 
+-      MenuItem help_plugin= new MenuItem(helpMenu, SWT.NULL);
+-      Messages.setLanguageText(help_plugin, "MainWindow.menu.help.plugins"); //$NON-NLS-1$
+-      help_plugin.addListener(SWT.Selection, new Listener() {
+-          public void handleEvent(Event e) {
+-            String pluginString = "http://azureus.sourceforge.net/plugin_list.php";
+-            Program.launch(pluginString);
+-          }
+-        });
+-      
+       new MenuItem(helpMenu,SWT.SEPARATOR);
+       
+-      if ( !SystemProperties.isJavaWebStartInstance()){
+-        MenuItem help_checkupdate = new MenuItem(helpMenu, SWT.NULL);
+-        KeyBindings.setAccelerator(help_checkupdate, "MainWindow.menu.help.checkupdate");
+-        Messages.setLanguageText(help_checkupdate, "MainWindow.menu.help.checkupdate"); //$NON-NLS-1$
+-        help_checkupdate.addListener(SWT.Selection, new Listener() {
+-        	public void handleEvent(Event e) {
+-        		UIFunctionsSWT uiFunctions = UIFunctionsManagerSWT.getUIFunctionsSWT();
+-        		if (uiFunctions != null) {
+-        			uiFunctions.bringToFront();
+-        		}
+-        		UpdateMonitor.getSingleton(core).performCheck(true);
+-        	}
+-        });
+-      }
+-
+       MenuItem help_donate = new MenuItem(helpMenu, SWT.NULL);
+       Messages.setLanguageText(help_donate, "MainWindow.menu.help.donate"); //$NON-NLS-1$
+       help_donate.addListener(SWT.Selection, new Listener() {
+@@ -503,8 +448,8 @@
+           new DonationWindow2(display).show();
+           //String donationString = "https://www.paypal.com/xclick/business=olivier%40gudy.org&item_name=Azureus&no_note=1&tax=0&currency_code=EUR";
+           //Program.launch(donationString);
+-        }
+-      });
++        } 
++     });
+       
+       new MenuItem(helpMenu,SWT.SEPARATOR);
+       MenuItem help_debug = new MenuItem(helpMenu, SWT.NULL);
