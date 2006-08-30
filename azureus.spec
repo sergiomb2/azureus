@@ -2,7 +2,7 @@
 
 Name:		azureus
 Version:	2.5.0.0
-Release:	1.3%{?dist}
+Release:	1.4%{?dist}
 Summary:	A BitTorrent Client
 
 Group:		Applications/Internet
@@ -206,7 +206,7 @@ fi
 %{_libdir}/gcj/*
 
 %changelog
-* Wed Aug 30 2006 Anthony Green <green@redhat.com> - 2.5.0.0-1.3
+* Wed Aug 30 2006 Anthony Green <green@redhat.com> - 2.5.0.0-1.4
 - Rebuild with new aot-compile-rpm.
 
 * Sat Aug 26 2006 Anthony Green <green@redhat.com> - 2.5.0.0-1.2
