@@ -2,7 +2,7 @@
 
 Name:		azureus
 Version:	2.5.0.0
-Release:	7%{?dist}
+Release:	8%{?dist}
 Summary:	A BitTorrent Client
 
 Group:		Applications/Internet
@@ -206,6 +206,10 @@ fi
 %{_libdir}/gcj/*
 
 %changelog
+* Sat Oct 28 2006 Anthony Green <green@redhat.com> 2.5.0.0-8
+- Force bcprov-1.33.jar onto the CLASSPATH in azureus.script so it
+  will run on non-gcj java alternatives.
+
 * Thu Oct 05 2006 Christian Iseli <Christian.Iseli@licr.org> 2.5.0.0-7
  - rebuilt for unwind info generation, broken in gcc-4.1.1-21
 
