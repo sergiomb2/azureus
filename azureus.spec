@@ -2,7 +2,7 @@
 
 Name:		azureus
 Version:	2.5.0.0
-Release:	8%{?dist}
+Release:	9%{?dist}
 Summary:	A BitTorrent Client
 
 Group:		Applications/Internet
@@ -101,8 +101,9 @@ cp %{SOURCE4} License.txt
 
 %build
 mkdir -p build/libs
-build-jar-repository -p build/libs jakarta-commons-cli swt-gtk-3.2 log4j gnu-crypto gtk2.8 glib0.2
+build-jar-repository -p build/libs jakarta-commons-cli log4j gnu-crypto gtk2.8 glib0.2
 ln -s /usr/share/java/gcj-endorsed/bcprov-1.33.jar build/libs
+ln -s %{_libdir}/eclipse/swt-gtk-3.2.jar build/libs
 find ./ -name osx | xargs rm -r
 find ./ -name macosx | xargs rm -r
 find ./ -name [Ww]in32\* | xargs rm -r
@@ -115,7 +116,7 @@ mkdir -p plugins/azplugins
 cd plugins/azplugins
 unzip -q %{SOURCE5}
 rm -f *.jar `find ./ -name \*class`
-find ./ -name \*java | xargs javac -cp `build-classpath swt-gtk-3.2`:../..:.
+find ./ -name \*java | xargs javac -cp %{_libdir}/eclipse/swt-gtk-3.2.jar:../..:.
 find ./ -name \*java | xargs rm
 jar cvf azplugins_1.9.jar .
 cd ../..
@@ -124,7 +125,7 @@ unzip -q %{SOURCE6}
 cd plugins/bdcc
 unzip *.jar
 rm -f *.jar `find ./ -name \*class`
-find ./ -name \*java | xargs javac -cp `build-classpath swt-gtk-3.2`:../..:.
+find ./ -name \*java | xargs javac -cp %{_libdir}/eclipse/swt-gtk-3.2.jar:../..:.
 find ./ -name \*java | xargs rm
 jar cvf bdcc_2.2.2.jar .
 cd ../..
@@ -206,6 +207,9 @@ fi
 %{_libdir}/gcj/*
 
 %changelog
+* Mon Nov 06 2006 Andrew Overholt <overholt@redhat.com> 2.5.0.0-9
+- Use new swt jar location.
+
 * Sat Oct 28 2006 Anthony Green <green@redhat.com> 2.5.0.0-8
 - Force bcprov-1.33.jar onto the CLASSPATH in azureus.script so it
   will run on non-gcj java alternatives.

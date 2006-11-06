@@ -15,4 +15,4 @@ for pdir in /usr/share/azureus/plugins/*; do
 done;
 popd > /dev/null 2>&1
 
-LD_LIBRARY_PATH=/usr/lib/eclipse:/usr/lib CLASSPATH=/usr/share/java/gcj-endorsed/bcprov-1.33.jar:`build-classpath jakarta-commons-cli log4j swt-gtk-3.2 gtk2.8 glib0.2`:/usr/share/azureus/Azureus2.jar java -Dgnu.gcj.runtime.VMClassLoader.library_control=never -Dazureus.install.path=$APPDIR org.gudy.azureus2.ui.swt.Main "$@"
+LD_LIBRARY_PATH=/usr/lib/eclipse:/usr/lib CLASSPATH=/usr/share/java/gcj-endorsed/bcprov-1.33.jar:/usr/lib/eclipse/swt-gtk-3.2.jar:`build-classpath jakarta-commons-cli log4j gtk2.8 glib0.2`:/usr/share/azureus/Azureus2.jar java -Dgnu.gcj.runtime.VMClassLoader.library_control=never -Dazureus.install.path=$APPDIR org.gudy.azureus2.ui.swt.Main "$@"
