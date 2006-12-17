@@ -2,7 +2,7 @@
 
 Name:		azureus
 Version:	2.5.0.0
-Release:	9%{?dist}
+Release:	10%{?dist}
 Summary:	A BitTorrent Client
 
 Group:		Applications/Internet
@@ -207,6 +207,9 @@ fi
 %{_libdir}/gcj/*
 
 %changelog
+* Sun Dec 17 2006 Anthony Green <green@redhat.com> 2.5.0.0-10
+- Update azureus.script to use unversioned bcprov jar file.
+
 * Mon Nov 29 2006 Andrew Overholt <overholt@redhat.com> 2.5.0.0-9
 - Use new swt jar location.
 - Need to wait to build until forthcoming eclipse update (currently in
