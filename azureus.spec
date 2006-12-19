@@ -2,7 +2,7 @@
 
 Name:		azureus
 Version:	2.5.0.0
-Release:	10%{?dist}
+Release:	11%{?dist}
 Summary:	A BitTorrent Client
 
 Group:		Applications/Internet
@@ -101,8 +101,7 @@ cp %{SOURCE4} License.txt
 
 %build
 mkdir -p build/libs
-build-jar-repository -p build/libs jakarta-commons-cli log4j gnu-crypto gtk2.8 glib0.2
-ln -s /usr/share/java/gcj-endorsed/bcprov-1.33.jar build/libs
+build-jar-repository -p build/libs bcprov jakarta-commons-cli log4j gnu-crypto gtk2.8 glib0.2
 ln -s %{_libdir}/eclipse/swt-gtk-3.2.jar build/libs
 find ./ -name osx | xargs rm -r
 find ./ -name macosx | xargs rm -r
@@ -207,6 +206,9 @@ fi
 %{_libdir}/gcj/*
 
 %changelog
+* Tue Dec 19 2006 Anthony Green <green@redhat.com> 2.5.0.0-11
+- Fix bcprov link for build.
+
 * Sun Dec 17 2006 Anthony Green <green@redhat.com> 2.5.0.0-10
 - Update azureus.script to use unversioned bcprov jar file.
 
