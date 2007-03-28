@@ -2,7 +2,7 @@
 
 Name:		azureus
 Version:	2.5.0.0
-Release:	11%{?dist}
+Release:	12%{?dist}
 Summary:	A BitTorrent Client
 
 Group:		Applications/Internet
@@ -49,11 +49,11 @@ Patch31:	azureus-fix-menu-MainMenu.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  ant, jpackage-utils >= 1.5, xml-commons-apis
-BuildRequires:  jakarta-commons-cli, log4j, gnu-crypto
+BuildRequires:  jakarta-commons-cli, log4j
 BuildRequires:  libgconf-java
 BuildRequires:  bouncycastle >= 1.33-3
 BuildRequires:  libswt3-gtk2 >= 3.2.0
-Requires:       jakarta-commons-cli, log4j, gnu-crypto
+Requires:       jakarta-commons-cli, log4j
 Requires:       libswt3-gtk2 >= 3.2.0
 Requires:       libgconf-java
 Requires:       bouncycastle >= 1.33-3
@@ -101,7 +101,7 @@ cp %{SOURCE4} License.txt
 
 %build
 mkdir -p build/libs
-build-jar-repository -p build/libs bcprov jakarta-commons-cli log4j gnu-crypto gtk2.8 glib0.2
+build-jar-repository -p build/libs bcprov jakarta-commons-cli log4j gtk2.8 glib0.2
 ln -s %{_libdir}/eclipse/swt-gtk-3.2.jar build/libs
 find ./ -name osx | xargs rm -r
 find ./ -name macosx | xargs rm -r
@@ -206,6 +206,10 @@ fi
 %{_libdir}/gcj/*
 
 %changelog
+* Wed Mar 28 2007 Thomas Fitzsimmons <fitzsim@redhat.com> - 2.5.0.0-12
+- Remove gnu-crypto build and runtime requirements.
+- Do not include gnu-crypto in classpath.
+
 * Tue Dec 19 2006 Anthony Green <green@redhat.com> 2.5.0.0-11
 - Fix bcprov link for build.
 
