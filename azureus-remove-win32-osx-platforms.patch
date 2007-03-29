@@ -1,6 +1,6 @@
---- org/gudy/azureus2/platform/PlatformManagerFactory.java.orig	2005-09-12 12:00:07.000000000 -0700
-+++ org/gudy/azureus2/platform/PlatformManagerFactory.java	2006-01-25 11:25:11.000000000 -0800
-@@ -43,32 +43,7 @@
+--- org/gudy/azureus2/platform/PlatformManagerFactory.java.orig	2007-01-12 12:39:23.000000000 -0800
++++ org/gudy/azureus2/platform/PlatformManagerFactory.java	2007-03-29 12:39:21.000000000 -0700
+@@ -43,36 +43,7 @@
  		try{
  			class_mon.enter();
  		
@@ -15,6 +15,10 @@
 -						
 -	                    platform_manager = org.gudy.azureus2.platform.macosx.PlatformManagerImpl.getSingleton();
 -	                    
+-					}else if( getPlatformType() == PlatformManager.PT_UNIX ){
+-						
+-            platform_manager = org.gudy.azureus2.platform.unix.PlatformManagerImpl.getSingleton();
+-
 -					}
 -				}catch( PlatformManagerException e ){
 -					

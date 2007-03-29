@@ -1,8 +1,8 @@
 # ExclusiveArch: %{ix86} x86_64
 
 Name:		azureus
-Version:	2.5.0.0
-Release:	11%{?dist}
+Version:	2.5.0.4
+Release:	1%{?dist}
 Summary:	A BitTorrent Client
 
 Group:		Applications/Internet
@@ -11,7 +11,7 @@ URL:		http://azureus.sourceforge.net
 
 # A cvs snapshot with the build and bouncycastle directories
 # removed.
-Source0:	azureus2-2.5.0.0.tar.gz
+Source0:	azureus2-2.5.0.4.tar.gz
 
 Source1:	azureus.script
 Source2:	Azureus.desktop
@@ -39,7 +39,7 @@ Patch20:	azureus-no-update-manager-SWTUpdateChecker.patch
 Patch22:	azureus-no-update-manager-UpdateMonitor.patch
 Patch23:	azureus-no-update-manager-PluginInstallerImpl-2.patch
 Patch25:	azureus-no-update-manager-MainStatusBar.patch
-Patch26:	azureus-nativetabs.patch
+#Patch26:	azureus-nativetabs.patch
 Patch27:	azureus-SecureMessageServiceClientHelper-bcprov.patch
 Patch28:	azureus-UDPConnectionSet-bcprov.patch
 Patch29:	azureus-CryptoHandlerECC-bcprov.patch
@@ -91,7 +91,7 @@ advanced users.
 %patch22 -p0
 %patch23 -p0
 %patch25 -p0
-%patch26 -p0
+#%patch26 -p0
 %patch27 -p0
 #%patch28 -p0
 #%patch29 -p0
@@ -105,7 +105,8 @@ build-jar-repository -p build/libs bcprov jakarta-commons-cli log4j gnu-crypto g
 ln -s %{_libdir}/eclipse/swt-gtk-3.2.jar build/libs
 find ./ -name osx | xargs rm -r
 find ./ -name macosx | xargs rm -r
-find ./ -name [Ww]in32\* | xargs rm -r
+find ./ -name win32 | xargs rm -r
+find ./ -name Win32\* | xargs rm -r
 # Remove test code
 rm org/gudy/azureus2/ui/swt/test/PrintTransferTypes.java
 
@@ -206,16 +207,17 @@ fi
 %{_libdir}/gcj/*
 
 %changelog
+* Thu Mar 29 2007 Anthony Green <green@redhat.com> 2.5.0.4-1
+- Upgrade to 2.5.0.4.
+
 * Tue Dec 19 2006 Anthony Green <green@redhat.com> 2.5.0.0-11
 - Fix bcprov link for build.
 
 * Sun Dec 17 2006 Anthony Green <green@redhat.com> 2.5.0.0-10
 - Update azureus.script to use unversioned bcprov jar file.
 
-* Mon Nov 29 2006 Andrew Overholt <overholt@redhat.com> 2.5.0.0-9
+* Mon Nov 06 2006 Andrew Overholt <overholt@redhat.com> 2.5.0.0-9
 - Use new swt jar location.
-- Need to wait to build until forthcoming eclipse update (currently in
-  fc6-updates-testing).
 
 * Sat Oct 28 2006 Anthony Green <green@redhat.com> 2.5.0.0-8
 - Force bcprov-1.33.jar onto the CLASSPATH in azureus.script so it

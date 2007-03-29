@@ -1,6 +1,6 @@
---- org/gudy/azureus2/ui/swt/mainwindow/MainMenu.java.orig	2006-08-26 17:09:20.000000000 -0700
-+++ org/gudy/azureus2/ui/swt/mainwindow/MainMenu.java	2006-08-26 17:10:24.000000000 -0700
-@@ -195,21 +195,10 @@
+--- org/gudy/azureus2/ui/swt/mainwindow/MainMenu.java.orig	2007-01-12 17:51:47.000000000 -0800
++++ org/gudy/azureus2/ui/swt/mainwindow/MainMenu.java	2007-03-29 12:55:44.000000000 -0700
+@@ -200,21 +200,10 @@
        addCloseDetailsMenuItem(fileMenu);
        addCloseDownloadBarsToMenu(fileMenu);
  
@@ -22,7 +22,7 @@
          final MenuItem file_exit = new MenuItem(fileMenu, SWT.NULL);
          if(!COConfigurationManager.getBooleanParameter("Enable System Tray") || !COConfigurationManager.getBooleanParameter("Close To Tray")) {
              KeyBindings.setAccelerator(file_exit, "MainWindow.menu.file.exit");
-@@ -376,26 +365,6 @@
+@@ -381,26 +370,6 @@
  			menu_plugin_logViews.setMenu(pluginLogsMenu);
  			menu_plugin_logViews.setData("EOL", "1");
  
@@ -49,16 +49,17 @@
        // standard items
        if(Constants.isOSX) {
            // Window menu
-@@ -470,32 +439,8 @@
+@@ -478,49 +447,8 @@
+         }
        });
  
- 
+-
 -      MenuItem help_plugin= new MenuItem(helpMenu, SWT.NULL);
 -      Messages.setLanguageText(help_plugin, "MainWindow.menu.help.plugins"); //$NON-NLS-1$
 -      help_plugin.addListener(SWT.Selection, new Listener() {
 -          public void handleEvent(Event e) {
 -            String pluginString = "http://azureus.sourceforge.net/plugin_list.php";
--            Program.launch(pluginString);
+-            Utils.launch(pluginString);
 -          }
 -        });
 -      
@@ -74,22 +75,27 @@
 -        		if (uiFunctions != null) {
 -        			uiFunctions.bringToFront();
 -        		}
--        		UpdateMonitor.getSingleton(core).performCheck(true);
+-        		UpdateMonitor.getSingleton(core).performCheck(true, false, new UpdateCheckInstanceListener() {
+-        			public void cancelled(UpdateCheckInstance instance) {
+-        			}
+-        			
+-        			public void complete(UpdateCheckInstance instance) {
+-        				if (instance.getUpdates().length == 0) {
+-        					Utils.execSWTThread(new AERunnable() {
+-        						public void runSupport() {
+-            					Utils.openMessageBox(parent,
+-													SWT.ICON_INFORMATION | SWT.OK,
+-													"window.update.noupdates", (String[]) null);
+-        						}
+-        					});
+-        				}
+-        			}
+-        		});
 -        	}
 -        });
 -      }
 -
-       MenuItem help_donate = new MenuItem(helpMenu, SWT.NULL);
-       Messages.setLanguageText(help_donate, "MainWindow.menu.help.donate"); //$NON-NLS-1$
-       help_donate.addListener(SWT.Selection, new Listener() {
-@@ -503,8 +448,8 @@
-           new DonationWindow2(display).show();
-           //String donationString = "https://www.paypal.com/xclick/business=olivier%40gudy.org&item_name=Azureus&no_note=1&tax=0&currency_code=EUR";
-           //Program.launch(donationString);
--        }
--      });
-+        } 
-+     });
-       
-       new MenuItem(helpMenu,SWT.SEPARATOR);
+-      new MenuItem(helpMenu,SWT.SEPARATOR);
        MenuItem help_debug = new MenuItem(helpMenu, SWT.NULL);
+       Messages.setLanguageText(help_debug, "MainWindow.menu.help.debug");
+       help_debug.addListener(SWT.Selection, new Listener() {

@@ -1,6 +1,6 @@
---- org/gudy/azureus2/pluginsimpl/local/installer/PluginInstallerImpl.java.orig	2006-02-09 23:30:18.000000000 -0500
-+++ org/gudy/azureus2/pluginsimpl/local/installer/PluginInstallerImpl.java	2006-02-09 23:32:16.000000000 -0500
-@@ -177,13 +177,6 @@
+--- org/gudy/azureus2/pluginsimpl/local/installer/PluginInstallerImpl.java.orig	2006-09-09 17:59:14.000000000 -0700
++++ org/gudy/azureus2/pluginsimpl/local/installer/PluginInstallerImpl.java	2007-03-29 12:48:29.000000000 -0700
+@@ -181,13 +181,6 @@
  	{
  		PluginUpdatePlugin	pup = (PluginUpdatePlugin)manager.getPluginInterfaceByClass( PluginUpdatePlugin.class ).getPlugin();
  		
@@ -14,7 +14,7 @@
  		try{
  			
  			for (int i=0;i<plugins.length;i++){
-@@ -247,23 +240,6 @@
+@@ -251,23 +244,6 @@
  					
  					((InstallablePluginImpl)plugin).addUpdate( inst, pup, dummy_plugin, dummy_plugin_interface );
  							
@@ -38,7 +38,7 @@
  				}else{
  					
  					((InstallablePluginImpl)plugin).addUpdate( inst, pup, existing_plugin, existing_plugin_interface );
-@@ -271,12 +247,8 @@
+@@ -275,12 +251,8 @@
  				}
  			}
  		
@@ -51,7 +51,7 @@
  			if ( e instanceof PluginException ){
  				
  				throw((PluginException)e);
-@@ -339,137 +311,6 @@
+@@ -343,137 +315,6 @@
  				throw( new PluginException( "Plugin '" + pi.getPluginID() + "' is not loaded from the file system, can't uninstall" ));
  			}
  		}
@@ -108,12 +108,12 @@
 -													
 -													FileUtil.recursiveDelete( new File( plugin_dir ));
 -												
--												}else{
--																
--													UpdateInstaller installer = checker.createInstaller();
--													
--													installer.addRemoveAction( new File( plugin_dir ).getCanonicalPath());
 -												}
+-																
+-												UpdateInstaller installer = checker.createInstaller();
+-													
+-												installer.addRemoveAction( new File( plugin_dir ).getCanonicalPath());
+-											
 -												
 -											}catch( Throwable e ){
 -												
