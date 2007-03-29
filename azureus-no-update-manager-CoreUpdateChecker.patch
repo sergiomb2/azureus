@@ -1,6 +1,6 @@
---- org/gudy/azureus2/update/CoreUpdateChecker.java.orig	2006-05-14 08:10:03.000000000 -0700
-+++ org/gudy/azureus2/update/CoreUpdateChecker.java	2006-05-26 09:23:28.000000000 -0700
-@@ -123,8 +123,6 @@
+--- org/gudy/azureus2/update/CoreUpdateChecker.java.orig	2006-12-20 17:14:36.000000000 -0800
++++ org/gudy/azureus2/update/CoreUpdateChecker.java	2007-03-29 12:46:47.000000000 -0700
+@@ -122,8 +122,6 @@
  		props.setProperty( "plugin.version", plugin_interface.getAzureusVersion());
  		
  		rdf = plugin_interface.getUtilities().getResourceDownloaderFactory();
@@ -9,7 +9,7 @@
  	}
  	
  	public String
-@@ -143,156 +141,9 @@
+@@ -142,235 +140,9 @@
  	checkForUpdate(
  		final UpdateChecker	checker )
  	{
@@ -24,8 +24,8 @@
 -      
 -			displayUserMessage( decoded );
 -			
--			String latest_version 			= null;
--			String latest_file_name			= null;
+-			String latest_version;
+-			String latest_file_name;
 -			
 -			byte[] b_version = (byte[])decoded.get("version");
 -			
@@ -45,9 +45,43 @@
 -			if ( b_filename != null ){
 -			
 -				latest_file_name = new String( b_filename );
+-				
+-			}else{
+-				
+-				throw( new Exception( "No update file details in reply" ));
 -			}
 -			
+-			//latest_version 		= "3.0.0.3";
+-			//latest_file_name	= "http://torrents.aelitis.com:88/torrents/Azureus2.5.0.0.jar.torrent";
+-			//latest_file_name	= "Azureus2.5.0.0.jar.torrent";
+-			
 -			String	msg = "Core: latest_version = '" + latest_version + "', file = '" + latest_file_name + "'";
+-			
+-			URL		full_download_url;
+-			
+-				// since 2501 we support a full download URL, falling back to SF mirrors if this
+-				// fails. 
+-					
+-			if ( latest_file_name.startsWith( "http" )){
+-				
+-				try{
+-					full_download_url	= new URL( latest_file_name );
+-					
+-				}catch( Throwable e ){
+-					
+-					full_download_url = null;
+-					
+-					log.log( e );
+-				}
+-				
+-				int	pos = latest_file_name.lastIndexOf( '/' );
+-				
+-				latest_file_name = latest_file_name.substring( pos+1 );
+-				
+-			}else{
+-				
+-				full_download_url	= null;
+-			}
 -			
 -			checker.reportProgress( msg );
 -			
@@ -61,40 +95,85 @@
 -			final String	f_latest_version	= latest_version;
 -			final String	f_latest_file_name	= latest_file_name;
 -			
--
--			ResourceDownloader[]	primary_mirrors;
+-			ResourceDownloader	top_downloader;
+-			
+-			if ( full_download_url == null ){
 -				
--			primary_mirrors = getPrimaryDownloaders( latest_file_name );
--
--				// the download hierarchy is primary mirrors first (randomised alternate)
--				// then backup mirrors (randomised alternate)
--			
--				// we don't want to load the backup mirrors until the primary mirrors fail
--			
--			ResourceDownloader		random_primary_mirrors = rdf.getRandomDownloader( primary_mirrors );
--			
--			ResourceDownloader		backup_downloader =
--				rdf.create(
--					new ResourceDownloaderDelayedFactory()
--					{
--						public ResourceDownloader
--						create()
+-				ResourceDownloader[]	primary_mirrors;
+-					
+-				primary_mirrors = getPrimaryDownloaders( latest_file_name );
+-	
+-					// the download hierarchy is primary mirrors first (randomised alternate)
+-					// then backup mirrors (randomised alternate)
+-				
+-					// we don't want to load the backup mirrors until the primary mirrors fail
+-				
+-				ResourceDownloader		random_primary_mirrors = rdf.getRandomDownloader( primary_mirrors );
+-				
+-				ResourceDownloader		backup_downloader =
+-					rdf.create(
+-						new ResourceDownloaderDelayedFactory()
 -						{
--							ResourceDownloader[]	backup_mirrors = getBackupDownloaders( f_latest_file_name );
--						
--							return( rdf.getRandomDownloader( backup_mirrors ));
--						}
--					});
--			
--			ResourceDownloader	top_downloader = 
--				rdf.getAlternateDownloader( 
--						new ResourceDownloader[]
+-							public ResourceDownloader
+-							create()
 -							{
--								random_primary_mirrors,
--								backup_downloader,
--							});
--			
+-								ResourceDownloader[]	backup_mirrors = getBackupDownloaders( f_latest_file_name );
+-							
+-								return( rdf.getRandomDownloader( backup_mirrors ));
+-							}
+-						});
+-								
+-				top_downloader = 
+-					rdf.getAlternateDownloader( 
+-							new ResourceDownloader[]
+-								{
+-									random_primary_mirrors,
+-									backup_downloader,
+-								});
 -
+-			}else{
+-				
+-				ResourceDownloader full_rd = rdf.create( full_download_url );
+-				
+-				full_rd = rdf.getSuffixBasedDownloader( full_rd );
+-				
+-				ResourceDownloader		primary_downloader =
+-					rdf.create(
+-						new ResourceDownloaderDelayedFactory()
+-						{
+-							public ResourceDownloader
+-							create()
+-							{
+-								ResourceDownloader[]	primary_mirrors = getPrimaryDownloaders( f_latest_file_name );
+-							
+-								return( rdf.getRandomDownloader( primary_mirrors ));
+-							}
+-						});
+-					
+-				ResourceDownloader		backup_downloader =
+-					rdf.create(
+-						new ResourceDownloaderDelayedFactory()
+-						{
+-							public ResourceDownloader
+-							create()
+-							{
+-								ResourceDownloader[]	backup_mirrors = getBackupDownloaders( f_latest_file_name );
+-							
+-								return( rdf.getRandomDownloader( backup_mirrors ));
+-							}
+-						});
+-				
+-				
+-				top_downloader = 
+-					rdf.getAlternateDownloader( 
+-							new ResourceDownloader[]
+-								{
+-									full_rd,
+-									primary_downloader,
+-									backup_downloader,
+-								});
+-			}
+-			
 -			top_downloader.addListener( rd_logger );
 -			
 -				// get size so it is cached

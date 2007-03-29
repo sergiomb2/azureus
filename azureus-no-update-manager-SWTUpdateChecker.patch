@@ -1,13 +1,6 @@
---- org/gudy/azureus2/ui/swt/updater2/SWTUpdateChecker.java.orig	2006-07-29 16:23:50.000000000 -0700
-+++ org/gudy/azureus2/ui/swt/updater2/SWTUpdateChecker.java	2006-08-23 12:18:50.000000000 -0700
-@@ -63,164 +63,13 @@
-   public static void
-   initialize()
-   {
--    PluginInitializer.getDefaultInterface().getUpdateManager().registerUpdatableComponent(new SWTUpdateChecker(),true);
-   }
-   
-   public SWTUpdateChecker() {    
+--- org/gudy/azureus2/ui/swt/updater2/SWTUpdateChecker.java.orig	2006-12-27 18:52:24.000000000 -0800
++++ org/gudy/azureus2/ui/swt/updater2/SWTUpdateChecker.java	2007-03-29 12:50:21.000000000 -0700
+@@ -71,172 +71,10 @@
    }
    
    public void checkForUpdate(final UpdateChecker checker) {
@@ -66,7 +59,20 @@
 -		        	    		}
 -		        	    	}else{
 -		        	    		
--		        		    	if ( update_prevented_version != versionGetter.getCurrentVersion()){
+-		        	    			// we need to periodically remind the user there's a problem as they need to realise that
+-		        	    			// it is causing ALL updates (core/plugin) to fail
+-		        	    		
+-		        	    		long	last_prompt = COConfigurationManager.getLongParameter( "swt.update.prevented.version.time", 0 );
+-		        	    		long	now			= SystemTime.getCurrentTime();
+-		        	    		
+-		        	    		boolean force = now < last_prompt || now - last_prompt > 7*24*60*60*1000;
+-		        	    		
+-		        	    		if ( !checker.getCheckInstance().isAutomatic()){
+-		        	    			
+-		        	    			force = true;
+-		        	    		}
+-		        	    		
+-		        		    	if ( force || update_prevented_version != versionGetter.getCurrentVersion()){
 -			        		    		
 -			        	    		String	alert = 
 -			        	    			MessageText.getString( 
@@ -77,11 +83,12 @@
 -			        	    						jar_file_dir.toString(), 
 -			        	    						expected_dir.toString()});
 -			        	    		
--			        	     		Logger.log(	new LogAlert(LogAlert.UNREPEATABLE, LogEvent.LT_ERROR, alert ));
+-			        	     		Logger.log(	new LogAlert(LogAlert.REPEATABLE, LogEvent.LT_ERROR, alert ));
 -			        						
 -			        	     		update_prevented_version = versionGetter.getCurrentVersion();
 -			        	     		
 -			        	    		COConfigurationManager.setParameter( "swt.update.prevented.version", update_prevented_version );
+-			        	    		COConfigurationManager.setParameter( "swt.update.prevented.version.time", now );
 -		        		    	}
 -		        	    	}
 -		        	    }
@@ -158,11 +165,12 @@
 -  		checker.failed();
 -  		
 -  	}finally{
--  		
--  		checker.completed();
+   		
+   		checker.completed();
 -  	}
 -    
-+      checker.completed();
    }
++
    
    private boolean 
+   processData(
