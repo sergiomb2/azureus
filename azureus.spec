@@ -2,7 +2,7 @@
 
 Name:		azureus
 Version:	2.5.0.4
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	A BitTorrent Client
 
 Group:		Applications/Internet
@@ -52,9 +52,9 @@ BuildRequires:  ant, jpackage-utils >= 1.5, xml-commons-apis
 BuildRequires:  jakarta-commons-cli, log4j
 BuildRequires:  libgconf-java
 BuildRequires:  bouncycastle >= 1.33-3
-BuildRequires:  libswt3-gtk2 >= 3.2.0
+BuildRequires:  libswt3-gtk2 >= 3.3.0
 Requires:       jakarta-commons-cli, log4j
-Requires:       libswt3-gtk2 >= 3.2.0
+Requires:       libswt3-gtk2 >= 3.3.0
 Requires:       libgconf-java
 Requires:       bouncycastle >= 1.33-3
 Requires:       libgcj >= 4.1.0-0.15
@@ -102,7 +102,7 @@ cp %{SOURCE4} License.txt
 %build
 mkdir -p build/libs
 build-jar-repository -p build/libs bcprov jakarta-commons-cli log4j gtk2.8 glib0.2
-ln -s %{_libdir}/eclipse/swt-gtk-3.2.jar build/libs
+ln -s %{_libdir}/eclipse/swt-gtk-3.3.jar build/libs
 find ./ -name osx | xargs rm -r
 find ./ -name macosx | xargs rm -r
 find ./ -name win32 | xargs rm -r
@@ -116,7 +116,7 @@ mkdir -p plugins/azplugins
 cd plugins/azplugins
 unzip -q %{SOURCE5}
 rm -f *.jar `find ./ -name \*class`
-find ./ -name \*java | xargs javac -cp %{_libdir}/eclipse/swt-gtk-3.2.jar:../..:.
+find ./ -name \*java | xargs javac -cp %{_libdir}/eclipse/swt-gtk-3.3.jar:../..:.
 find ./ -name \*java | xargs rm
 jar cvf azplugins_1.9.jar .
 cd ../..
@@ -125,7 +125,7 @@ unzip -q %{SOURCE6}
 cd plugins/bdcc
 unzip *.jar
 rm -f *.jar `find ./ -name \*class`
-find ./ -name \*java | xargs javac -cp %{_libdir}/eclipse/swt-gtk-3.2.jar:../..:.
+find ./ -name \*java | xargs javac -cp %{_libdir}/eclipse/swt-gtk-3.3.jar:../..:.
 find ./ -name \*java | xargs rm
 jar cvf bdcc_2.2.2.jar .
 cd ../..
@@ -207,6 +207,11 @@ fi
 %{_libdir}/gcj/*
 
 %changelog
+* Thu Oct  4 2007 Thomas Fitzsimmons <fitzsim@redhat.com> - 2.5.0.4-3
+- Build against swt 3.3.
+- Update startup script.
+- Resolves: rhbz#296911
+
 * Thu Mar 29 2007 Anthony Green <green@redhat.com> 2.5.0.4-2
 - Upgrade to 2.5.0.4.
 
