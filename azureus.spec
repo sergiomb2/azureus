@@ -2,7 +2,7 @@
 
 Name:		azureus
 Version:	2.5.0.4
-Release:	3%{?dist}
+Release:	4%{?dist}
 Summary:	A BitTorrent Client
 
 Group:		Applications/Internet
@@ -207,6 +207,9 @@ fi
 %{_libdir}/gcj/*
 
 %changelog
+* Thu Oct 25 2007 Ben Konrath <bkonrath@redhat.com> - 2.5.0.4-4
+- Use swt.jar instead of swt-gtk-3.3.jar in wrapper script.
+
 * Thu Oct  4 2007 Thomas Fitzsimmons <fitzsim@redhat.com> - 2.5.0.4-3
 - Build against swt 3.3.
 - Update startup script.
