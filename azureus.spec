@@ -43,7 +43,7 @@ Patch31:	azureus-fix-menu-MainMenu.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
-BuildRequires:  ant, junit, jpackage-utils >= 1.5, xml-commons-apis
+BuildRequires:  ant, jpackage-utils >= 1.5, xml-commons-apis
 BuildRequires:  jakarta-commons-cli, log4j
 BuildRequires:  libgconf-java
 BuildRequires:  bouncycastle >= 1.33-3
