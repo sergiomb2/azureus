@@ -48,7 +48,6 @@ BuildRequires:  jakarta-commons-cli, log4j
 BuildRequires:  libgconf-java
 BuildRequires:  bouncycastle >= 1.33-3
 BuildRequires:  libswt3-gtk2 >= 3.3.0
-BuildRequires:  openssl-devel
 Requires:       jakarta-commons-cli, log4j
 Requires:       libswt3-gtk2 >= 3.3.0
 Requires:       libgconf-java
