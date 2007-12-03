@@ -48,6 +48,7 @@ BuildRequires:  jakarta-commons-cli, log4j
 BuildRequires:  libgconf-java
 BuildRequires:  bouncycastle >= 1.33-3
 BuildRequires:  libswt3-gtk2 >= 3.3.0
+BuildRequires:  openssl-devel
 Requires:       jakarta-commons-cli, log4j
 Requires:       libswt3-gtk2 >= 3.3.0
 Requires:       libgconf-java
@@ -55,10 +56,9 @@ Requires:       bouncycastle >= 1.33-3
 Requires:       libgcj >= 4.1.0-0.15
 BuildRequires:    java-1.5.0-gcj-devel
 BuildRequires:    java-1.7.0-icedtea-devel
-Requires(post):   java-1.5.0-gcj
-Requires(postun): java-1.5.0-gcj
-Requires(post):   java-1.7.0-icedtea
-Requires(postun): java-1.7.0-icedtea
+Requires:	  java-1.7.0-icedtea
+Requires(post):   java-gcj-compat >= 1.0.31
+Requires(postun): java-gcj-compat >= 1.0.31
 BuildRequires:    desktop-file-utils
 Requires(post):   desktop-file-utils
 Requires(postun): desktop-file-utils
