@@ -1,5 +1,5 @@
---- org/gudy/azureus2/pluginsimpl/local/installer/PluginInstallerImpl.java.orig	2006-09-09 17:59:14.000000000 -0700
-+++ org/gudy/azureus2/pluginsimpl/local/installer/PluginInstallerImpl.java	2007-03-29 12:48:29.000000000 -0700
+--- ../azureus3orig/azureus3/org/gudy/azureus2/pluginsimpl/local/installer/PluginInstallerImpl.java	2007-12-03 10:07:11.000000000 -0500
++++ org/gudy/azureus2/pluginsimpl/local/installer/PluginInstallerImpl.java	2007-12-03 10:32:17.000000000 -0500
 @@ -181,13 +181,6 @@
  	{
  		PluginUpdatePlugin	pup = (PluginUpdatePlugin)manager.getPluginInterfaceByClass( PluginUpdatePlugin.class ).getPlugin();
@@ -14,7 +14,7 @@
  		try{
  			
  			for (int i=0;i<plugins.length;i++){
-@@ -251,23 +244,6 @@
+@@ -254,23 +247,6 @@
  					
  					((InstallablePluginImpl)plugin).addUpdate( inst, pup, dummy_plugin, dummy_plugin_interface );
  							
@@ -38,7 +38,7 @@
  				}else{
  					
  					((InstallablePluginImpl)plugin).addUpdate( inst, pup, existing_plugin, existing_plugin_interface );
-@@ -275,12 +251,8 @@
+@@ -278,12 +254,8 @@
  				}
  			}
  		
@@ -51,11 +51,10 @@
  			if ( e instanceof PluginException ){
  				
  				throw((PluginException)e);
-@@ -343,137 +315,6 @@
- 				throw( new PluginException( "Plugin '" + pi.getPluginID() + "' is not loaded from the file system, can't uninstall" ));
+@@ -347,138 +319,6 @@
  			}
  		}
--		
+ 		
 -		try{
 -			UpdateManager	uman = manager.getDefaultPluginInterface().getUpdateManager();
 -			
@@ -121,6 +120,8 @@
 -												Logger.log(new LogAlert(LogAlert.REPEATABLE,
 -														"Plugin uninstall failed", e));
 -											}
+-											
+-												// don't close the stream as we process it later
 -												
 -											return( true );
 -										}

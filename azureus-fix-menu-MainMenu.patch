@@ -1,6 +1,6 @@
---- org/gudy/azureus2/ui/swt/mainwindow/MainMenu.java.orig	2007-01-12 17:51:47.000000000 -0800
-+++ org/gudy/azureus2/ui/swt/mainwindow/MainMenu.java	2007-03-29 12:55:44.000000000 -0700
-@@ -200,21 +200,10 @@
+--- ../azureus3orig/azureus3/org/gudy/azureus2/ui/swt/mainwindow/MainMenu.java	2007-12-03 10:07:11.000000000 -0500
++++ org/gudy/azureus2/ui/swt/mainwindow/MainMenu.java	2007-12-03 10:41:18.000000000 -0500
+@@ -229,21 +229,10 @@
        addCloseDetailsMenuItem(fileMenu);
        addCloseDownloadBarsToMenu(fileMenu);
  
@@ -22,38 +22,29 @@
          final MenuItem file_exit = new MenuItem(fileMenu, SWT.NULL);
          if(!COConfigurationManager.getBooleanParameter("Enable System Tray") || !COConfigurationManager.getBooleanParameter("Close To Tray")) {
              KeyBindings.setAccelerator(file_exit, "MainWindow.menu.file.exit");
-@@ -381,26 +370,6 @@
- 			menu_plugin_logViews.setMenu(pluginLogsMenu);
- 			menu_plugin_logViews.setData("EOL", "1");
- 
--      new MenuItem(pluginMenu, SWT.SEPARATOR);
--      
--      MenuItem plugins_install_wizard = new MenuItem(pluginMenu, SWT.NULL);
--      KeyBindings.setAccelerator(plugins_install_wizard, "MainWindow.menu.plugins.installPlugins");
--      Messages.setLanguageText(plugins_install_wizard, "MainWindow.menu.plugins.installPlugins"); //$NON-NLS-1$
--      plugins_install_wizard.addListener(SWT.Selection, new Listener() {
--        public void handleEvent(Event e) {
--          new InstallPluginWizard(core, display);
--        }
--      });
--      
--      MenuItem plugins_uninstall_wizard = new MenuItem(pluginMenu, SWT.NULL);
--      KeyBindings.setAccelerator(plugins_uninstall_wizard, "MainWindow.menu.plugins.uninstallPlugins");
--      Messages.setLanguageText(plugins_uninstall_wizard, "MainWindow.menu.plugins.uninstallPlugins"); //$NON-NLS-1$
--      plugins_uninstall_wizard.addListener(SWT.Selection, new Listener() {
--        public void handleEvent(Event e) {
--          new UnInstallPluginWizard(core, display);
--        }
--      });
+@@ -399,18 +388,6 @@
+             if(isModal) {performOneTimeDisable(menu_tools, true);}
+       }
+       
+-      //the Plugins menu
+-        menu_plugin = new MenuItem(menuBar, SWT.CASCADE);
+-        Messages.setLanguageText(menu_plugin, "MainWindow.menu.view.plugins"); //$NON-NLS-1$
+-        Menu pluginMenu = new Menu(parent,SWT.DROP_DOWN);
+-        menu_plugin.setMenu(pluginMenu);
+-        if(isModal) {performOneTimeDisable(menu_plugin, true);}
+-        MenuBuildUtils.addMaintenanceListenerForMenu(pluginMenu, new MenuBuildUtils.MenuBuilder() {
+-        	public void buildMenu(Menu menu) {
+-        		buildPluginMenu(parent, menu, notMainWindow);
+-        	}
+-        });
 -      
        // standard items
        if(Constants.isOSX) {
            // Window menu
-@@ -478,49 +447,8 @@
-         }
+@@ -489,56 +466,8 @@
        });
  
--
+ 
 -      MenuItem help_plugin= new MenuItem(helpMenu, SWT.NULL);
 -      Messages.setLanguageText(help_plugin, "MainWindow.menu.help.plugins"); //$NON-NLS-1$
 -      help_plugin.addListener(SWT.Selection, new Listener() {
@@ -75,7 +66,7 @@
 -        		if (uiFunctions != null) {
 -        			uiFunctions.bringToFront();
 -        		}
--        		UpdateMonitor.getSingleton(core).performCheck(true, false, new UpdateCheckInstanceListener() {
+-        		UpdateMonitor.getSingleton(core).performCheck(true, false, false, new UpdateCheckInstanceListener() {
 -        			public void cancelled(UpdateCheckInstance instance) {
 -        			}
 -        			
@@ -95,7 +86,51 @@
 -        });
 -      }
 -
+-      MenuItem help_donate = new MenuItem(helpMenu, SWT.NULL);
+-      Messages.setLanguageText(help_donate, "MainWindow.menu.help.donate");
+-      help_donate.addListener(SWT.Selection, new Listener() {
+-        public void handleEvent(Event e) {
+-          new OldDonationWindow(display).show();
+-        }
+-      });
+-      
 -      new MenuItem(helpMenu,SWT.SEPARATOR);
        MenuItem help_debug = new MenuItem(helpMenu, SWT.NULL);
        Messages.setLanguageText(help_debug, "MainWindow.menu.help.debug");
        help_debug.addListener(SWT.Selection, new Listener() {
+@@ -646,35 +575,6 @@
+     	  this.plugin_view_mon.exit();
+       }
+       
+-    new MenuItem(pluginMenu, SWT.SEPARATOR);
+-    
+-    org.gudy.azureus2.plugins.ui.menus.MenuItem[] plugin_items;
+-    plugin_items = MenuItemManager.getInstance().getAllAsArray("mainmenu");
+-    if (plugin_items.length > 0) {
+-    	MenuBuildUtils.addPluginMenuItems(parent, plugin_items, pluginMenu, true, true,
+-    		MenuBuildUtils.BASIC_MENU_ITEM_CONTROLLER
+-    	);
+-    	new MenuItem(pluginMenu, SWT.SEPARATOR);
+-    }
+-    
+-    MenuItem plugins_install_wizard = new MenuItem(pluginMenu, SWT.NULL);
+-    KeyBindings.setAccelerator(plugins_install_wizard, "MainWindow.menu.plugins.installPlugins");
+-    Messages.setLanguageText(plugins_install_wizard, "MainWindow.menu.plugins.installPlugins"); //$NON-NLS-1$
+-    plugins_install_wizard.addListener(SWT.Selection, new Listener() {
+-      public void handleEvent(Event e) {
+-        new InstallPluginWizard(core, display);
+-      }
+-    });
+-    
+-    MenuItem plugins_uninstall_wizard = new MenuItem(pluginMenu, SWT.NULL);
+-    KeyBindings.setAccelerator(plugins_uninstall_wizard, "MainWindow.menu.plugins.uninstallPlugins");
+-    Messages.setLanguageText(plugins_uninstall_wizard, "MainWindow.menu.plugins.uninstallPlugins"); //$NON-NLS-1$
+-    plugins_uninstall_wizard.addListener(SWT.Selection, new Listener() {
+-      public void handleEvent(Event e) {
+-        new UnInstallPluginWizard(core, display);
+-      }
+-    });
+-  
+   }
+ 
+ 	private void addDebugMenu(Menu menu) {

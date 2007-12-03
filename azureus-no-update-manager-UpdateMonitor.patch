@@ -1,226 +1,193 @@
---- org/gudy/azureus2/ui/swt/update/UpdateMonitor.java.orig	2006-12-27 18:52:24.000000000 -0800
-+++ org/gudy/azureus2/ui/swt/update/UpdateMonitor.java	2007-03-29 12:52:02.000000000 -0700
-@@ -90,150 +90,12 @@
- 	{
- 		azureus_core	= _azureus_core;
- 		
--	  	UpdateManager um = azureus_core.getPluginManager().getDefaultPluginInterface().getUpdateManager(); 
+--- ../azureus3orig/azureus3/org/gudy/azureus2/ui/swt/update/UpdateMonitor.java	2007-12-03 10:07:11.000000000 -0500
++++ org/gudy/azureus2/ui/swt/update/UpdateMonitor.java	2007-12-03 10:35:51.000000000 -0500
+@@ -84,67 +84,6 @@
+ 	protected UpdateMonitor(AzureusCore _azureus_core) {
+ 		azCore = _azureus_core;
+ 
+-		PluginInterface defPI = azCore.getPluginManager().getDefaultPluginInterface();
+-		UpdateManager um = defPI.getUpdateManager();
 -
--	  	um.addListener(
--	  		new UpdateManagerListener()
--			{
--	  			public void
--				checkInstanceCreated(
--					UpdateCheckInstance	instance )
--	  			{
--	  				instance.addListener( UpdateMonitor.this );
--	  			}
--			});
--	  	
--	  	um.addVerificationListener(
--	  			new UpdateManagerVerificationListener()
--	  			{
--	  				public boolean
--	  				acceptUnVerifiedUpdate(
--	  					final Update		update )
--	  				{
--						final boolean	accept[]	 = {false};
--						
--						Utils.execSWTThread(
--								new Runnable()
--								{
--									public void
--									run()
--									{
--										accept[0] = MessageBoxWindow.open( 
--											"UpdateMonitor.messagebox.accept.unverified",
--											SWT.YES | SWT.NO,
--											SWT.NULL,
--											false,
--											SWTThread.getInstance().getDisplay(),
--											MessageBoxWindow.ICON_WARNING,
--											MessageText.getString( "UpdateMonitor.messagebox.accept.unverified.title" ),
--											MessageText.getString( 
--													"UpdateMonitor.messagebox.accept.unverified.text", 
--													new String[]{ update.getName()})) == SWT.YES;
--										
--									}
--								},
--								false );	
--							
--						return( accept[0] );
--	  				}
--	  				
--	  				public void
--	  				verificationFailed(
--	  					final Update		update,
--	  					final Throwable		cause )
--	  				{
--	  					final String	cause_str = Debug.getNestedExceptionMessage( cause );
--	  					
--						Utils.execSWTThread(
--								new Runnable()
--								{
--									public void
--									run()
--									{
--										Utils.openMessageBox(Utils.findAnyShell(),
--											SWT.OK,
--											"UpdateMonitor.messagebox.verification.failed",
--											new String[]{ update.getName(), cause_str });
--									}
--								});
--	  				}
--	  			});
--	  	
--	    SimpleTimer.addPeriodicEvent( 
--	    		"UpdateMon:autocheck",
--	            AUTO_UPDATE_CHECK_PERIOD,
--	            new TimerEventPerformer()
--	            {
--	            	public void
--					perform(
--						TimerEvent  ev )
--					{
--	            		performAutoCheck(false);
--					}
--	            });
--	      
--	    	// wait a bit before starting check to give rest of AZ time to initialise 
--	    
--		new DelayedEvent(
--				"UpdateMon:wait",
--				2500,
--				new AERunnable()
--				{
--					public void
--					runSupport()
--					{
--						performAutoCheck(true);
+-		um.addListener(new UpdateManagerListener() {
+-			public void checkInstanceCreated(UpdateCheckInstance instance) {
+-				instance.addListener(UpdateMonitor.this);
+-			}
+-		});
+-
+-		um.addVerificationListener(new UpdateManagerVerificationListener() {
+-			public boolean acceptUnVerifiedUpdate(final Update update) {
+-				UIFunctions uiFunctions = UIFunctionsManager.getUIFunctions();
+-				if (uiFunctions != null) {
+-					String title = MessageText.getString(MSG_PREFIX
+-							+ "accept.unverified.title");
+-					String text = MessageText.getString(MSG_PREFIX
+-							+ "accept.unverified.text", new String[] {
+-						update.getName()
+-					});
+-					return uiFunctions.promptUser(title, text, new String[] {
+-						MessageText.getString("Button.yes"),
+-						MessageText.getString("Button.no")
+-					}, 1, MSG_PREFIX + "accept.unverified",
+-							MessageText.getString("MessageBoxWindow.nomoreprompting"), false,
+-							0) == 0;
+-				}
+-
+-				return false;
+-			}
+-
+-			public void verificationFailed(final Update update, final Throwable cause) {
+-				final String cause_str = Debug.getNestedExceptionMessage(cause);
+-				UIFunctions uiFunctions = UIFunctionsManager.getUIFunctions();
+-				if (uiFunctions != null) {
+-					String title = MessageText.getString(MSG_PREFIX
+-							+ "verification.failed.title");
+-					String text = MessageText.getString(MSG_PREFIX
+-							+ "verification.failed.text", new String[] {
+-						update.getName(),
+-						cause_str
+-					});
+-					uiFunctions.promptUser(title, text, new String[] {
+-						MessageText.getString("Button.ok")
+-					}, 0, null, null, false, 0);
+-				}
+-			}
+-		});
+-
+-		SimpleTimer.addPeriodicEvent("UpdateMon:autocheck",
+-				AUTO_UPDATE_CHECK_PERIOD, new TimerEventPerformer() {
+-					public void perform(TimerEvent ev) {
+-						performAutoCheck(false);
 -					}
 -				});
+-
+-		// wait a bit before starting check to give rest of AZ time to initialise 
+-		new DelayedEvent("UpdateMon:wait", 2500, new AERunnable() {
+-			public void runSupport() {
+-				performAutoCheck(true);
+-			}
+-		});
  	}
-   
- 	protected void
- 	performAutoCheck(
- 		final boolean		start_of_day )
- 	{
--		boolean check_at_start	= false;
--		boolean check_periodic	= false;
+ 
+ 	protected void requestRecheck()
+@@ -157,43 +96,6 @@
+ 	}
+ 	
+ 	protected void performAutoCheck(final boolean start_of_day) {
+-		boolean check_at_start = false;
+-		boolean check_periodic = false;
 -		boolean bOldSWT = SWT.getVersion() < 3139;
--	
--			// no update checks for java web start
--		
--		if ( !SystemProperties.isJavaWebStartInstance()){
--					
+-
+-		// no update checks for java web start
+-
+-		if (!SystemProperties.isJavaWebStartInstance()) {
+-
 -			// force check when SWT is really old
--			check_at_start	= COConfigurationManager.getBooleanParameter( "update.start", true ) || bOldSWT;
--			check_periodic	= COConfigurationManager.getBooleanParameter( "update.periodic", true );
+-			check_at_start = COConfigurationManager.getBooleanParameter("update.start")
+-					|| bOldSWT;
+-			check_periodic = COConfigurationManager.getBooleanParameter("update.periodic");
 -		}
--		
--			// periodic -> check at start as well
--		
+-
+-		// periodic -> check at start as well
+-
 -		check_at_start = check_at_start || check_periodic;
--		
--		if (	( check_at_start && start_of_day) ||
--				( check_periodic && !start_of_day )){
--			
--			performCheck(bOldSWT, true, null);	// this will implicitly do usage stats
--			
--		}else{
 -
--			new DelayedEvent(
--					"UpdateMon:wait2",
--					5000,
--					new AERunnable()
--					{
--						public void
--						runSupport()
--						{
--							if ( start_of_day ){
--						  	UIFunctions uiFunctions = UIFunctionsManager.getUIFunctions();
--						  	if (uiFunctions != null) {
--						  		uiFunctions.setStatusText("");
--						  	}
--							}
+-		if ((check_at_start && start_of_day) || (check_periodic && !start_of_day)) {
 -
--							CoreUpdateChecker.doUsageStats();
+-			performCheck(bOldSWT, true, false, null ); // this will implicitly do usage stats
+-
+-		} else {
+-
+-			new DelayedEvent("UpdateMon:wait2", 5000, new AERunnable() {
+-				public void runSupport() {
+-					if (start_of_day) {
+-						UIFunctions uiFunctions = UIFunctionsManager.getUIFunctions();
+-						if (uiFunctions != null) {
+-							uiFunctions.setStatusText("");
 -						}
--					});
+-					}
+-
+-					CoreUpdateChecker.doUsageStats();
+-				}
+-			});
 -		}
  	}
  
- 	public void
-@@ -242,72 +104,7 @@
- 		final boolean						automatic,
- 		final UpdateCheckInstanceListener 	l )
+ 	public void 
+@@ -203,78 +105,6 @@
+ 		final boolean						isRecheck,
+ 		final UpdateCheckInstanceListener 	l ) 
  	{
--		if ( SystemProperties.isJavaWebStartInstance()){
+-		long now = SystemTime.getCurrentTime();
+-
+-		if ( isRecheck ){
 -			
--				// just in case we get here somehome!
+-			if ( last_recheck_time > now || now - last_recheck_time < 23*60*60*1000 ){
+-				
+-				if (Logger.isEnabled())
+-					Logger.log(new LogEvent(LOGID,
+-							"skipping recheck as consecutive recheck too soon"));
+-
+-				return;
+-			}
+-			
+-			last_recheck_time = now;
+-			
+-		}else{
+-			
+-			last_recheck_time	= 0;
+-		}
+-		
+-		if (SystemProperties.isJavaWebStartInstance()) {
+-
+-			// just in case we get here somehome!
 -			if (Logger.isEnabled())
 -				Logger.log(new LogEvent(LOGID,
 -						"skipping update check as java web start"));
--			
+-
 -			return;
 -		}
- 
--			// kill any existing update window
--		
--	    if ( current_update_window != null && ! current_update_window.isDisposed()){
--	    	
--	      SWTThread.getInstance().getDisplay().syncExec(
--	      		new AERunnable() 
--				{
--	      			public void 
--					runSupport() 
--	      			{               
--	      				current_update_window.dispose();
--	      			}
--	      		});
--	    }
--	    
--	    if ( current_update_instance != null ){
--	    	
--	    	current_update_instance.cancel();
--	    }
--	    
--	  	UIFunctions uiFunctions = UIFunctionsManager.getUIFunctions();
--	  	if (uiFunctions != null) {
--	  		// XXX What kind of format is this!?
--	  		uiFunctions.setStatusText("MainWindow.status.checking ...");
--	  	}
--	    
--	    	// take this off this GUI thread in case it blocks for a while
--	    
--	   AEThread t = 
--		   	new AEThread( "UpdateMonitor:kickoff")
--				{
--			    	public void
--					runSupport()
--			    	{
--			    		UpdateManager um = azureus_core.getPluginManager().getDefaultPluginInterface().getUpdateManager(); 
--				
--			    		current_update_instance = 
--			    			um.createUpdateCheckInstance(
--			    				bForce ? UpdateCheckInstance.UCI_INSTALL : UpdateCheckInstance.UCI_UPDATE,
--			  					"update.instance.update" );
--			  	
--			    		if ( !automatic ){
--			    			
--			    			current_update_instance.setAutomatic( false );
--			    		}
--			    		
--			    		if (l != null) {
--			    			current_update_instance.addListener(l);
--			    		}
--			    		current_update_instance.start();
--			    	}
--				};
--			
--		t.setDaemon( true );
--		
+-
+-		// kill any existing update window
+-
+-		if (current_update_window != null && !current_update_window.isDisposed()) {
+-			current_update_window.dispose();
+-		}
+-
+-		if (current_update_instance != null) {
+-
+-			current_update_instance.cancel();
+-		}
+-
+-		UIFunctions uiFunctions = UIFunctionsManager.getUIFunctions();
+-		if (uiFunctions != null) {
+-			// XXX What kind of format is this!?
+-			uiFunctions.setStatusText("MainWindow.status.checking ...");
+-		}
+-
+-		// take this off this GUI thread in case it blocks for a while
+-
+-		AEThread t = new AEThread("UpdateMonitor:kickoff") {
+-			public void runSupport() {
+-				UpdateManager um = azCore.getPluginManager().getDefaultPluginInterface().getUpdateManager();
+-
+-				current_update_instance = um.createUpdateCheckInstance(bForce
+-						? UpdateCheckInstance.UCI_INSTALL : UpdateCheckInstance.UCI_UPDATE,
+-						"update.instance.update");
+-
+-				if (!automatic) {
+-
+-					current_update_instance.setAutomatic(false);
+-				}
+-
+-				if (l != null) {
+-					current_update_instance.addListener(l);
+-				}
+-				current_update_instance.start();
+-			}
+-		};
+-
+-		t.setDaemon(true);
+-
 -		t.start();
  	}
- 	
- 	public void
+ 
+ 	public void complete(UpdateCheckInstance instance) {

@@ -1,5 +1,5 @@
---- org/gudy/azureus2/ui/swt/ImageRepository.java.orig	2007-01-19 17:09:35.000000000 -0800
-+++ org/gudy/azureus2/ui/swt/ImageRepository.java	2007-03-29 12:42:58.000000000 -0700
+--- ../azureus3orig/azureus3/org/gudy/azureus2/ui/swt/ImageRepository.java	2007-12-03 10:07:11.000000000 -0500
++++ org/gudy/azureus2/ui/swt/ImageRepository.java	2007-12-03 10:23:20.000000000 -0500
 @@ -67,6 +67,25 @@
      addPath("org/gudy/azureus2/ui/splash/azureus.jpg", "azureus_splash");
    }
@@ -26,7 +26,7 @@
    public static void loadImages(Display display) {
  	  
  	  	if(Constants.isOSX) {
-@@ -119,22 +138,22 @@
+@@ -119,23 +138,23 @@
  		//ToolBar Icons
  
  		addPath("org/gudy/azureus2/ui/icons/toolbar/open.gif", "cb_open");
@@ -46,36 +46,44 @@
 -		addPath("org/gudy/azureus2/ui/icons/toolbar/remove.gif", "cb_remove");
 -		addPath("org/gudy/azureus2/ui/icons/toolbar/host.gif", "cb_host");
 -		addPath("org/gudy/azureus2/ui/icons/toolbar/publish.gif", "cb_publish");
-+ 		addPath(getThemedIcon("fileopen", "org/gudy/azureus2/ui/icons/toolbar/open_no_default.gif"),
-+  				"cb_open_no_default");
-+ 		addPath(getThemedIcon("filenew", "org/gudy/azureus2/ui/icons/toolbar/new.gif"), "cb_new");
-+ 		addPath(getThemedIcon("gtk-go-up", "org/gudy/azureus2/ui/icons/toolbar/up.gif"), "cb_up");
-+ 		addPath(getThemedIcon("gtk-go-down", "org/gudy/azureus2/ui/icons/toolbar/down.gif"), "cb_down");
-+ 		addPath(getThemedIcon("gtk-goto-top", "org/gudy/azureus2/ui/icons/toolbar/top.gif"), "cb_top");
-+ 		addPath(getThemedIcon("gtk-goto-bottom", "org/gudy/azureus2/ui/icons/toolbar/bottom.gif"), "cb_bottom");
-+ 		addPath(getThemedIcon("exec", "org/gudy/azureus2/ui/icons/toolbar/run.gif"), "cb_run");
-+ 		addPath(getThemedIcon("gtk-go-forward", "org/gudy/azureus2/ui/icons/toolbar/start.gif"), "cb_start");
-+ 		addPath(getThemedIcon("gtk-stop", "org/gudy/azureus2/ui/icons/toolbar/stop.gif"), "cb_stop");
-+ 		addPath(getThemedIcon("edit_remove", "org/gudy/azureus2/ui/icons/toolbar/remove.gif"), "cb_remove");
-+ 		addPath(getThemedIcon("gohome", "org/gudy/azureus2/ui/icons/toolbar/host.gif"), "cb_host");
-+ 		addPath(getThemedIcon("icon-html", "org/gudy/azureus2/ui/icons/toolbar/publish.gif"), "cb_publish");
+ 		addPath("org/gudy/azureus2/ui/icons/toolbar/switchui.png", "cb_switch");
++		addPath(getThemedIcon("fileopen", "org/gudy/azureus2/ui/icons/toolbar/open_no_default.gif"),
++                                "cb_open_no_default");
++                addPath(getThemedIcon("filenew", "org/gudy/azureus2/ui/icons/toolbar/new.gif"), "cb_new");
++                addPath(getThemedIcon("gtk-go-up", "org/gudy/azureus2/ui/icons/toolbar/up.gif"), "cb_up");
++                addPath(getThemedIcon("gtk-go-down", "org/gudy/azureus2/ui/icons/toolbar/down.gif"), "cb_down");
++                addPath(getThemedIcon("gtk-goto-top", "org/gudy/azureus2/ui/icons/toolbar/top.gif"), "cb_top");
++                addPath(getThemedIcon("gtk-goto-bottom", "org/gudy/azureus2/ui/icons/toolbar/bottom.gif"), "cb_bottom");
++                addPath(getThemedIcon("exec", "org/gudy/azureus2/ui/icons/toolbar/run.gif"), "cb_run");
++                addPath(getThemedIcon("gtk-go-forward", "org/gudy/azureus2/ui/icons/toolbar/start.gif"), "cb_start");
++                addPath(getThemedIcon("gtk-stop", "org/gudy/azureus2/ui/icons/toolbar/stop.gif"), "cb_stop");
++                addPath(getThemedIcon("edit_remove", "org/gudy/azureus2/ui/icons/toolbar/remove.gif"), "cb_remove");
++                addPath(getThemedIcon("gohome", "org/gudy/azureus2/ui/icons/toolbar/host.gif"), "cb_host");
++                addPath(getThemedIcon("icon-html", "org/gudy/azureus2/ui/icons/toolbar/publish.gif"), "cb_publish");
  
  		//Status icons
  		addPath("org/gudy/azureus2/ui/icons/status/ok.gif", "st_ok");
-@@ -195,6 +214,16 @@
-     Image im = getImage(name,false);
+@@ -198,6 +217,16 @@
      if(null == im) {
-       InputStream is = loader.getResourceAsStream(res);
-+      if (is == null)
-+	{
-+	  try
-+	    {
-+	      is = new FileInputStream (res);
-+	    }
-+	  catch (FileNotFoundException fnf)
-+	    {
-+	    }
-+	}
-       if(null != is) {
-       	try { 
- 	        if(alpha == 255) {
+       try{
+ 	      InputStream is = loader.getResourceAsStream(res);
++	            if (is == null)
++       {
++         try
++           {
++             is = new FileInputStream (res);
++           }
++         catch (FileNotFoundException fnf)
++           {
++           }
++       }
+ 	      if(null != is) {
+ 	      	try { 
+ 		        if(alpha == 255) {
+@@ -629,4 +658,4 @@
+ 				}
+ 			}
+ 		}
+-}
+\ No newline at end of file
++}
