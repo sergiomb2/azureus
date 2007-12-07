@@ -2,7 +2,7 @@
 
 Name:		azureus
 Version:	3.0.3.4
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	A BitTorrent Client
 
 Group:		Applications/Internet
@@ -49,6 +49,7 @@ BuildRequires:  libgconf-java
 BuildRequires:  bouncycastle >= 1.33-3
 BuildRequires:  libswt3-gtk2 >= 3.3.0
 Requires:       jakarta-commons-cli, log4j
+Requires:	firefox
 Requires:       libswt3-gtk2 >= 3.3.0
 Requires:       libgconf-java
 Requires:       bouncycastle >= 1.33-3
@@ -61,7 +62,6 @@ Requires(postun): java-gcj-compat >= 1.0.31
 BuildRequires:    desktop-file-utils
 Requires(post):   desktop-file-utils
 Requires(postun): desktop-file-utils
-ExcludeArch:      ppc ppc64
 
 %description 
 Azureus implements the BitTorrent protocol using java language and
@@ -92,7 +92,6 @@ advanced users.
 cp %{SOURCE4} License.txt
 
 %build
-export JAVA_HOME=/usr/lib/jvm/java-icedtea/
 mkdir -p build/libs
 build-jar-repository -p build/libs bcprov jakarta-commons-cli log4j gtk2.8 glib0.2
 ln -s %{_libdir}/eclipse/swt-gtk-3.3.jar build/libs
@@ -204,6 +203,14 @@ fi
 %{_libdir}/gcj/*
 
 %changelog
+* Fri Dec  7 2007 Lillian Angel <langel@redhat.com> - 3.0.3.4-2
+- Removed ExcludeArch.
+- Updated Release.
+- Added firefox as a requirement for the browser support.
+- Moved JAVA_HOME to script.
+- Added MOZILLA_FIVE_HOME to script.
+- Updated LD_LIBRARY_PATH in script.
+
 * Mon Dec  3 2007 Lillian Angel <langel@redhat.com> - 3.0.3.4-1
 - Upgrade to 3.0.3.4.
 - ExcludeArch ppc and ppc64 because of IcedTea.

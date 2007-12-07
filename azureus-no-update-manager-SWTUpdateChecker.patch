@@ -1,6 +1,13 @@
---- ../azureus3orig/azureus3/org/gudy/azureus2/ui/swt/updater2/SWTUpdateChecker.java	2007-12-03 10:07:11.000000000 -0500
-+++ org/gudy/azureus2/ui/swt/updater2/SWTUpdateChecker.java	2007-12-03 10:33:55.000000000 -0500
-@@ -71,173 +71,6 @@
+--- iorigorg/gudy/azureus2/ui/swt/updater2/SWTUpdateChecker.java	2007-12-03 10:07:11.000000000 -0500
++++ org/gudy/azureus2/ui/swt/updater2/SWTUpdateChecker.java	2007-12-07 09:52:45.000000000 -0500
+@@ -64,180 +64,12 @@
+   public static void
+   initialize()
+   {
+-    PluginInitializer.getDefaultInterface().getUpdateManager().registerUpdatableComponent(new SWTUpdateChecker(),true);
+   }
+   
+   public SWTUpdateChecker() {    
    }
    
    public void checkForUpdate(final UpdateChecker checker) {
