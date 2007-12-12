@@ -2,7 +2,7 @@
 
 Name:		azureus
 Version:	3.0.3.4
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	A BitTorrent Client
 
 Group:		Applications/Internet
@@ -49,7 +49,7 @@ BuildRequires:  libgconf-java
 BuildRequires:  bouncycastle >= 1.33-3
 BuildRequires:  libswt3-gtk2 >= 3.3.0
 Requires:       jakarta-commons-cli, log4j
-Requires:	firefox
+Requires:	xulrunner
 Requires:       libswt3-gtk2 >= 3.3.0
 Requires:       libgconf-java
 Requires:       bouncycastle >= 1.33-3
@@ -203,6 +203,10 @@ fi
 %{_libdir}/gcj/*
 
 %changelog
+* Wed Dec 12 2007 Lillian Angel <langel@redhat.com> - 3.0.3.4-3
+- Changed firefox requirement to xulrunner.
+- Adusted script accordingly.
+
 * Fri Dec  7 2007 Lillian Angel <langel@redhat.com> - 3.0.3.4-2
 - Removed ExcludeArch.
 - Updated Release.
