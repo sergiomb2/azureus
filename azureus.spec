@@ -2,7 +2,7 @@
 
 Name:		azureus
 Version:	3.0.3.4
-Release:	3%{?dist}
+Release:	4%{?dist}
 Summary:	A BitTorrent Client
 
 Group:		Applications/Internet
@@ -203,6 +203,10 @@ fi
 %{_libdir}/gcj/*
 
 %changelog
+* Thu Dec 20 2007 Lillian Angel <langel@redhat.com> - 3.0.3.4-4
+- Updated script to use new xulrunner-1.9pre
+- Updated release.
+
 * Wed Dec 12 2007 Lillian Angel <langel@redhat.com> - 3.0.3.4-3
 - Changed firefox requirement to xulrunner.
 - Adusted script accordingly.
