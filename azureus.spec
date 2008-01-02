@@ -2,7 +2,7 @@
 
 Name:		azureus
 Version:	3.0.3.4
-Release:	4%{?dist}
+Release:	5%{?dist}
 Summary:	A BitTorrent Client
 
 Group:		Applications/Internet
@@ -39,6 +39,7 @@ Patch22:	azureus-no-update-manager-UpdateMonitor.patch
 Patch23:	azureus-no-update-manager-PluginInstallerImpl-2.patch
 Patch25:	azureus-no-update-manager-MainStatusBar.patch
 Patch27:	azureus-SecureMessageServiceClientHelper-bcprov.patch
+Patch28:	azureus-configuration.patch
 Patch31:	azureus-fix-menu-MainMenu.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -88,6 +89,7 @@ advanced users.
 %patch23 -p0
 %patch25 -p0
 %patch27 -p0
+%patch28 -p0
 %patch31 -p0
 cp %{SOURCE4} License.txt
 
@@ -203,6 +205,12 @@ fi
 %{_libdir}/gcj/*
 
 %changelog
+* Wed Jan 02 2008 Lillian Angel <langel@redhat.com> - 3.0.3.4-5
+- Updated script to set version.
+- Updated release.
+- Added new patch.
+- Resolves: rhbz#427257
+
 * Thu Dec 20 2007 Lillian Angel <langel@redhat.com> - 3.0.3.4-4
 - Updated script to use new xulrunner-1.9pre
 - Updated release.
