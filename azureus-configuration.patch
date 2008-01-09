@@ -1,0 +1,11 @@
+--- org/gudy/azureus2/core3/config/impl/ConfigurationChecker.java.orig	2007-12-03 10:07:11.000000000 -0500
++++ org/gudy/azureus2/core3/config/impl/ConfigurationChecker.java	2008-01-02 13:26:56.000000000 -0500
+@@ -285,7 +285,7 @@
+ 								? last_version : sMinVersion;
+ 					}
+ 					COConfigurationManager.setParameter("First Recorded Version",
+-							sMinVersion);
++							this_version);
+ 				}
+ 	    
+ 	    	COConfigurationManager.setParameter( "azureus.version", this_version );

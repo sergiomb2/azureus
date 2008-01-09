@@ -6,6 +6,8 @@ if ! test -d $APPDIR; then
   mkdir -p $APPDIR;
 fi
 
+SCRIPT_VERSION=2
+
 # Reconstruct the plugins dir.
 rm -rf $APPDIR/plugins
 mkdir -p $APPDIR/plugins
@@ -15,4 +17,4 @@ for pdir in /usr/share/azureus/plugins/*; do
 done;
 popd > /dev/null 2>&1
 
-LD_LIBRARY_PATH=/usr/lib/eclipse:/usr/lib CLASSPATH=/usr/lib/eclipse/swt-gtk-3.3.jar:`build-classpath bcprov jakarta-commons-cli log4j gtk2.8 glib0.2`:/usr/share/azureus/Azureus2.jar java -Dgnu.gcj.runtime.VMClassLoader.library_control=never -Dazureus.install.path=$APPDIR org.gudy.azureus2.ui.swt.Main "$@"
+MOZILLA_FIVE_HOME=/usr/lib/firefox-2.0.0.10/ JAVA_HOME=/usr/lib/jvm/java-icedtea LD_LIBRARY_PATH=$MOZILLA_FIVE_HOME:/usr/lib/eclipse/plugins/:/usr/lib/eclipse/:/usr/lib/ CLASSPATH=/usr/lib/eclipse/swt.jar:`build-classpath bcprov jakarta-commons-cli log4j gtk2.8 glib0.2`:/usr/share/azureus/Azureus2.jar java -Dazureus.install.path=$APPDIR -Dazureus.script.version=$SCRIPT_VERSION -Dazureus.script=$0 org.gudy.azureus2.ui.swt.Main "$@"

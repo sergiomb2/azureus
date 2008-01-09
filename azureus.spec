@@ -1,8 +1,8 @@
 # ExclusiveArch: %{ix86} x86_64
 
 Name:		azureus
-Version:	2.5.0.4
-Release:	3%{?dist}
+Version:	3.0.3.4
+Release:	2%{?dist}
 Summary:	A BitTorrent Client
 
 Group:		Applications/Internet
@@ -11,7 +11,7 @@ URL:		http://azureus.sourceforge.net
 
 # A cvs snapshot with the build and bouncycastle directories
 # removed.
-Source0:	azureus2-2.5.0.4.tar.gz
+Source0:	azureus3-3.0.3.4.tar.gz
 
 Source1:	azureus.script
 Source2:	Azureus.desktop
@@ -22,7 +22,6 @@ Source5:	azplugins_1.9.jar
 Source6:	bdcc_2.2.2.zip
 
 Patch0:		azureus-remove-win32-osx-platforms.patch
-Patch1:		azureus-remove-win32-PlatformManagerUpdateChecker.patch
 Patch2:		azureus-cache-size.patch
 Patch3:		azureus-remove-manifest-classpath.patch
 Patch7:		azureus-themed.patch
@@ -39,11 +38,8 @@ Patch20:	azureus-no-update-manager-SWTUpdateChecker.patch
 Patch22:	azureus-no-update-manager-UpdateMonitor.patch
 Patch23:	azureus-no-update-manager-PluginInstallerImpl-2.patch
 Patch25:	azureus-no-update-manager-MainStatusBar.patch
-#Patch26:	azureus-nativetabs.patch
 Patch27:	azureus-SecureMessageServiceClientHelper-bcprov.patch
-Patch28:	azureus-UDPConnectionSet-bcprov.patch
-Patch29:	azureus-CryptoHandlerECC-bcprov.patch
-Patch30:	azureus-CryptoSTSEngineImpl-bcprov.patch
+Patch28:	azureus-configuration.patch
 Patch31:	azureus-fix-menu-MainMenu.patch
 
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -54,11 +50,14 @@ BuildRequires:  libgconf-java
 BuildRequires:  bouncycastle >= 1.33-3
 BuildRequires:  libswt3-gtk2 >= 3.3.0
 Requires:       jakarta-commons-cli, log4j
+Requires:	firefox = 2.0.0.10
 Requires:       libswt3-gtk2 >= 3.3.0
 Requires:       libgconf-java
 Requires:       bouncycastle >= 1.33-3
 Requires:       libgcj >= 4.1.0-0.15
-BuildRequires:    java-gcj-compat-devel >= 1.0.31
+BuildRequires:    java-1.5.0-gcj-devel
+BuildRequires:    java-1.7.0-icedtea-devel
+Requires:	  java-1.7.0-icedtea
 Requires(post):   java-gcj-compat >= 1.0.31
 Requires(postun): java-gcj-compat >= 1.0.31
 BuildRequires:    desktop-file-utils
@@ -71,15 +70,13 @@ comes bundled with many invaluable features for both beginners and
 advanced users.
 
 %prep
-%setup -q -n %{name}2
+%setup -q -n %{name}3
 %patch0 -p0
-%patch1 -p0
 %patch2 -p0
 %patch3 -p0
 %patch7 -p0
 %patch8 -p0
 %patch9 -p0
-#%patch11 -p0
 %patch12 -p0
 %patch13 -p0
 %patch14 -p0
@@ -91,11 +88,8 @@ advanced users.
 %patch22 -p0
 %patch23 -p0
 %patch25 -p0
-#%patch26 -p0
 %patch27 -p0
-#%patch28 -p0
-#%patch29 -p0
-#%patch30 -p0
+%patch28 -p0
 %patch31 -p0
 cp %{SOURCE4} License.txt
 
@@ -113,22 +107,26 @@ rm org/gudy/azureus2/ui/swt/test/PrintTransferTypes.java
 ant jar
 
 mkdir -p plugins/azplugins
-cd plugins/azplugins
+pushd plugins
+pushd azplugins
 unzip -q %{SOURCE5}
 rm -f *.jar `find ./ -name \*class`
 find ./ -name \*java | xargs javac -cp %{_libdir}/eclipse/swt-gtk-3.3.jar:../..:.
 find ./ -name \*java | xargs rm
 jar cvf azplugins_1.9.jar .
-cd ../..
+popd
+popd
 
 unzip -q %{SOURCE6}
-cd plugins/bdcc
+pushd plugins
+pushd bdcc
 unzip *.jar
 rm -f *.jar `find ./ -name \*class`
 find ./ -name \*java | xargs javac -cp %{_libdir}/eclipse/swt-gtk-3.3.jar:../..:.
 find ./ -name \*java | xargs rm
 jar cvf bdcc_2.2.2.jar .
-cd ../..
+popd
+popd
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -207,6 +205,26 @@ fi
 %{_libdir}/gcj/*
 
 %changelog
+* Wed Jan 09 2008 Lillian Angel <langel@redhat.com> - 3.0.3.4-2
+- Updated script to set version.
+- Added new patch.
+- Updated Release.
+- Added firefox as a requirement for the browser support.
+- Moved JAVA_HOME to script.
+- Added MOZILLA_FIVE_HOME to script.
+- Updated LD_LIBRARY_PATH in script.
+- Upgrade to 3.0.3.4.
+- Resolves: rhbz#427257
+- Resolves: rhbz#376111
+- Resolves: rhbz#321581
+- Resolves: rhbz#371521
+- Resolves: rhbz#372931
+- Resolves: rhbz#235751
+- Resolves: rhbz#247295
+
+* Thu Oct 25 2007 Ben Konrath <bkonrath@redhat.com> - 2.5.0.4-4
+- Use swt.jar instead of swt-gtk-3.3.jar in wrapper script.
+
 * Thu Oct  4 2007 Thomas Fitzsimmons <fitzsim@redhat.com> - 2.5.0.4-3
 - Build against swt 3.3.
 - Update startup script.

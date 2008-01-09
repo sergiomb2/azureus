@@ -1,6 +1,6 @@
---- org/gudy/azureus2/pluginsimpl/local/PluginInitializer.java.orig	2006-07-02 21:17:53.000000000 -0700
-+++ org/gudy/azureus2/pluginsimpl/local/PluginInitializer.java	2006-07-02 21:19:27.000000000 -0700
-@@ -49,13 +49,8 @@
+--- ../azureus3orig/azureus3/org/gudy/azureus2/pluginsimpl/local/PluginInitializer.java	2007-12-03 10:07:11.000000000 -0500
++++ org/gudy/azureus2/pluginsimpl/local/PluginInitializer.java	2007-12-03 10:27:39.000000000 -0500
+@@ -44,13 +44,8 @@
  import org.gudy.azureus2.plugins.*;
  import org.gudy.azureus2.pluginsimpl.local.launch.PluginLauncherImpl;
  import org.gudy.azureus2.pluginsimpl.local.ui.UIManagerImpl;
@@ -14,7 +14,7 @@
  
  /**
   * @author Olivier
-@@ -96,11 +91,6 @@
+@@ -91,11 +86,6 @@
     					"azbpsharehoster", 
     					"ShareHoster",
  					"true" },
@@ -26,7 +26,7 @@
  			{	 PluginManagerDefaults.PID_CLIENT_ID, 
  				    "com.aelitis.azureus.plugins.clientid.ClientIDPlugin", 
  				    "azbpclientid", 
-@@ -126,16 +116,6 @@
+@@ -121,16 +111,6 @@
  					"azbpmagnet", 
  					"Magnet URI Handler",
  					"true" },
@@ -40,22 +40,22 @@
 -   					"azbpcorepatcher", 
 -   					"CorePatcher",
 -					"true" },
- 	   		//{	 PluginManagerDefaults.PID_JPC, 
- 				//	"com.aelitis.azureus.plugins.jpc.JPCPlugin", 
- 				//	"azjpc", 
-@@ -302,11 +282,7 @@
+ 	   		{	 PluginManagerDefaults.PID_PLATFORM_CHECKER, 
+    					"org.gudy.azureus2.platform.PlatformManagerPluginDelegate", 
+    					"azplatform2", 
+@@ -316,11 +296,7 @@
    	
-     listener 	= _listener;
+   	core_operation 	= _core_operation;
      
 -    UpdateManagerImpl.getSingleton( azureus_core );	// initialise the update manager
 -       
      plugin_manager = PluginManagerImpl.getSingleton( this );
 -    
--    UpdaterUtils.checkPlugin();
+-    UpdaterUtils.checkBootstrapPlugins();
    }
    
-   	public List 
-@@ -901,16 +877,11 @@
+   protected boolean
+@@ -946,16 +922,11 @@
  	      
  	      if ( load_failure != null ){
  	      		  
