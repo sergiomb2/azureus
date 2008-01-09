@@ -63,6 +63,7 @@ Requires(postun): java-gcj-compat >= 1.0.31
 BuildRequires:    desktop-file-utils
 Requires(post):   desktop-file-utils
 Requires(postun): desktop-file-utils
+ExcludeArch:      ppc ppc64
 
 %description 
 Azureus implements the BitTorrent protocol using java language and
@@ -207,6 +208,7 @@ fi
 %changelog
 * Wed Jan 09 2008 Lillian Angel <langel@redhat.com> - 3.0.3.4-2
 - Updated script to set version.
+- Exclude ppc and ppc64 because building with IcedTea.
 - Added new patch.
 - Updated Release.
 - Added firefox as a requirement for the browser support.
