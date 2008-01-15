@@ -2,7 +2,7 @@
 
 Name:		azureus
 Version:	3.0.3.4
-Release:	3%{?dist}
+Release:	2%{?dist}
 Summary:	A BitTorrent Client
 
 Group:		Applications/Internet
@@ -48,10 +48,10 @@ BuildRequires:  ant, jpackage-utils >= 1.5, xml-commons-apis
 BuildRequires:  jakarta-commons-cli, log4j
 BuildRequires:  libgconf-java
 BuildRequires:  bouncycastle >= 1.33-3
-BuildRequires:  libswt3-gtk2 = 3.3.0
+BuildRequires:  libswt3-gtk2 >= 3.3.0
 Requires:       jakarta-commons-cli, log4j
 Requires:	firefox = 2.0.0.10
-Requires:       libswt3-gtk2 = 3.3.0
+Requires:       libswt3-gtk2 >= 3.3.0
 Requires:       libgconf-java
 Requires:       bouncycastle >= 1.33-3
 Requires:       libgcj >= 4.1.0-0.15
@@ -206,10 +206,6 @@ fi
 %{_libdir}/gcj/*
 
 %changelog
-* Thu Jan 15 2008 Lillian Angel <langel@redhat.com> - 3.0.3.4-3 
-- Updated libswt3-gtk2 requirements.
-- Updated release.
-
 * Wed Jan 09 2008 Lillian Angel <langel@redhat.com> - 3.0.3.4-2
 - Updated script to set version.
 - Exclude ppc and ppc64 because building with IcedTea.
