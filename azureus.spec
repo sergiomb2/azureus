@@ -2,7 +2,7 @@
 
 Name:		azureus
 Version:	3.0.3.4
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	A BitTorrent Client
 
 Group:		Applications/Internet
@@ -24,7 +24,6 @@ Source6:	bdcc_2.2.2.zip
 Patch0:		azureus-remove-win32-osx-platforms.patch
 Patch2:		azureus-cache-size.patch
 Patch3:		azureus-remove-manifest-classpath.patch
-Patch7:		azureus-themed.patch
 Patch8:		azureus-rh-bugzilla-180418.patch
 Patch9:		azureus-no-shared-plugins.patch
 Patch12:	azureus-no-updates-PluginInitializer.patch
@@ -75,7 +74,6 @@ advanced users.
 %patch0 -p0
 %patch2 -p0
 %patch3 -p0
-%patch7 -p0
 %patch8 -p0
 %patch9 -p0
 %patch12 -p0
@@ -206,6 +204,10 @@ fi
 %{_libdir}/gcj/*
 
 %changelog
+* Wed Jan 16 2008 Lillian Angel <langel@redhat.com> - 3.0.3.4-3
+- Removed azureus-themed.patch
+- Resolves: rhbz#428482
+
 * Wed Jan 09 2008 Lillian Angel <langel@redhat.com> - 3.0.3.4-2
 - Updated script to set version.
 - Exclude ppc and ppc64 because building with IcedTea.
