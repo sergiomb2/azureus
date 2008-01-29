@@ -1,6 +1,6 @@
---- ../azureus3orig/azureus3/org/gudy/azureus2/ui/swt/update/UpdateMonitor.java	2007-12-03 10:07:11.000000000 -0500
-+++ org/gudy/azureus2/ui/swt/update/UpdateMonitor.java	2007-12-03 10:35:51.000000000 -0500
-@@ -84,67 +84,6 @@
+--- origorg/gudy/azureus2/ui/swt/update/UpdateMonitor.java	2007-11-30 10:44:14.000000000 -0500
++++ org/gudy/azureus2/ui/swt/update/UpdateMonitor.java	2008-01-29 10:08:47.000000000 -0500
+@@ -89,70 +89,6 @@
  	protected UpdateMonitor(AzureusCore _azureus_core) {
  		azCore = _azureus_core;
  
@@ -10,6 +10,8 @@
 -		um.addListener(new UpdateManagerListener() {
 -			public void checkInstanceCreated(UpdateCheckInstance instance) {
 -				instance.addListener(UpdateMonitor.this);
+-				
+-				new updateStatusChanger(instance);
 -			}
 -		});
 -
@@ -52,6 +54,7 @@
 -			}
 -		});
 -
+-
 -		SimpleTimer.addPeriodicEvent("UpdateMon:autocheck",
 -				AUTO_UPDATE_CHECK_PERIOD, new TimerEventPerformer() {
 -					public void perform(TimerEvent ev) {
@@ -67,8 +70,8 @@
 -		});
  	}
  
- 	protected void requestRecheck()
-@@ -157,43 +96,6 @@
+ 	protected class updateStatusChanger
+@@ -306,43 +242,6 @@
  	}
  	
  	protected void performAutoCheck(final boolean start_of_day) {
@@ -112,7 +115,7 @@
  	}
  
  	public void 
-@@ -203,78 +105,6 @@
+@@ -352,76 +251,6 @@
  		final boolean						isRecheck,
  		final UpdateCheckInstanceListener 	l ) 
  	{
@@ -165,8 +168,8 @@
 -
 -		// take this off this GUI thread in case it blocks for a while
 -
--		AEThread t = new AEThread("UpdateMonitor:kickoff") {
--			public void runSupport() {
+-		AEThread2 t = new AEThread2("UpdateMonitor:kickoff", true) {
+-			public void run() {
 -				UpdateManager um = azCore.getPluginManager().getDefaultPluginInterface().getUpdateManager();
 -
 -				current_update_instance = um.createUpdateCheckInstance(bForce
@@ -184,8 +187,6 @@
 -				current_update_instance.start();
 -			}
 -		};
--
--		t.setDaemon(true);
 -
 -		t.start();
  	}

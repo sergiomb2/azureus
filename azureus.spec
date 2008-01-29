@@ -1,8 +1,8 @@
 # ExclusiveArch: %{ix86} x86_64
 
 Name:		azureus
-Version:	3.0.3.4
-Release:	6%{?dist}
+Version:	3.0.4.2
+Release:	7%{?dist}
 Summary:	A BitTorrent Client
 
 Group:		Applications/Internet
@@ -11,7 +11,7 @@ URL:		http://azureus.sourceforge.net
 
 # A cvs snapshot with the build and bouncycastle directories
 # removed.
-Source0:	azureus3-3.0.3.4.tar.gz
+Source0:	azureus-3.0.4.2.tar.gz
 
 Source1:	azureus.script
 Source2:	Azureus.desktop
@@ -24,7 +24,6 @@ Source6:	bdcc_2.2.2.zip
 Patch0:		azureus-remove-win32-osx-platforms.patch
 Patch2:		azureus-cache-size.patch
 Patch3:		azureus-remove-manifest-classpath.patch
-Patch8:		azureus-rh-bugzilla-180418.patch
 Patch9:		azureus-no-shared-plugins.patch
 Patch12:	azureus-no-updates-PluginInitializer.patch
 Patch13:	azureus-no-updates-PluginInterfaceImpl.patch
@@ -36,7 +35,6 @@ Patch19:	azureus-no-update-manager-PluginUpdatePlugin.patch
 Patch20:	azureus-no-update-manager-SWTUpdateChecker.patch
 Patch22:	azureus-no-update-manager-UpdateMonitor.patch
 Patch23:	azureus-no-update-manager-PluginInstallerImpl-2.patch
-Patch25:	azureus-no-update-manager-MainStatusBar.patch
 Patch27:	azureus-SecureMessageServiceClientHelper-bcprov.patch
 Patch28:	azureus-configuration.patch
 Patch31:	azureus-fix-menu-MainMenu.patch
@@ -69,11 +67,10 @@ comes bundled with many invaluable features for both beginners and
 advanced users.
 
 %prep
-%setup -q -n %{name}3
+%setup -q -n %{name}
 %patch0 -p0
 %patch2 -p0
 %patch3 -p0
-%patch8 -p0
 %patch9 -p0
 %patch12 -p0
 %patch13 -p0
@@ -85,7 +82,6 @@ advanced users.
 %patch20 -p0
 %patch22 -p0
 %patch23 -p0
-%patch25 -p0
 %patch27 -p0
 %patch28 -p0
 %patch31 -p0
@@ -203,6 +199,14 @@ fi
 %{_libdir}/gcj/*
 
 %changelog
+* Tue Jan 29 2008 Lillian Angel <langel@redhat.com> - 3.0.4.2-7
+- Upgraded to azureus version 3.0.4.2
+- Removed azureus-no-update-manager-MainStatusBar.patch.
+- Removed azureus-rh-bugzilla-180418.patch.
+- Updated azureus-no-update-manager-UpdateMonitor.patch.
+- Updated azureus-remove-manifest-classpath.patch.
+- Resolves rhbz#430607
+
 * Wed Jan 16 2008 Lillian Angel <langel@redhat.com> - 3.0.3.4-6
 - Removed azureus-themed.patch
 
