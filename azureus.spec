@@ -1,8 +1,6 @@
-# ExclusiveArch: %{ix86} x86_64
-
 Name:		azureus
 Version:	3.0.4.2
-Release:	7%{?dist}
+Release:	8%{?dist}
 Summary:	A BitTorrent Client
 
 Group:		Applications/Internet
@@ -18,7 +16,7 @@ Source2:	Azureus.desktop
 Source3:	azureus.applications
 Source4:	azureus-License.txt
 
-Source5:	azplugins_1.9.jar
+Source5:	azplugins_2.1.6.jar
 Source6:	bdcc_2.2.2.zip
 
 Patch0:		azureus-remove-win32-osx-platforms.patch
@@ -107,7 +105,7 @@ unzip -q %{SOURCE5}
 rm -f *.jar `find ./ -name \*class`
 find ./ -name \*java | xargs javac -cp %{_libdir}/eclipse/swt-gtk-3.3.jar:../..:.
 find ./ -name \*java | xargs rm
-jar cvf azplugins_1.9.jar .
+jar cvf azplugins_2.1.6.jar .
 popd
 popd
 
@@ -131,7 +129,7 @@ install -p -D -m 0755 %{SOURCE1} $RPM_BUILD_ROOT%{_bindir}/azureus
 sed --in-place "s:/usr/lib:%{_libdir}:g" $RPM_BUILD_ROOT%{_bindir}/azureus
 
 install -dm 755 $RPM_BUILD_ROOT%{_datadir}/azureus/plugins/azplugins
-install -pm 644 plugins/azplugins/azplugins_1.9.jar $RPM_BUILD_ROOT%{_datadir}/azureus/plugins/azplugins/azplugins_1.9.jar
+install -pm 644 plugins/azplugins/azplugins_2.1.6.jar $RPM_BUILD_ROOT%{_datadir}/azureus/plugins/azplugins/azplugins_2.1.6.jar
 install -pm 644 plugins/azplugins/plugin.properties $RPM_BUILD_ROOT%{_datadir}/azureus/plugins/azplugins/plugin.properties
 
 install -dm 755 $RPM_BUILD_ROOT%{_datadir}/azureus/plugins/bdcc
@@ -199,6 +197,9 @@ fi
 %{_libdir}/gcj/*
 
 %changelog
+* Wed Jan 30 2008 Lillian Angel <langel@redhat.com> - 3.0.4.2-8
+- Updated azplugins jar to 2.1.6
+
 * Tue Jan 29 2008 Lillian Angel <langel@redhat.com> - 3.0.4.2-7
 - Upgraded to azureus version 3.0.4.2
 - Removed azureus-no-update-manager-MainStatusBar.patch.
