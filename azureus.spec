@@ -2,7 +2,7 @@
 
 Name:		azureus
 Version:	3.0.3.4
-Release:	4%{?dist}
+Release:	5%{?dist}
 Summary:	A BitTorrent Client
 
 Group:		Applications/Internet
@@ -49,7 +49,7 @@ BuildRequires:  libgconf-java
 BuildRequires:  bouncycastle >= 1.33-3
 BuildRequires:  libswt3-gtk2 >= 3.3.0
 Requires:       jakarta-commons-cli, log4j
-Requires:	firefox = 2.0.0.10
+Requires:	firefox = 2.0.0.12
 Requires:       libswt3-gtk2 >= 3.3.0
 Requires:       libgconf-java
 Requires:       bouncycastle >= 1.33-3
@@ -204,6 +204,10 @@ fi
 %{_libdir}/gcj/*
 
 %changelog
+* Wed Feb 13 2008 Lillian Angel <langel@redhat.com> - 3.0.3.4-5
+- Updated firefox requirement to 2.0.0.12
+- Resolves: rhbz#432614
+
 * Wed Jan 30 2008 Lillian Angel <langel@redhat.com> - 3.0.3.4-4
 - Updated azplugins jar to 2.1.6
 
