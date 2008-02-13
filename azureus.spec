@@ -2,7 +2,7 @@
 
 Name:		azureus
 Version:	3.0.3.4
-Release:	5%{?dist}
+Release:	6%{?dist}
 Summary:	A BitTorrent Client
 
 Group:		Applications/Internet
