@@ -49,7 +49,7 @@ BuildRequires:  libgconf-java
 BuildRequires:  bouncycastle >= 1.33-3
 BuildRequires:  libswt3-gtk2 >= 3.3.0
 Requires:       jakarta-commons-cli, log4j
-Requires:	firefox = 2.0.0.12
+Requires:	firefox
 Requires:       libswt3-gtk2 >= 3.3.0
 Requires:       libgconf-java
 Requires:       bouncycastle >= 1.33-3
@@ -204,6 +204,10 @@ fi
 %{_libdir}/gcj/*
 
 %changelog
+* Wed Feb 13 2008 Lillian Angel <langel@redhat.com> - 3.0.3.4-6
+- Updated firefox requirement to be version-less.
+- Resolves: rhbz#432614
+
 * Wed Feb 13 2008 Lillian Angel <langel@redhat.com> - 3.0.3.4-5
 - Updated firefox requirement to 2.0.0.12
 - Resolves: rhbz#432614
