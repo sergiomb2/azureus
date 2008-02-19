@@ -1,6 +1,6 @@
 Name:		azureus
 Version:	3.0.4.2
-Release:	8%{?dist}
+Release:	9%{?dist}
 Summary:	A BitTorrent Client
 
 Group:		Applications/Internet
@@ -197,6 +197,9 @@ fi
 %{_libdir}/gcj/*
 
 %changelog
+* Tue Feb 19 2008 Fedora Release Engineering <rel-eng@fedoraproject.org> - 3.0.4.2-9
+- Autorebuild for GCC 4.3
+
 * Wed Jan 30 2008 Lillian Angel <langel@redhat.com> - 3.0.4.2-8
 - Updated azplugins jar to 2.1.6
 
