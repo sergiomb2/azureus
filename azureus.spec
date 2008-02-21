@@ -197,6 +197,10 @@ fi
 %{_libdir}/gcj/*
 
 %changelog
+* Thu Feb 21 2008 Lillian Angel <langel@redhat.com> - 3.0.4.2-9
+- Updated release.
+- Updated azureus.script
+
 * Tue Feb 19 2008 Fedora Release Engineering <rel-eng@fedoraproject.org> - 3.0.4.2-9
 - Autorebuild for GCC 4.3
 
