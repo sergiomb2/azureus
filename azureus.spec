@@ -1,6 +1,6 @@
 Name:		azureus
 Version:	3.0.4.2
-Release:	9%{?dist}
+Release:	10%{?dist}
 Summary:	A BitTorrent Client
 
 Group:		Applications/Internet
@@ -197,7 +197,7 @@ fi
 %{_libdir}/gcj/*
 
 %changelog
-* Thu Feb 21 2008 Lillian Angel <langel@redhat.com> - 3.0.4.2-9
+* Thu Feb 21 2008 Lillian Angel <langel@redhat.com> - 3.0.4.2-10
 - Updated release.
 - Updated azureus.script
 
