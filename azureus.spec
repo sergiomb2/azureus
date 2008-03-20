@@ -1,6 +1,6 @@
 Name:		azureus
 Version:	3.0.4.2
-Release:	12%{?dist}
+Release:	13%{?dist}
 Summary:	A BitTorrent Client
 
 Group:		Applications/Internet
@@ -52,7 +52,7 @@ Requires:       bouncycastle >= 1.33-3
 Requires:       libgcj >= 4.1.0-0.15
 BuildRequires:    java-1.5.0-gcj-devel
 BuildRequires:    java-1.6.0-openjdk-devel
-Requires:	  java-1.6.0.openjdk
+Requires:	  java-1.6.0-openjdk
 Requires(post):   java-gcj-compat >= 1.0.31
 Requires(postun): java-gcj-compat >= 1.0.31
 BuildRequires:    desktop-file-utils
@@ -197,6 +197,10 @@ fi
 %{_libdir}/gcj/*
 
 %changelog
+* Thu Mar 20 2008 Lillian Angel <langel@redhat.com> - 3.0.4.2-13
+- Fixed typo.
+- Updated Release.
+
 * Tue Mar 18 2008 Lillian Angel <langel@redhat.com> - 3.0.4.2-12
 - Fixed typo.
 - Updated Release.
