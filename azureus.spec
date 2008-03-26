@@ -2,7 +2,7 @@
 
 Name:		azureus
 Version:	3.0.3.4
-Release:	6%{?dist}
+Release:	7%{?dist}
 Summary:	A BitTorrent Client
 
 Group:		Applications/Internet
@@ -204,6 +204,9 @@ fi
 %{_libdir}/gcj/*
 
 %changelog
+* Wed Mar 26 2008 Lillian Angel <langel@redhat.com> - 3.0.3.4-7
+- Fixed azureus.script to set GRE_PATH properly on 64-bit.
+
 * Wed Feb 13 2008 Lillian Angel <langel@redhat.com> - 3.0.3.4-6
 - Updated firefox requirement to be version-less.
 - Resolves: rhbz#432614
