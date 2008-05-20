@@ -1,6 +1,6 @@
 Name:		azureus
 Version:	3.0.4.2
-Release:	14%{?dist}
+Release:	15%{?dist}
 Summary:	A BitTorrent Client
 
 Group:		Applications/Internet
@@ -44,6 +44,7 @@ BuildRequires:  jakarta-commons-cli, log4j
 BuildRequires:  libgconf-java
 BuildRequires:  bouncycastle >= 1.33-3
 BuildRequires:  libswt3-gtk2 >= 3.3.0
+Requires:	bash
 Requires:       jakarta-commons-cli, log4j
 Requires:	xulrunner
 Requires:       libswt3-gtk2 >= 3.3.0
@@ -197,6 +198,10 @@ fi
 %{_libdir}/gcj/*
 
 %changelog
+* Tue May 20 2008 Lillian Angel <langel@redhat.com> - 3.0.4.2-15
+- Updated release.
+- Added bash as a requirement.
+
 * Wed Mar 26 2008 Lillian Angel <langel@redhat.com> - 3.0.4.2-14
 - Fixed azureus.script to set GRE_PATH properly on 64-bit.
 
