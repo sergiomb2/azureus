@@ -1,6 +1,6 @@
 Name:		azureus
 Version:	3.0.4.2
-Release:	15%{?dist}
+Release:	16%{?dist}
 Summary:	A BitTorrent Client
 
 Group:		Applications/Internet
@@ -197,7 +197,7 @@ fi
 %{_libdir}/gcj/*
 
 %changelog
-* Mon Jul 14 2008 Tom "spot" Callaway <tcallawa@redhat.com> - 3.0.4.2-15
+* Mon Jul 14 2008 Tom "spot" Callaway <tcallawa@redhat.com> - 3.0.4.2-16
 - fix license tag
 - fix cache-size patch to apply with fuzz=0
 
