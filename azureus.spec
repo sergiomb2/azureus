@@ -1,10 +1,10 @@
 Name:		azureus
 Version:	3.0.4.2
-Release:	14%{?dist}
+Release:	15%{?dist}
 Summary:	A BitTorrent Client
 
 Group:		Applications/Internet
-License:	GPL
+License:	GPLv2+
 URL:		http://azureus.sourceforge.net
 
 # A cvs snapshot with the build and bouncycastle directories
@@ -197,6 +197,10 @@ fi
 %{_libdir}/gcj/*
 
 %changelog
+* Mon Jul 14 2008 Tom "spot" Callaway <tcallawa@redhat.com> - 3.0.4.2-15
+- fix license tag
+- fix cache-size patch to apply with fuzz=0
+
 * Wed Mar 26 2008 Lillian Angel <langel@redhat.com> - 3.0.4.2-14
 - Fixed azureus.script to set GRE_PATH properly on 64-bit.
 
