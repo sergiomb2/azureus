@@ -1,6 +1,6 @@
 Name:		azureus
 Version:	3.0.4.2
-Release:	16%{?dist}
+Release:	17%{?dist}
 Summary:	A BitTorrent Client
 
 Group:		Applications/Internet
@@ -43,10 +43,10 @@ BuildRequires:  ant, jpackage-utils >= 1.5, xml-commons-apis
 BuildRequires:  jakarta-commons-cli, log4j
 BuildRequires:  libgconf-java
 BuildRequires:  bouncycastle >= 1.33-3
-BuildRequires:  libswt3-gtk2 >= 3.3.0
+BuildRequires:  eclipse-swt >= 3.4.0
 Requires:       jakarta-commons-cli, log4j
 Requires:	xulrunner
-Requires:       libswt3-gtk2 >= 3.3.0
+Requires:       eclipse-swt >= 3.4.0
 Requires:       libgconf-java
 Requires:       bouncycastle >= 1.33-3
 Requires:       libgcj >= 4.1.0-0.15
@@ -88,7 +88,7 @@ cp %{SOURCE4} License.txt
 %build
 mkdir -p build/libs
 build-jar-repository -p build/libs bcprov jakarta-commons-cli log4j gtk2.8 glib0.2
-ln -s %{_libdir}/eclipse/swt-gtk-3.3.jar build/libs
+ln -s %{_libdir}/eclipse/swt.jar build/libs
 find ./ -name osx | xargs rm -r
 find ./ -name macosx | xargs rm -r
 find ./ -name win32 | xargs rm -r
@@ -103,7 +103,7 @@ pushd plugins
 pushd azplugins
 unzip -q %{SOURCE5}
 rm -f *.jar `find ./ -name \*class`
-find ./ -name \*java | xargs javac -cp %{_libdir}/eclipse/swt-gtk-3.3.jar:../..:.
+find ./ -name \*java | xargs javac -cp %{_libdir}/eclipse/swt.jar:../..:.
 find ./ -name \*java | xargs rm
 jar cvf azplugins_2.1.6.jar .
 popd
@@ -114,7 +114,7 @@ pushd plugins
 pushd bdcc
 unzip *.jar
 rm -f *.jar `find ./ -name \*class`
-find ./ -name \*java | xargs javac -cp %{_libdir}/eclipse/swt-gtk-3.3.jar:../..:.
+find ./ -name \*java | xargs javac -cp %{_libdir}/eclipse/swt.jar:../..:.
 find ./ -name \*java | xargs rm
 jar cvf bdcc_2.2.2.jar .
 popd
@@ -197,6 +197,12 @@ fi
 %{_libdir}/gcj/*
 
 %changelog
+* Wed Oct 01 2008 Lillian Angel <langel@redhat.com> - 3.0.4.2-17
+- Updated release.
+- Changed swt-gtk-3.3.jar links to swt.jar.
+- Updated libswt3-gtk2 requirements to eclipse-swt.
+- Resolves: rhbz#465051
+
 * Mon Jul 14 2008 Tom "spot" Callaway <tcallawa@redhat.com> - 3.0.4.2-16
 - fix license tag
 - fix cache-size patch to apply with fuzz=0
