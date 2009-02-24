@@ -1,6 +1,6 @@
 Name:		azureus
 Version:	3.0.4.2
-Release:	17%{?dist}
+Release:	18%{?dist}
 Summary:	A BitTorrent Client
 
 Group:		Applications/Internet
@@ -197,6 +197,9 @@ fi
 %{_libdir}/gcj/*
 
 %changelog
+* Mon Feb 23 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 3.0.4.2-18
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_11_Mass_Rebuild
+
 * Wed Oct 01 2008 Lillian Angel <langel@redhat.com> - 3.0.4.2-17
 - Updated release.
 - Changed swt-gtk-3.3.jar links to swt.jar.
