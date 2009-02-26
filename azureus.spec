@@ -2,7 +2,7 @@
 
 Name:		azureus
 Version:	4.0.0.4
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 License:	GPLv2+
@@ -58,8 +58,8 @@ Requires:	xulrunner
 Requires:       eclipse-swt >= 3.4.0
 Requires:       libgconf-java
 Requires:       bouncycastle >= 1.33-3
-Requires:	  java >= 1.5.0
-BuildRequires:    java-devel >= 1.5.0
+Requires:	  java >= 1:1.6.0
+BuildRequires:    java-devel >= 1:1.6.0
 BuildRequires:    desktop-file-utils
 Requires(post):   desktop-file-utils
 Requires(postun): desktop-file-utils
@@ -105,9 +105,9 @@ advanced users.
 %patch56 -b .orig
 %patch57 -b .orig -p1
 rm org/gudy/azureus2/ui/swt/test/PrintTransferTypes.java
-sed -i -e \
-  "s|sun.security.action.GetPropertyAction|gnu.java.security.action.GetPropertyAction|" \
-  org/gudy/azureus2/core3/internat/MessageText.java
+#sed -i -e \
+#  "s|sun.security.action.GetPropertyAction|gnu.java.security.action.GetPropertyAction|" \
+#  org/gudy/azureus2/core3/internat/MessageText.java
 
 # Convert line endings...
 sed -i 's/\r//' ChangeLog.txt
@@ -212,6 +212,10 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Thu Feb 26 2009 Conrad Meyer <konrad@tylerc.org> - 4.0.0.4-2
+- Upstream uses internal things from sun's jre, so we need
+  openjdk.
+
 * Thu Feb 26 2009 Conrad Meyer <konrad@tylerc.org> - 4.0.0.4-1
 - New version, new breakage. Patches 50-56 added.
 - Dropped a lot of patches that don't apply to the new azureus.
