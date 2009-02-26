@@ -1,0 +1,24 @@
+--- Vuze-4.0.0.4/com/aelitis/azureus/core/metasearch/impl/DateParserRegex.java.orig	2009-02-26 11:22:55.000000000 -0800
++++ Vuze-4.0.0.4/com/aelitis/azureus/core/metasearch/impl/DateParserRegex.java	2009-02-26 11:52:24.000000000 -0800
+@@ -50,17 +50,17 @@
+ 	
+ 	private static final String[] MONTHS_LIST = new String[] {
+ 		" january janvier enero januar",
+-		" february fevrier février febrero februar",
+-		" march mars marzo marz marz märz" ,
++		" february fevrier febrero februar",
++		" march mars marzo marz marz" ,
+ 		" april avril abril april ",
+ 		" may mai mayo mai",
+ 		" june juin junio juni",
+ 		" july juillet julio juli",
+-		" august aout août agosto august",
++		" august aout agosto august",
+ 		" september septembre septiembre september",
+ 		" october octobre octubre oktober",
+ 		" november novembre noviembre november",
+-		" december decembre décembre diciembre dezember"};
++		" december decembre diciembre dezember"};
+ 	
+ 	public DateParserRegex() {
+ 		this("GMT-7",true,null);

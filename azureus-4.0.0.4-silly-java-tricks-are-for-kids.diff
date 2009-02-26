@@ -1,0 +1,17 @@
+--- org/gudy/azureus2/platform/PlatformManagerFactory.java.orig	2008-12-20 00:48:53.000000000 -0800
++++ org/gudy/azureus2/platform/PlatformManagerFactory.java	2008-12-20 00:49:18.000000000 -0800
+@@ -50,14 +50,10 @@
+ 					if( getPlatformType() == PlatformManager.PT_UNIX ){
+ 						
+             platform_manager = org.gudy.azureus2.platform.unix.PlatformManagerImpl.getSingleton();
+ 
+ 					}
+-				}catch( PlatformManagerException e ){
+-					
+-						// exception will already have been logged
+-					
+ 				}catch( Throwable e ){
+ 					
+ 					Debug.printStackTrace(e);
+ 				}
+ 			}

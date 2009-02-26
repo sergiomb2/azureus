@@ -1,30 +1,33 @@
-Name:		azureus
-Version:	3.0.4.2
-Release:	18%{?dist}
-Summary:	A BitTorrent Client
+%define         _newname Vuze
+#%%define with_gcj %{!?_without_gcj:1}%{?_without_gcj:0}
 
+# aot-compile-rpm seems broken:
+%define with_gcj 0
+
+Name:		azureus
+Version:	4.0.0.4
+Release:	1%{?dist}
+Summary:	A BitTorrent Client
 Group:		Applications/Internet
 License:	GPLv2+
 URL:		http://azureus.sourceforge.net
 
-# A cvs snapshot with the build and bouncycastle directories
-# removed.
-Source0:	azureus-3.0.4.2.tar.gz
+Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_%{version}_source.zip
 
 Source1:	azureus.script
 Source2:	Azureus.desktop
 Source3:	azureus.applications
-Source4:	azureus-License.txt
+#Source4:	azureus-License.txt
 
-Source5:	azplugins_2.1.6.jar
-Source6:	bdcc_2.2.2.zip
+#Source5:	azplugins_2.1.6.jar
+#Source6:	bdcc_2.2.2.zip
 
 Patch0:		azureus-remove-win32-osx-platforms.patch
 Patch2:		azureus-cache-size.patch
 Patch3:		azureus-remove-manifest-classpath.patch
 Patch9:		azureus-no-shared-plugins.patch
 Patch12:	azureus-no-updates-PluginInitializer.patch
-Patch13:	azureus-no-updates-PluginInterfaceImpl.patch
+#Patch13:	azureus-no-updates-PluginInterfaceImpl.patch
 Patch14:	azureus-no-update-manager-AzureusCoreImpl.patch
 Patch15:	azureus-no-update-manager-CorePatchChecker.patch
 Patch16:	azureus-no-update-manager-CoreUpdateChecker.patch
@@ -37,6 +40,15 @@ Patch27:	azureus-SecureMessageServiceClientHelper-bcprov.patch
 Patch28:	azureus-configuration.patch
 Patch31:	azureus-fix-menu-MainMenu.patch
 
+Patch50:        azureus-4.0.0.4-boo-windows.diff
+Patch51:        azureus-4.0.0.4-boo-osx.diff
+Patch52:        azureus-4.0.0.4-screw-w32-tests.diff
+Patch53:        azureus-4.0.0.4-boo-updating-w32.diff
+Patch54:        azureus-4.0.0.4-screw-win32utils.diff
+Patch55:        azureus-4.0.0.4-oops-return.diff
+Patch56:        azureus-4.0.0.4-silly-java-tricks-are-for-kids.diff
+Patch57:        azureus-4.0.0.4-stupid-invalid-characters.diff
+
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:  ant, jpackage-utils >= 1.5, xml-commons-apis
@@ -44,97 +56,125 @@ BuildRequires:  jakarta-commons-cli, log4j
 BuildRequires:  libgconf-java
 BuildRequires:  bouncycastle >= 1.33-3
 BuildRequires:  eclipse-swt >= 3.4.0
+BuildRequires:  junit
 Requires:       jakarta-commons-cli, log4j
 Requires:	xulrunner
 Requires:       eclipse-swt >= 3.4.0
 Requires:       libgconf-java
 Requires:       bouncycastle >= 1.33-3
-Requires:       libgcj >= 4.1.0-0.15
-BuildRequires:    java-1.5.0-gcj-devel
-BuildRequires:    java-1.6.0-openjdk-devel
-Requires:	  java-1.6.0-openjdk
-Requires(post):   java-gcj-compat >= 1.0.31
-Requires(postun): java-gcj-compat >= 1.0.31
+Requires:	  java >= 1.5.0
+BuildRequires:    java-devel >= 1.5.0
 BuildRequires:    desktop-file-utils
 Requires(post):   desktop-file-utils
 Requires(postun): desktop-file-utils
 
+%if %{with_gcj}
+BuildRequires:    java-gcj-compat-devel >= 1.0.31
+Requires(post):   java-gcj-compat >= 1.0.31
+Requires(postun): java-gcj-compat >= 1.0.31
+%else
+BuildArch:      noarch
+%endif
+
+
 %description 
-Azureus implements the BitTorrent protocol using java language and
-comes bundled with many invaluable features for both beginners and
+Azureus (now %{_newname}) implements the BitTorrent protocol using java
+and comes bundled with many invaluable features for both beginners and
 advanced users.
 
 %prep
-%setup -q -n %{name}
-%patch0 -p0
+%setup -q -c
+#%patch0 -p0
 %patch2 -p0
 %patch3 -p0
 %patch9 -p0
-%patch12 -p0
-%patch13 -p0
+#%patch12 -p0
+#%patch13 -p0
 %patch14 -p0
 %patch15 -p0
-%patch16 -p0
-%patch18 -p0
-%patch19 -p0
-%patch20 -p0
-%patch22 -p0
-%patch23 -p0
+#%patch16 -p0
+#%patch18 -p0
+#%patch19 -p0
+#%patch20 -p0
+#%patch22 -p0
+#%patch23 -p0
 %patch27 -p0
 %patch28 -p0
-%patch31 -p0
-cp %{SOURCE4} License.txt
+#%patch31 -p0
+#rm com/aelitis/azureus/core/update -rf
+#find ./ -name osx | xargs rm -r
+#find ./ -name macosx | xargs rm -r
+#find ./ -name win32 | xargs rm -r
+#find ./ -name Win32\* | xargs rm -r
+# Remove test code
+%patch50 -b .orig
+%patch51 -b .orig
+%patch52 -b .orig
+%patch53 -b .orig
+%patch54 -b .orig
+%patch55 -b .orig
+%patch56 -b .orig
+%patch57 -b .orig -p1
+rm org/gudy/azureus2/ui/swt/test/PrintTransferTypes.java
+sed -i -e \
+  "s|sun.security.action.GetPropertyAction|gnu.java.security.action.GetPropertyAction|" \
+  org/gudy/azureus2/core3/internat/MessageText.java
+
+# if upstream doesn't include it, no need for us to ship it.
+#cp %{SOURCE4} License.txt
+
+# Convert line endings...
+#sed -i 's/\r//' License.txt
+sed -i 's/\r//' ChangeLog.txt
+chmod 644 *.txt
+
 
 %build
 mkdir -p build/libs
-build-jar-repository -p build/libs bcprov jakarta-commons-cli log4j gtk2.8 glib0.2
+build-jar-repository -p build/libs bcprov jakarta-commons-cli log4j \
+  gtk2.8 glib0.2 junit
 ln -s %{_libdir}/eclipse/swt.jar build/libs
-find ./ -name osx | xargs rm -r
-find ./ -name macosx | xargs rm -r
-find ./ -name win32 | xargs rm -r
-find ./ -name Win32\* | xargs rm -r
-# Remove test code
-rm org/gudy/azureus2/ui/swt/test/PrintTransferTypes.java
 
 ant jar
 
-mkdir -p plugins/azplugins
-pushd plugins
-pushd azplugins
-unzip -q %{SOURCE5}
-rm -f *.jar `find ./ -name \*class`
-find ./ -name \*java | xargs javac -cp %{_libdir}/eclipse/swt.jar:../..:.
-find ./ -name \*java | xargs rm
-jar cvf azplugins_2.1.6.jar .
-popd
-popd
+#mkdir -p plugins/azplugins
+#pushd plugins
+#pushd azplugins
+#unzip -q %{SOURCE5}
+#rm -f *.jar `find ./ -name \*class`
+#find ./ -name \*java | xargs javac -cp %{_libdir}/eclipse/swt.jar:../..:.
+#find ./ -name \*java | xargs rm
+#jar cvf azplugins_2.1.6.jar .
+#popd
+#popd
 
-unzip -q %{SOURCE6}
-pushd plugins
-pushd bdcc
-unzip *.jar
-rm -f *.jar `find ./ -name \*class`
-find ./ -name \*java | xargs javac -cp %{_libdir}/eclipse/swt.jar:../..:.
-find ./ -name \*java | xargs rm
-jar cvf bdcc_2.2.2.jar .
-popd
-popd
+#unzip -q %{SOURCE6}
+#pushd plugins
+#pushd bdcc
+#unzip *.jar
+#rm -f *.jar `find ./ -name \*class`
+#find ./ -name \*java | xargs javac -cp %{_libdir}/eclipse/swt.jar:../..:.
+#find ./ -name \*java | xargs rm
+#jar cvf bdcc_2.2.2.jar .
+#popd
+#popd
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
 install -dm 755 $RPM_BUILD_ROOT%{_datadir}/azureus/plugins
 install -pm 644 dist/Azureus2.jar $RPM_BUILD_ROOT%{_datadir}/azureus/Azureus2.jar
+# TODO: fix launcher to be multilib-safe
 install -p -D -m 0755 %{SOURCE1} $RPM_BUILD_ROOT%{_bindir}/azureus
 sed --in-place "s:/usr/lib:%{_libdir}:g" $RPM_BUILD_ROOT%{_bindir}/azureus
 
-install -dm 755 $RPM_BUILD_ROOT%{_datadir}/azureus/plugins/azplugins
-install -pm 644 plugins/azplugins/azplugins_2.1.6.jar $RPM_BUILD_ROOT%{_datadir}/azureus/plugins/azplugins/azplugins_2.1.6.jar
-install -pm 644 plugins/azplugins/plugin.properties $RPM_BUILD_ROOT%{_datadir}/azureus/plugins/azplugins/plugin.properties
+#install -dm 755 $RPM_BUILD_ROOT%{_datadir}/azureus/plugins/azplugins
+#install -pm 644 plugins/azplugins/azplugins_2.1.6.jar $RPM_BUILD_ROOT%{_datadir}/azureus/plugins/azplugins/azplugins_2.1.6.jar
+#install -pm 644 plugins/azplugins/plugin.properties $RPM_BUILD_ROOT%{_datadir}/azureus/plugins/azplugins/plugin.properties
 
-install -dm 755 $RPM_BUILD_ROOT%{_datadir}/azureus/plugins/bdcc
-install -pm 644 plugins/bdcc/bdcc_2.2.2.jar $RPM_BUILD_ROOT%{_datadir}/azureus/plugins/bdcc/bdcc_2.2.2.jar
-install -pm 644 plugins/bdcc/plugin.properties $RPM_BUILD_ROOT%{_datadir}/azureus/plugins/bdcc/plugin.properties
+#install -dm 755 $RPM_BUILD_ROOT%{_datadir}/azureus/plugins/bdcc
+#install -pm 644 plugins/bdcc/bdcc_2.2.2.jar $RPM_BUILD_ROOT%{_datadir}/azureus/plugins/bdcc/bdcc_2.2.2.jar
+#install -pm 644 plugins/bdcc/plugin.properties $RPM_BUILD_ROOT%{_datadir}/azureus/plugins/bdcc/plugin.properties
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/pixmaps
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/16x16/apps
@@ -154,19 +194,22 @@ desktop-file-install --vendor fedora 			\
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/application-registry
 install -m644 %{SOURCE3} $RPM_BUILD_ROOT%{_datadir}/application-registry
 
-# Convert line endings...
-%{__sed} -i 's/\r//' License.txt
-%{__sed} -i 's/\r//' ChangeLog.txt
-chmod 644 *.txt
+%if %{with_gcj}
+%{_bindir}/aot-compile-rpm
+%endif
 
-#RPM_OPT_FLAGS="-O0" aot-compile-rpm
-aot-compile-rpm
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %post
+%if %{with_gcj}
+if [ -x %{_bindir}/rebuild-gcj-db ] 
+then
 %{_bindir}/rebuild-gcj-db
+fi
+%endif
+
 update-desktop-database %{_datadir}/applications
 # update icon themes
 touch %{_datadir}/icons/hicolor
@@ -175,7 +218,13 @@ if [ -x /usr/bin/gtk-update-icon-cache ]; then
 fi
 
 %postun
+%if %{with_gcj}
+if [ -x %{_bindir}/rebuild-gcj-db ] 
+then
 %{_bindir}/rebuild-gcj-db
+fi
+%endif
+
 update-desktop-database %{_datadir}/applications
 # update icon themes
 touch %{_datadir}/icons/hicolor
@@ -185,7 +234,7 @@ fi
 
 %files
 %defattr(-,root,root)
-%doc License.txt ChangeLog.txt
+%doc ChangeLog.txt GPL.txt
 %{_datadir}/applications/*
 %{_datadir}/application-registry/*
 %{_datadir}/pixmaps/azureus.png
@@ -194,9 +243,15 @@ fi
 %{_datadir}/icons/hicolor/64x64/apps/azureus.png
 %{_bindir}/azureus
 %{_datadir}/azureus
-%{_libdir}/gcj/*
+%if %{with_gcj}
+%attr(-,root,root) %{_libdir}/gcj/%{name}
+%endif
 
 %changelog
+* Sat Dec 20 2008 Conrad Meyer <konrad@tylerc.org> - 4.0.0.4-1
+- New version, new breakage. Patches 50-56 added.
+- Dropped a lot of patches that don't apply to the new azureus.
+
 * Mon Feb 23 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 3.0.4.2-18
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_11_Mass_Rebuild
 
