@@ -1,8 +1,4 @@
 %define         _newname Vuze
-#%%define with_gcj %{!?_without_gcj:1}%{?_without_gcj:0}
-
-# aot-compile-rpm seems broken:
-%define with_gcj 0
 
 Name:		azureus
 Version:	4.0.0.4
@@ -67,14 +63,7 @@ BuildRequires:    java-devel >= 1.5.0
 BuildRequires:    desktop-file-utils
 Requires(post):   desktop-file-utils
 Requires(postun): desktop-file-utils
-
-%if %{with_gcj}
-BuildRequires:    java-gcj-compat-devel >= 1.0.31
-Requires(post):   java-gcj-compat >= 1.0.31
-Requires(postun): java-gcj-compat >= 1.0.31
-%else
 BuildArch:      noarch
-%endif
 
 
 %description 
@@ -120,11 +109,7 @@ sed -i -e \
   "s|sun.security.action.GetPropertyAction|gnu.java.security.action.GetPropertyAction|" \
   org/gudy/azureus2/core3/internat/MessageText.java
 
-# if upstream doesn't include it, no need for us to ship it.
-#cp %{SOURCE4} License.txt
-
 # Convert line endings...
-#sed -i 's/\r//' License.txt
 sed -i 's/\r//' ChangeLog.txt
 chmod 644 *.txt
 
@@ -194,22 +179,11 @@ desktop-file-install --vendor fedora 			\
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/application-registry
 install -m644 %{SOURCE3} $RPM_BUILD_ROOT%{_datadir}/application-registry
 
-%if %{with_gcj}
-%{_bindir}/aot-compile-rpm
-%endif
-
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %post
-%if %{with_gcj}
-if [ -x %{_bindir}/rebuild-gcj-db ] 
-then
-%{_bindir}/rebuild-gcj-db
-fi
-%endif
-
 update-desktop-database %{_datadir}/applications
 # update icon themes
 touch %{_datadir}/icons/hicolor
@@ -218,13 +192,6 @@ if [ -x /usr/bin/gtk-update-icon-cache ]; then
 fi
 
 %postun
-%if %{with_gcj}
-if [ -x %{_bindir}/rebuild-gcj-db ] 
-then
-%{_bindir}/rebuild-gcj-db
-fi
-%endif
-
 update-desktop-database %{_datadir}/applications
 # update icon themes
 touch %{_datadir}/icons/hicolor
@@ -243,14 +210,12 @@ fi
 %{_datadir}/icons/hicolor/64x64/apps/azureus.png
 %{_bindir}/azureus
 %{_datadir}/azureus
-%if %{with_gcj}
-%attr(-,root,root) %{_libdir}/gcj/%{name}
-%endif
 
 %changelog
-* Thu Feb 26 2008 Conrad Meyer <konrad@tylerc.org> - 4.0.0.4-1
+* Thu Feb 26 2009 Conrad Meyer <konrad@tylerc.org> - 4.0.0.4-1
 - New version, new breakage. Patches 50-56 added.
 - Dropped a lot of patches that don't apply to the new azureus.
+- Make noarch (drop gcj support).
 
 * Mon Feb 23 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 3.0.4.2-18
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_11_Mass_Rebuild
