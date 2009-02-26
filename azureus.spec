@@ -248,7 +248,7 @@ fi
 %endif
 
 %changelog
-* Sat Dec 20 2008 Conrad Meyer <konrad@tylerc.org> - 4.0.0.4-1
+* Thu Feb 26 2008 Conrad Meyer <konrad@tylerc.org> - 4.0.0.4-1
 - New version, new breakage. Patches 50-56 added.
 - Dropped a lot of patches that don't apply to the new azureus.
 
