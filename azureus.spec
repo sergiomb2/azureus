@@ -2,7 +2,7 @@
 
 Name:		azureus
 Version:	4.0.0.4
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 License:	GPLv2+
@@ -212,6 +212,10 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Wed Mar 18 2009 Conrad Meyer <konrad@tylerc.org> - 4.0.0.4-3
+- Apply Bart Vanbrabant's patch to azureus.script to start
+  correctly on 64-bit (rhbz#490774).
+
 * Thu Feb 26 2009 Conrad Meyer <konrad@tylerc.org> - 4.0.0.4-2
 - Upstream uses internal things from sun's jre, so we need
   openjdk.
