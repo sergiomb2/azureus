@@ -1,7 +1,7 @@
-diff -urN com/aelitis/azureus/core/update.orig/impl/AzureusRestarterImpl.java com/aelitis/azureus/core/update/impl/AzureusRestarterImpl.java
---- com/aelitis/azureus/core/update.orig/impl/AzureusRestarterImpl.java	2007-07-30 13:13:28.000000000 -0700
-+++ com/aelitis/azureus/core/update/impl/AzureusRestarterImpl.java	2008-12-20 00:09:42.000000000 -0800
-@@ -30,8 +30,8 @@
+diff -up azureus-4.2.0.4/com/aelitis/azureus/core/update/impl/AzureusRestarterImpl.java.boo-updating-w32 azureus-4.2.0.4/com/aelitis/azureus/core/update/impl/AzureusRestarterImpl.java
+--- azureus-4.2.0.4/com/aelitis/azureus/core/update/impl/AzureusRestarterImpl.java.boo-updating-w32	2009-07-08 19:00:28.000000000 +0300
++++ azureus-4.2.0.4/com/aelitis/azureus/core/update/impl/AzureusRestarterImpl.java	2009-07-31 20:20:12.000000000 +0300
+@@ -30,8 +30,8 @@ import org.gudy.azureus2.core3.util.*;
  import org.gudy.azureus2.platform.PlatformManager;
  import org.gudy.azureus2.platform.PlatformManagerFactory;
  import org.gudy.azureus2.platform.unix.ScriptAfterShutdown;
@@ -9,10 +9,10 @@ diff -urN com/aelitis/azureus/core/update.orig/impl/AzureusRestarterImpl.java co
 -import org.gudy.azureus2.platform.win32.access.AEWin32Manager;
 +//import org.gudy.azureus2.platform.win32.access.AEWin32Access;
 +//import org.gudy.azureus2.platform.win32.access.AEWin32Manager;
- import org.gudy.azureus2.update.UpdaterUtils;
- 
- import com.aelitis.azureus.core.AzureusCore;
-@@ -219,20 +219,6 @@
+ import org.gudy.azureus2.plugins.PluginInterface;
+ import org.gudy.azureus2.plugins.platform.PlatformManagerException;
+ import org.gudy.azureus2.pluginsimpl.local.PluginInitializer;
+@@ -218,20 +218,6 @@ AzureusRestarterImpl 
  		PrintWriter	log,
  		String		exec )
  	{
@@ -33,7 +33,7 @@ diff -urN com/aelitis/azureus/core/update.orig/impl/AzureusRestarterImpl.java co
  	}
  	
  
-@@ -304,131 +290,6 @@
+@@ -294,131 +280,6 @@ AzureusRestarterImpl 
        String backupJavaRunString,
        boolean update_only) 
    {
@@ -165,7 +165,7 @@ diff -urN com/aelitis/azureus/core/update.orig/impl/AzureusRestarterImpl.java co
  		return true;
  	}
    
-@@ -454,9 +315,6 @@
+@@ -444,9 +305,6 @@ AzureusRestarterImpl 
      	
      	restartAzureus_Unix(log,mainClass,properties,parameters);
        
@@ -175,7 +175,7 @@ diff -urN com/aelitis/azureus/core/update.orig/impl/AzureusRestarterImpl.java co
      }
    }
    
-@@ -468,35 +326,7 @@
+@@ -458,35 +316,7 @@ AzureusRestarterImpl 
      String[]  parameters,
      boolean	update_only) 
    {
@@ -212,7 +212,7 @@ diff -urN com/aelitis/azureus/core/update.orig/impl/AzureusRestarterImpl.java co
    
  
  	private boolean
-@@ -529,20 +359,6 @@
+@@ -519,20 +349,6 @@ AzureusRestarterImpl 
      String[]  properties,
      String[] parameters) 
    {

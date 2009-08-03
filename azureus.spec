@@ -1,8 +1,8 @@
-%define         _newname Vuze
+%define		_newname Vuze
 
 Name:		azureus
-Version:	4.0.0.4
-Release:	4%{?dist}
+Version:	4.2.0.4
+Release:	1%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 License:	GPLv2+
@@ -13,57 +13,62 @@ Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_%{version}_source.
 Source1:	azureus.script
 Source2:	Azureus.desktop
 Source3:	azureus.applications
+
+#retrieved from CVS
+Source4:	build.xml
 #Source4:	azureus-License.txt
 
 #Source5:	azplugins_2.1.6.jar
 #Source6:	bdcc_2.2.2.zip
 
-Patch0:		azureus-remove-win32-osx-platforms.patch
+#Patch0:		azureus-remove-win32-osx-platforms.patch
 Patch2:		azureus-cache-size.patch
 Patch3:		azureus-remove-manifest-classpath.patch
 Patch9:		azureus-no-shared-plugins.patch
-Patch12:	azureus-no-updates-PluginInitializer.patch
+#Patch12:	azureus-no-updates-PluginInitializer.patch
 #Patch13:	azureus-no-updates-PluginInterfaceImpl.patch
 Patch14:	azureus-no-update-manager-AzureusCoreImpl.patch
 Patch15:	azureus-no-update-manager-CorePatchChecker.patch
-Patch16:	azureus-no-update-manager-CoreUpdateChecker.patch
-Patch18:	azureus-no-update-manager-PluginInstallerImpl.patch
-Patch19:	azureus-no-update-manager-PluginUpdatePlugin.patch
-Patch20:	azureus-no-update-manager-SWTUpdateChecker.patch
-Patch22:	azureus-no-update-manager-UpdateMonitor.patch
-Patch23:	azureus-no-update-manager-PluginInstallerImpl-2.patch
+#Patch16:	azureus-no-update-manager-CoreUpdateChecker.patch
+#Patch18:	azureus-no-update-manager-PluginInstallerImpl.patch
+#Patch19:	azureus-no-update-manager-PluginUpdatePlugin.patch
+#Patch20:	azureus-no-update-manager-SWTUpdateChecker.patch
+#Patch22:	azureus-no-update-manager-UpdateMonitor.patch
+#Patch23:	azureus-no-update-manager-PluginInstallerImpl-2.patch
 Patch27:	azureus-SecureMessageServiceClientHelper-bcprov.patch
 Patch28:	azureus-configuration.patch
-Patch31:	azureus-fix-menu-MainMenu.patch
+#Patch31:	azureus-fix-menu-MainMenu.patch
 
-Patch50:        azureus-4.0.0.4-boo-windows.diff
-Patch51:        azureus-4.0.0.4-boo-osx.diff
-Patch52:        azureus-4.0.0.4-screw-w32-tests.diff
-Patch53:        azureus-4.0.0.4-boo-updating-w32.diff
-Patch54:        azureus-4.0.0.4-screw-win32utils.diff
-Patch55:        azureus-4.0.0.4-oops-return.diff
-Patch56:        azureus-4.0.0.4-silly-java-tricks-are-for-kids.diff
-Patch57:        azureus-4.0.0.4-stupid-invalid-characters.diff
+Patch50:	azureus-4.0.0.4-boo-windows.diff
+Patch51:	azureus-4.0.0.4-boo-osx.diff
+Patch52:	azureus-4.0.0.4-screw-w32-tests.diff
+Patch53:	azureus-4.0.0.4-boo-updating-w32.diff
+Patch54:	azureus-4.0.0.4-screw-win32utils.diff
+Patch55:	azureus-4.0.0.4-oops-return.diff
+Patch56:	azureus-4.0.0.4-silly-java-tricks-are-for-kids.diff
+Patch57:	azureus-4.0.0.4-stupid-invalid-characters.diff
 
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+Patch58:	azureus-4.2.0.4-java5.patch
 
-BuildRequires:  ant, jpackage-utils >= 1.5, xml-commons-apis
-BuildRequires:  jakarta-commons-cli, log4j
-BuildRequires:  libgconf-java
-BuildRequires:  bouncycastle >= 1.33-3
-BuildRequires:  eclipse-swt >= 3.4.0
-BuildRequires:  junit
-Requires:       jakarta-commons-cli, log4j
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
+
+BuildRequires:	ant, jpackage-utils >= 1.5, xml-commons-apis
+BuildRequires:	jakarta-commons-cli, log4j
+BuildRequires:	libgconf-java
+BuildRequires:	bouncycastle >= 1.33-3
+BuildRequires:	eclipse-swt >= 3.4.0
+BuildRequires:	junit
+Requires:	jakarta-commons-cli, log4j
 Requires:	xulrunner
-Requires:       eclipse-swt >= 3.4.0
-Requires:       libgconf-java
-Requires:       bouncycastle >= 1.33-3
-Requires:	  java >= 1:1.6.0
-BuildRequires:    java-devel >= 1:1.6.0
-BuildRequires:    desktop-file-utils
-Requires(post):   desktop-file-utils
-Requires(postun): desktop-file-utils
-BuildArch:      noarch
+Requires:	eclipse-swt >= 3.4.0
+Requires:	libgconf-java
+Requires:	 bouncycastle >= 1.33-3
+Requires:	 java >= 1:1.6.0
+BuildRequires:	 java-devel >= 1:1.6.0
+BuildRequires:	 desktop-file-utils
+Requires(post):	 desktop-file-utils
+Requires(postun):	desktop-file-utils
+BuildArch:	noarch
 
 
 %description 
@@ -73,9 +78,11 @@ advanced users.
 
 %prep
 %setup -q -c
+
+cp %{SOURCE4} .
 #%patch0 -p0
 %patch2 -p0
-%patch3 -p0
+%patch3 -p1 -b .remove-manifest-classpath
 %patch9 -p0
 #%patch12 -p0
 #%patch13 -p0
@@ -87,7 +94,7 @@ advanced users.
 #%patch20 -p0
 #%patch22 -p0
 #%patch23 -p0
-%patch27 -p0
+%patch27 -p1 -b .nobcprov
 %patch28 -p0
 #%patch31 -p0
 #rm com/aelitis/azureus/core/update -rf
@@ -96,14 +103,23 @@ advanced users.
 #find ./ -name win32 | xargs rm -r
 #find ./ -name Win32\* | xargs rm -r
 # Remove test code
-%patch50 -b .orig
-%patch51 -b .orig
+
+rm org/gudy/azureus2/platform/macosx/access/cocoa/CocoaJavaBridge.java
+rm org/gudy/azureus2/platform/macosx/PlatformManagerImpl.java
+rm org/gudy/azureus2/platform/win32/PlatformManagerImpl.java
+%patch50 -b .boo-windows
+
+rm org/gudy/azureus2/ui/swt/osx/CarbonUIEnhancer.java
+%patch51 -b .boo-osx
 %patch52 -b .orig
-%patch53 -b .orig
+%patch53 -p1 -b .boo-updating-w32
 %patch54 -b .orig
 %patch55 -b .orig
-%patch56 -b .orig
+%patch56 -p1 -b .silly-java-tricks-are-for-kids
 %patch57 -b .orig -p1
+
+%patch58 -p1 -b .java5
+
 rm org/gudy/azureus2/ui/swt/test/PrintTransferTypes.java
 #sed -i -e \
 #  "s|sun.security.action.GetPropertyAction|gnu.java.security.action.GetPropertyAction|" \
@@ -151,7 +167,7 @@ install -dm 755 $RPM_BUILD_ROOT%{_datadir}/azureus/plugins
 install -pm 644 dist/Azureus2.jar $RPM_BUILD_ROOT%{_datadir}/azureus/Azureus2.jar
 # TODO: fix launcher to be multilib-safe
 install -p -D -m 0755 %{SOURCE1} $RPM_BUILD_ROOT%{_bindir}/azureus
-sed --in-place "s:/usr/lib:%{_libdir}:g" $RPM_BUILD_ROOT%{_bindir}/azureus
+sed --in-place "s:LIBDIR:%{_libdir}:g" $RPM_BUILD_ROOT%{_bindir}/azureus
 
 #install -dm 755 $RPM_BUILD_ROOT%{_datadir}/azureus/plugins/azplugins
 #install -pm 644 plugins/azplugins/azplugins_2.1.6.jar $RPM_BUILD_ROOT%{_datadir}/azureus/plugins/azplugins/azplugins_2.1.6.jar
@@ -171,9 +187,9 @@ install -m 644 org/gudy/azureus2/ui/icons/a32.png $RPM_BUILD_ROOT%{_datadir}/ico
 install -m 644 org/gudy/azureus2/ui/icons/a64.png $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/64x64/apps/azureus.png
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install --vendor fedora 			\
-	--dir ${RPM_BUILD_ROOT}%{_datadir}/applications	\
-	--add-category X-Fedora				\
+desktop-file-install --vendor fedora					\
+		     --dir ${RPM_BUILD_ROOT}%{_datadir}/applications	\
+		     --add-category X-Fedora				\
 	%{SOURCE2}
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/application-registry
@@ -201,7 +217,7 @@ fi
 
 %files
 %defattr(-,root,root)
-%doc ChangeLog.txt GPL.txt
+%doc ChangeLog.txt
 %{_datadir}/applications/*
 %{_datadir}/application-registry/*
 %{_datadir}/pixmaps/azureus.png
@@ -212,6 +228,11 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Wed Jul 29 2009 David Juran <david@juran.se> - 4.2.0.4-1
+- Upgrade to 4.2.0.4
+- Fix SWT dir on x86_64 (Bz 515228)
+- fix rpmlint warnings
+
 * Fri Jul 24 2009 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 4.0.0.4-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_12_Mass_Rebuild
 
@@ -499,7 +520,7 @@ an updated azureus-themed.patch to work around GCC PR 27271.
 
 * Wed Jan 18 2006 Anthony Green <green@redhat.com> - 2.3.0.6-9
 - Require libgcj with the latest fixes for running Azureus.
-- Be explicit about .png files in %files.
+- Be explicit about .png files in files-section.
 
 * Wed Jan 18 2006 Anthony Green <green@redhat.com> - 2.3.0.6-8
 - Remove bouncycastle from build-classpath in startup script.
