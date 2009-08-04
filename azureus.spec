@@ -2,7 +2,7 @@
 
 Name:		azureus
 Version:	4.2.0.4
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 License:	GPLv2+
@@ -167,7 +167,6 @@ install -dm 755 $RPM_BUILD_ROOT%{_datadir}/azureus/plugins
 install -pm 644 dist/Azureus2.jar $RPM_BUILD_ROOT%{_datadir}/azureus/Azureus2.jar
 # TODO: fix launcher to be multilib-safe
 install -p -D -m 0755 %{SOURCE1} $RPM_BUILD_ROOT%{_bindir}/azureus
-sed --in-place "s:LIBDIR:%{_libdir}:g" $RPM_BUILD_ROOT%{_bindir}/azureus
 
 #install -dm 755 $RPM_BUILD_ROOT%{_datadir}/azureus/plugins/azplugins
 #install -pm 644 plugins/azplugins/azplugins_2.1.6.jar $RPM_BUILD_ROOT%{_datadir}/azureus/plugins/azplugins/azplugins_2.1.6.jar
@@ -228,6 +227,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Tue Aug  4 2009 David Juran <david@juran.se> - 4.2.0.4-2
+- Fix Bz 515228 properly
+
 * Wed Jul 29 2009 David Juran <david@juran.se> - 4.2.0.4-1
 - Upgrade to 4.2.0.4
 - Fix SWT dir on x86_64 (Bz 515228)
