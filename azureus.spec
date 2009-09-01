@@ -2,7 +2,7 @@
 
 Name:		azureus
 Version:	4.0.0.4
-Release:	3%{?dist}
+Release:	4%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 License:	GPLv2+
@@ -212,6 +212,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Tue Sep  1 2009 David Juran <david@juran.se> - 4.0.0.4-4
+- fix start-script to work when  /usr/share/azureus/plugins/ is empty
+
 * Wed Mar 18 2009 Conrad Meyer <konrad@tylerc.org> - 4.0.0.4-3
 - Apply Bart Vanbrabant's patch to azureus.script to start
   correctly on 64-bit (rhbz#490774).

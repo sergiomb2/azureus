@@ -12,9 +12,13 @@ SCRIPT_VERSION=2
 rm -rf $APPDIR/plugins
 mkdir -p $APPDIR/plugins
 pushd $APPDIR/plugins > /dev/null 2>&1
-for pdir in /usr/share/azureus/plugins/*; do
-  ln -s $pdir .;
-done;
+
+if ls /usr/share/azureus/plugins/* > /dev/null 2>&1;then
+    for pdir in /usr/share/azureus/plugins/*; do
+	ln -s $pdir .;
+    done;
+fi
+
 popd > /dev/null 2>&1
 
 case $(uname -i) in
