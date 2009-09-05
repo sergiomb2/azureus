@@ -12,7 +12,6 @@ SCRIPT_VERSION=2
 rm -rf $APPDIR/plugins
 mkdir -p $APPDIR/plugins
 pushd $APPDIR/plugins > /dev/null 2>&1
-
 if ls /usr/share/azureus/plugins/* > /dev/null 2>&1;then
     for pdir in /usr/share/azureus/plugins/*; do
 	ln -s $pdir .;
@@ -25,10 +24,12 @@ case $(uname -i) in
         *64)
                 eval $(grep '^GRE_PATH=' /etc/gre.d/gre64.conf)
                 SWT=/usr/lib64/eclipse/swt.jar
+		LIBDIR=/usr/lib64
                 ;;
         *)
                 eval $(grep '^GRE_PATH=' /etc/gre.d/gre.conf)
                 SWT=/usr/lib/eclipse/swt.jar
+		LIBDIR=/usr/lib
                 ;;
 esac
 MOZILLA_FIVE_HOME=$GRE_PATH JAVA_HOME=/usr/lib/jvm/java-openjdk LD_LIBRARY_PATH=$MOZILLA_FIVE_HOME:/usr/lib/eclipse/plugins/:/usr/lib/eclipse/:/usr/lib/ CLASSPATH=$SWT:`build-classpath bcprov jakarta-commons-cli log4j gtk2.8 glib0.2`:/usr/share/azureus/Azureus2.jar java -Dazureus.install.path=$APPDIR -Dazureus.script.version=$SCRIPT_VERSION -Dazureus.script=$0 org.gudy.azureus2.ui.swt.Main "$@"

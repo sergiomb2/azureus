@@ -2,7 +2,7 @@
 
 Name:		azureus
 Version:	4.0.0.4
-Release:	4%{?dist}
+Release:	6%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 License:	GPLv2+
@@ -23,7 +23,7 @@ Patch2:		azureus-cache-size.patch
 Patch3:		azureus-remove-manifest-classpath.patch
 Patch9:		azureus-no-shared-plugins.patch
 Patch12:	azureus-no-updates-PluginInitializer.patch
-#Patch13:	azureus-no-updates-PluginInterfaceImpl.patch
+Patch13:	azureus-no-updates-PluginInterfaceImpl.patch
 Patch14:	azureus-no-update-manager-AzureusCoreImpl.patch
 Patch15:	azureus-no-update-manager-CorePatchChecker.patch
 Patch16:	azureus-no-update-manager-CoreUpdateChecker.patch
@@ -77,16 +77,16 @@ advanced users.
 %patch2 -p0
 %patch3 -p0
 %patch9 -p0
-#%patch12 -p0
-#%patch13 -p0
+%patch12 -p1 -b .no-updates-PluginInitializer
+%patch13 -p1 -b .no-updates-PluginInterfaceImpl
 %patch14 -p0
 %patch15 -p0
-#%patch16 -p0
-#%patch18 -p0
-#%patch19 -p0
-#%patch20 -p0
-#%patch22 -p0
-#%patch23 -p0
+%patch16 -p1 -b .no-update-manager-CoreUpdateChecker
+%patch18 -p1 -b .no-update-manager-PluginInstallerImpl
+%patch19 -p1 -b .no-update-manager-PluginUpdatePlugin
+%patch20 -p1 -b .no-update-manager-SWTUpdateChecker
+%patch22 -p1 -b .no-update-manager-UpdateMonitor
+#%patch23 -p1 -b .no-update-manager-PluginInstallerImpl-2
 %patch27 -p0
 %patch28 -p0
 #%patch31 -p0
@@ -151,7 +151,6 @@ install -dm 755 $RPM_BUILD_ROOT%{_datadir}/azureus/plugins
 install -pm 644 dist/Azureus2.jar $RPM_BUILD_ROOT%{_datadir}/azureus/Azureus2.jar
 # TODO: fix launcher to be multilib-safe
 install -p -D -m 0755 %{SOURCE1} $RPM_BUILD_ROOT%{_bindir}/azureus
-sed --in-place "s:/usr/lib:%{_libdir}:g" $RPM_BUILD_ROOT%{_bindir}/azureus
 
 #install -dm 755 $RPM_BUILD_ROOT%{_datadir}/azureus/plugins/azplugins
 #install -pm 644 plugins/azplugins/azplugins_2.1.6.jar $RPM_BUILD_ROOT%{_datadir}/azureus/plugins/azplugins/azplugins_2.1.6.jar
@@ -212,6 +211,12 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Wed Sep  2 2009 David Juran <david@juran.se> - 4.0.0.4-6
+- revive the no-updates patches
+
+* Wed Sep  2 2009 David Juran <david@juran.se> - 4.0.0.4-5
+ - Fix SWT dir on x86_64 (Bz 515228)
+
 * Tue Sep  1 2009 David Juran <david@juran.se> - 4.0.0.4-4
 - fix start-script to work when  /usr/share/azureus/plugins/ is empty
 

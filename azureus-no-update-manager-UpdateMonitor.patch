@@ -1,17 +1,27 @@
---- origorg/gudy/azureus2/ui/swt/update/UpdateMonitor.java	2007-11-30 10:44:14.000000000 -0500
-+++ org/gudy/azureus2/ui/swt/update/UpdateMonitor.java	2008-01-29 10:08:47.000000000 -0500
-@@ -89,70 +89,6 @@
+diff -up azureus-4.0.0.4/org/gudy/azureus2/ui/swt/update/UpdateMonitor.java.no-update-manager-UpdateMonitor azureus-4.0.0.4/org/gudy/azureus2/ui/swt/update/UpdateMonitor.java
+--- azureus-4.0.0.4/org/gudy/azureus2/ui/swt/update/UpdateMonitor.java.no-update-manager-UpdateMonitor	2008-10-01 15:58:50.000000000 +0300
++++ azureus-4.0.0.4/org/gudy/azureus2/ui/swt/update/UpdateMonitor.java	2009-09-05 17:40:13.000000000 +0300
+@@ -99,66 +99,66 @@ public class UpdateMonitor
  	protected UpdateMonitor(AzureusCore _azureus_core) {
  		azCore = _azureus_core;
  
 -		PluginInterface defPI = azCore.getPluginManager().getDefaultPluginInterface();
 -		UpdateManager um = defPI.getUpdateManager();
--
++// 		PluginInterface defPI = azCore.getPluginManager().getDefaultPluginInterface();
++// 		UpdateManager um = defPI.getUpdateManager();
+ 
 -		um.addListener(new UpdateManagerListener() {
 -			public void checkInstanceCreated(UpdateCheckInstance instance) {
 -				instance.addListener(UpdateMonitor.this);
--				
--				new updateStatusChanger(instance);
++// 		um.addListener(new UpdateManagerListener() {
++// 			public void checkInstanceCreated(UpdateCheckInstance instance) {
++// 				instance.addListener(UpdateMonitor.this);
+ 				
+-				if ( !instance.isLowNoise()){
++// 				if ( !instance.isLowNoise()){
+ 				
+-					new updateStatusChanger(instance);
+-				}
 -			}
 -		});
 -
@@ -61,17 +71,61 @@
 -						performAutoCheck(false);
 -					}
 -				});
--
--		// wait a bit before starting check to give rest of AZ time to initialise 
--		new DelayedEvent("UpdateMon:wait", 2500, new AERunnable() {
--			public void runSupport() {
--				performAutoCheck(true);
--			}
--		});
- 	}
++// 					new updateStatusChanger(instance);
++// 				}
++// 			}
++// 		});
++
++// 		um.addVerificationListener(new UpdateManagerVerificationListener() {
++// 			public boolean acceptUnVerifiedUpdate(final Update update) {
++// 				UIFunctions uiFunctions = UIFunctionsManager.getUIFunctions();
++// 				if (uiFunctions != null) {
++// 					String title = MessageText.getString(MSG_PREFIX
++// 							+ "accept.unverified.title");
++// 					String text = MessageText.getString(MSG_PREFIX
++// 							+ "accept.unverified.text", new String[] {
++// 						update.getName()
++// 					});
++// 					return uiFunctions.promptUser(title, text, new String[] {
++// 						MessageText.getString("Button.yes"),
++// 						MessageText.getString("Button.no")
++// 					}, 1, MSG_PREFIX + "accept.unverified",
++// 							MessageText.getString("MessageBoxWindow.nomoreprompting"), false,
++// 							0) == 0;
++// 				}
++
++// 				return false;
++// 			}
++
++// 			public void verificationFailed(final Update update, final Throwable cause) {
++// 				final String cause_str = Debug.getNestedExceptionMessage(cause);
++// 				UIFunctions uiFunctions = UIFunctionsManager.getUIFunctions();
++// 				if (uiFunctions != null) {
++// 					String title = MessageText.getString(MSG_PREFIX
++// 							+ "verification.failed.title");
++// 					String text = MessageText.getString(MSG_PREFIX
++// 							+ "verification.failed.text", new String[] {
++// 						update.getName(),
++// 						cause_str
++// 					});
++// 					uiFunctions.promptUser(title, text, new String[] {
++// 						MessageText.getString("Button.ok")
++// 					}, 0, null, null, false, 0);
++// 				}
++// 			}
++// 		});
++
++
++// 		SimpleTimer.addPeriodicEvent("UpdateMon:autocheck",
++// 				AUTO_UPDATE_CHECK_PERIOD, new TimerEventPerformer() {
++// 					public void perform(TimerEvent ev) {
++// 						performAutoCheck(false);
++// 					}
++// 				});
  
- 	protected class updateStatusChanger
-@@ -306,43 +242,6 @@
+ 		DelayedTask delayed_task = 
+ 			UtilitiesImpl.addDelayedTask(
+@@ -380,43 +380,6 @@ public class UpdateMonitor
  	}
  	
  	protected void performAutoCheck(final boolean start_of_day) {
@@ -115,7 +169,7 @@
  	}
  
  	public void 
-@@ -352,76 +251,6 @@
+@@ -426,76 +389,6 @@ public class UpdateMonitor
  		final boolean						isRecheck,
  		final UpdateCheckInstanceListener 	l ) 
  	{

@@ -1,10 +1,12 @@
---- iorigorg/gudy/azureus2/ui/swt/updater2/SWTUpdateChecker.java	2007-12-03 10:07:11.000000000 -0500
-+++ org/gudy/azureus2/ui/swt/updater2/SWTUpdateChecker.java	2007-12-07 09:52:45.000000000 -0500
-@@ -64,180 +64,12 @@
+diff -up azureus-4.0.0.4/org/gudy/azureus2/ui/swt/updater2/SWTUpdateChecker.java.no-update-manager-SWTUpdateChecker azureus-4.0.0.4/org/gudy/azureus2/ui/swt/updater2/SWTUpdateChecker.java
+--- azureus-4.0.0.4/org/gudy/azureus2/ui/swt/updater2/SWTUpdateChecker.java.no-update-manager-SWTUpdateChecker	2008-08-20 12:14:50.000000000 +0300
++++ azureus-4.0.0.4/org/gudy/azureus2/ui/swt/updater2/SWTUpdateChecker.java	2009-09-05 17:34:43.000000000 +0300
+@@ -64,180 +64,180 @@ public class SWTUpdateChecker implements
    public static void
    initialize()
    {
 -    PluginInitializer.getDefaultInterface().getUpdateManager().registerUpdatableComponent(new SWTUpdateChecker(),true);
++//     PluginInitializer.getDefaultInterface().getUpdateManager().registerUpdatableComponent(new SWTUpdateChecker(),true);
    }
    
    public SWTUpdateChecker() {    
@@ -13,87 +15,138 @@
    public void checkForUpdate(final UpdateChecker checker) {
 -  	try{
 -	    SWTVersionGetter versionGetter = new SWTVersionGetter( checker );
--	    
--     	boolean	update_required  = 	versionGetter.needsUpdate() && 
--     								System.getProperty("azureus.skipSWTcheck") == null ;
--    	
++//   	try{
++// 	    SWTVersionGetter versionGetter = new SWTVersionGetter( checker );
+ 	    
+-     	boolean	update_required  = 	System.getProperty("azureus.skipSWTcheck") == null && versionGetter.needsUpdate();
++//      	boolean	update_required  = 	System.getProperty("azureus.skipSWTcheck") == null && versionGetter.needsUpdate();
+     	
 -	    if ( update_required ){
--        	    
++// 	    if ( update_required ){
+         	    
 -	       	int	update_prevented_version = COConfigurationManager.getIntParameter( "swt.update.prevented.version", -1 );
--
++// 	       	int	update_prevented_version = COConfigurationManager.getIntParameter( "swt.update.prevented.version", -1 );
+ 
 -	    	try{
 -		        URL	swt_url = SWT.class.getClassLoader().getResource("org/eclipse/swt/SWT.class");
--		        
++// 	    	try{
++// 		        URL	swt_url = SWT.class.getClassLoader().getResource("org/eclipse/swt/SWT.class");
+ 		        
 -		        if ( swt_url != null ){
--		        	
++// 		        if ( swt_url != null ){
+ 		        	
 -		        	String	url_str = swt_url.toExternalForm();
--	
++// 		        	String	url_str = swt_url.toExternalForm();
+ 	
 -		        	if ( url_str.startsWith("jar:file:")){
--	
++// 		        	if ( url_str.startsWith("jar:file:")){
+ 	
 -		        		File jar_file = FileUtil.getJarFileFromURL(url_str);
--		        		
++// 		        		File jar_file = FileUtil.getJarFileFromURL(url_str);
+ 		        		
 -		        		String	expected_location;
--		        		
++// 		        		String	expected_location;
+ 		        		
 -		        	    if ( Constants.isOSX ){
--		        	        	  
++// 		        	    if ( Constants.isOSX ){
+ 		        	        	  
 -		        	    	expected_location = checker.getCheckInstance().getManager().getInstallDir() + OSX_APP + "/Contents/Resources/Java";
--		        	            
++// 		        	    	expected_location = checker.getCheckInstance().getManager().getInstallDir() + OSX_APP + "/Contents/Resources/Java";
+ 		        	            
 -		        	    }else{ 
--		        	        	  
++// 		        	    }else{ 
+ 		        	        	  
 -		        	    	expected_location = checker.getCheckInstance().getManager().getInstallDir();
 -		        	    }
--		        	    
++// 		        	    	expected_location = checker.getCheckInstance().getManager().getInstallDir();
++// 		        	    }
+ 		        	    
 -		        	    File	expected_dir = new File( expected_location );
--		        	    
++// 		        	    File	expected_dir = new File( expected_location );
+ 		        	    
 -		        	    File	jar_file_dir = jar_file.getParentFile();
--		        	    
++// 		        	    File	jar_file_dir = jar_file.getParentFile();
+ 		        	    
 -		        	    	// sanity check
--		        	    
++// 		        	    	// sanity check
+ 		        	    
 -		        	    if ( expected_dir.exists() && jar_file_dir.exists() ){
--		        	    	
++// 		        	    if ( expected_dir.exists() && jar_file_dir.exists() ){
+ 		        	    	
 -		        	    	expected_dir	= expected_dir.getCanonicalFile();
 -		        	    	jar_file_dir	= jar_file_dir.getCanonicalFile();
--		        	    	
++// 		        	    	expected_dir	= expected_dir.getCanonicalFile();
++// 		        	    	jar_file_dir	= jar_file_dir.getCanonicalFile();
+ 		        	    	
 -		        	    	if ( expected_dir.equals( jar_file_dir )){
--		        	    	
++// 		        	    	if ( expected_dir.equals( jar_file_dir )){
+ 		        	    	
 -		        	    			// everything looks ok
--		        	    		
++// 		        	    			// everything looks ok
+ 		        	    		
 -		        	    		if ( update_prevented_version != -1 ){
--		        	    			
++// 		        	    		if ( update_prevented_version != -1 ){
+ 		        	    			
 -		        	    			update_prevented_version	= -1;
--		        	    			
++// 		        	    			update_prevented_version	= -1;
+ 		        	    			
 -			        	    		COConfigurationManager.setParameter( "swt.update.prevented.version", update_prevented_version );
 -		        	    		}
 -		        	    	}else{
--		        	    		
++// 			        	    		COConfigurationManager.setParameter( "swt.update.prevented.version", update_prevented_version );
++// 		        	    		}
++// 		        	    	}else{
+ 		        	    		
 -		        	    			// we need to periodically remind the user there's a problem as they need to realise that
 -		        	    			// it is causing ALL updates (core/plugin) to fail
--		        	    		
++// 		        	    			// we need to periodically remind the user there's a problem as they need to realise that
++// 		        	    			// it is causing ALL updates (core/plugin) to fail
+ 		        	    		
+-		        	    		String	alert = 
+-		        	    			MessageText.getString( 
+-		        	    					"swt.alert.cant.update", 
+-		        	    					new String[]{
+-			        	    					String.valueOf( versionGetter.getCurrentVersion()),
+-			        	    					String.valueOf( versionGetter.getLatestVersion()),
+-		        	    						jar_file_dir.toString(), 
+-		        	    						expected_dir.toString()});
++// 		        	    		String	alert = 
++// 		        	    			MessageText.getString( 
++// 		        	    					"swt.alert.cant.update", 
++// 		        	    					new String[]{
++// 			        	    					String.valueOf( versionGetter.getCurrentVersion()),
++// 			        	    					String.valueOf( versionGetter.getLatestVersion()),
++// 		        	    						jar_file_dir.toString(), 
++// 		        	    						expected_dir.toString()});
+ 		        	    		
+-		        	    		checker.reportProgress( alert );
++// 		        	    		checker.reportProgress( alert );
+ 		        	    		
 -		        	    		long	last_prompt = COConfigurationManager.getLongParameter( "swt.update.prevented.version.time", 0 );
 -		        	    		long	now			= SystemTime.getCurrentTime();
--		        	    		
++// 		        	    		long	last_prompt = COConfigurationManager.getLongParameter( "swt.update.prevented.version.time", 0 );
++// 		        	    		long	now			= SystemTime.getCurrentTime();
+ 		        	    		
 -		        	    		boolean force = now < last_prompt || now - last_prompt > 7*24*60*60*1000;
--		        	    		
++// 		        	    		boolean force = now < last_prompt || now - last_prompt > 7*24*60*60*1000;
+ 		        	    		
 -		        	    		if ( !checker.getCheckInstance().isAutomatic()){
--		        	    			
++// 		        	    		if ( !checker.getCheckInstance().isAutomatic()){
+ 		        	    			
 -		        	    			force = true;
 -		        	    		}
--		        	    		
++// 		        	    			force = true;
++// 		        	    		}
+ 		        	    		
 -		        		    	if ( force || update_prevented_version != versionGetter.getCurrentVersion()){
--			        		    		
--			        	    		String	alert = 
--			        	    			MessageText.getString( 
--			        	    					"swt.alert.cant.update", 
--			        	    					new String[]{
--				        	    					String.valueOf( versionGetter.getCurrentVersion()),
--				        	    					String.valueOf( versionGetter.getLatestVersion()),
--			        	    						jar_file_dir.toString(), 
--			        	    						expected_dir.toString()});
--			        	    		
++// 		        		    	if ( force || update_prevented_version != versionGetter.getCurrentVersion()){
+ 			        		    				        	    		
 -			        	     		Logger.log(	new LogAlert(LogAlert.REPEATABLE, LogEvent.LT_ERROR, alert ));
--			        						
++// 			        	     		Logger.log(	new LogAlert(LogAlert.REPEATABLE, LogEvent.LT_ERROR, alert ));
+ 			        						
 -			        	     		update_prevented_version = versionGetter.getCurrentVersion();
--			        	     		
++// 			        	     		update_prevented_version = versionGetter.getCurrentVersion();
+ 			        	     		
 -			        	    		COConfigurationManager.setParameter( "swt.update.prevented.version", update_prevented_version );
 -			        	    		COConfigurationManager.setParameter( "swt.update.prevented.version.time", now );
 -		        		    	}
@@ -102,25 +155,43 @@
 -		        	}
 -		        }
 -	    	}catch( Throwable e ){
--		    	
++// 			        	    		COConfigurationManager.setParameter( "swt.update.prevented.version", update_prevented_version );
++// 			        	    		COConfigurationManager.setParameter( "swt.update.prevented.version.time", now );
++// 		        		    	}
++// 		        	    	}
++// 		        	    }
++// 		        	}
++// 		        }
++// 	    	}catch( Throwable e ){
+ 		    	
 -		    	Debug.printStackTrace(e);		    	
 -	    	}
--	    
++// 		    	Debug.printStackTrace(e);		    	
++// 	    	}
+ 	    
 -		    if ( update_prevented_version == versionGetter.getCurrentVersion()){
--			
++// 		    if ( update_prevented_version == versionGetter.getCurrentVersion()){
+ 			
 -		    	Logger.log(new LogEvent(LOGID, LogEvent.LT_ERROR, "SWT update aborted due to previously reported issues regarding its install location" ));
--		    			
++// 		    	Logger.log(new LogEvent(LOGID, LogEvent.LT_ERROR, "SWT update aborted due to previously reported issues regarding its install location" ));
+ 		    			
 -				checker.failed();
--				
++// 				checker.failed();
+ 				
 -				checker.getCheckInstance().cancel();
--				
++// 				checker.getCheckInstance().cancel();
+ 				
 -				return;
 -		    }
--	    	    	 
++// 				return;
++// 		    }
+ 	    	    	 
 -	      String[] mirrors = versionGetter.getMirrors();
--	      
++// 	      String[] mirrors = versionGetter.getMirrors();
+ 	      
 -	      ResourceDownloader swtDownloader = null;
--	      
++// 	      ResourceDownloader swtDownloader = null;
+ 	      
 -          ResourceDownloaderFactory factory = ResourceDownloaderFactoryImpl.getSingleton();
 -          List downloaders =  new ArrayList();
 -          for(int i = 0 ; i < mirrors.length ; i++) {
@@ -136,31 +207,62 @@
 -          ResourceDownloader[] resourceDownloaders = 
 -            (ResourceDownloader[]) 
 -            downloaders.toArray(new ResourceDownloader[downloaders.size()]);
--          
++//           ResourceDownloaderFactory factory = ResourceDownloaderFactoryImpl.getSingleton();
++//           List downloaders =  new ArrayList();
++//           for(int i = 0 ; i < mirrors.length ; i++) {
++//             try {
++//               downloaders.add(factory.getSuffixBasedDownloader(factory.create(new URL(mirrors[i]))));
++//             } catch(MalformedURLException e) {
++//               //Do nothing
++//             	if (Logger.isEnabled())
++// 								Logger.log(new LogEvent(LOGID, LogEvent.LT_WARNING,
++// 										"Cannot use URL " + mirrors[i] + " (not valid)"));
++//             }
++//           }
++//           ResourceDownloader[] resourceDownloaders = 
++//             (ResourceDownloader[]) 
++//             downloaders.toArray(new ResourceDownloader[downloaders.size()]);
+           
 -          swtDownloader = factory.getRandomDownloader(resourceDownloaders);
--	      
++//           swtDownloader = factory.getRandomDownloader(resourceDownloaders);
+ 	      
 -	      	// get the size so its cached up
--	      
++// 	      	// get the size so its cached up
+ 	      
 -	      try{
 -	      	swtDownloader.getSize();
--	      	
++// 	      try{
++// 	      	swtDownloader.getSize();
+ 	      	
 -	      }catch( ResourceDownloaderException e ){
--	      
++// 	      }catch( ResourceDownloaderException e ){
+ 	      
 -	      	Debug.printStackTrace( e );
 -	      }
--	      
++// 	      	Debug.printStackTrace( e );
++// 	      }
+ 	      
 -	      final Update update = 
 -	    	  checker.addUpdate("SWT Library for " + versionGetter.getPlatform(),
--		          new String[] {"SWT is the graphical library used by Azureus"},
+-		          new String[] {"SWT is the graphical library used by " + Constants.APP_NAME},
 -		          "" + versionGetter.getLatestVersion(),
 -		          swtDownloader,
 -		          Update.RESTART_REQUIRED_YES
 -	          );
--	      
++// 	      final Update update = 
++// 	    	  checker.addUpdate("SWT Library for " + versionGetter.getPlatform(),
++// 		          new String[] {"SWT is the graphical library used by " + Constants.APP_NAME},
++// 		          "" + versionGetter.getLatestVersion(),
++// 		          swtDownloader,
++// 		          Update.RESTART_REQUIRED_YES
++// 	          );
+ 	      
 -	      update.setDescriptionURL(versionGetter.getInfoURL());
--	      
++// 	      update.setDescriptionURL(versionGetter.getInfoURL());
+ 	      
 -	      swtDownloader.addListener(new ResourceDownloaderAdapter() {
--		        
++// 	      swtDownloader.addListener(new ResourceDownloaderAdapter() {
+ 		        
 -		        public boolean completed(ResourceDownloader downloader, InputStream data) {
 -		          //On completion, process the InputStream to store temp files
 -		          return processData(checker,update,downloader,data);
@@ -170,14 +272,26 @@
 -  	}catch( Throwable e ){
 -  		Logger.log(new LogAlert(LogAlert.UNREPEATABLE,
 -					"SWT Version check failed", e));
--  		
++// 		        public boolean completed(ResourceDownloader downloader, InputStream data) {
++// 		          //On completion, process the InputStream to store temp files
++// 		          return processData(checker,update,downloader,data);
++// 		        }
++// 		      });
++// 	    }
++//   	}catch( Throwable e ){
++//   		Logger.log(new LogAlert(LogAlert.UNREPEATABLE,
++// 					"SWT Version check failed", e));
+   		
 -  		checker.failed();
--  		
++//   		checker.failed();
+   		
 -  	}finally{
--  		
++//   	}finally{
+   		
 -  		checker.completed();
 -  	}
--    
++//   		checker.completed();
++//   	}
+     
    }
    
-   private boolean 
