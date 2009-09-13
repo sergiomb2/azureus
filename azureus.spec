@@ -1,8 +1,8 @@
 %define		_newname Vuze
 
 Name:		azureus
-Version:	4.2.0.4
-Release:	2%{?dist}
+Version:	4.2.0.8
+Release:	1%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 License:	GPLv2+
@@ -13,13 +13,6 @@ Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_%{version}_source.
 Source1:	azureus.script
 Source2:	Azureus.desktop
 Source3:	azureus.applications
-
-#retrieved from CVS
-Source4:	build.xml
-#Source4:	azureus-License.txt
-
-#Source5:	azplugins_2.1.6.jar
-#Source6:	bdcc_2.2.2.zip
 
 #Patch0:		azureus-remove-win32-osx-platforms.patch
 Patch2:		azureus-cache-size.patch
@@ -79,7 +72,6 @@ advanced users.
 %prep
 %setup -q -c
 
-cp %{SOURCE4} .
 #%patch0 -p0
 %patch2 -p0
 %patch3 -p1 -b .remove-manifest-classpath
@@ -107,9 +99,34 @@ cp %{SOURCE4} .
 rm org/gudy/azureus2/platform/macosx/access/cocoa/CocoaJavaBridge.java
 rm org/gudy/azureus2/platform/macosx/PlatformManagerImpl.java
 rm org/gudy/azureus2/platform/win32/PlatformManagerImpl.java
-%patch50 -b .boo-windows
+rm org/gudy/azureus2/platform/macosx/access/jnilib/OSXAccess.java
+rm org/gudy/azureus2/platform/win32/access/AEWin32Access.java
+rm org/gudy/azureus2/platform/win32/access/impl/AEWin32AccessInterface.java
+rm org/gudy/azureus2/platform/win32/access/impl/aereg.cpp
+rm org/gudy/azureus2/platform/win32/access/impl/AEWin32AccessImpl.java
+rm org/gudy/azureus2/platform/win32/access/impl/org_gudy_azureus2_platform_win32_access_impl_AEWin32AccessInterface.h
+rm org/gudy/azureus2/platform/win32/access/impl/Test.java
+rm org/gudy/azureus2/platform/macosx/NativeInvocationBridge.java
+rm org/gudy/azureus2/platform/macosx/PListEditor.java
+rm org/gudy/azureus2/platform/win32/access/AEWin32AccessException.java
+rm org/gudy/azureus2/platform/win32/access/AEWin32AccessListener.java
+rm org/gudy/azureus2/platform/win32/access/AEWin32Manager.java
+rm org/gudy/azureus2/platform/win32/access/impl/aenet.cpp
+rm org/gudy/azureus2/platform/win32/access/impl/aenet.h
+rm org/gudy/azureus2/platform/win32/access/impl/aereg.dsp
+rm org/gudy/azureus2/platform/win32/access/impl/aereg.dsw
+rm org/gudy/azureus2/platform/win32/access/impl/aereg.h
+rm org/gudy/azureus2/platform/win32/access/impl/AEWin32AccessCallback.java
+rm org/gudy/azureus2/platform/win32/access/impl/AEWin32AccessExceptionImpl.java
+rm org/gudy/azureus2/platform/win32/access/impl/generate_ini.bat
+rm org/gudy/azureus2/platform/win32/access/impl/StdAfx.cpp
+rm org/gudy/azureus2/platform/win32/access/impl/StdAfx.h
+rm org/gudy/azureus2/platform/win32/PlatformManagerUpdateChecker.java
+%patch50 -p1 -b .boo-windows
 
 rm org/gudy/azureus2/ui/swt/osx/CarbonUIEnhancer.java
+rm org/gudy/azureus2/ui/swt/osx/Start.java
+rm org/gudy/azureus2/ui/swt/win32/Win32UIEnhancer.java
 %patch51 -b .boo-osx
 %patch52 -b .orig
 %patch53 -p1 -b .boo-updating-w32
@@ -216,7 +233,7 @@ fi
 
 %files
 %defattr(-,root,root)
-%doc ChangeLog.txt
+%doc ChangeLog.txt GPL.txt
 %{_datadir}/applications/*
 %{_datadir}/application-registry/*
 %{_datadir}/pixmaps/azureus.png
@@ -227,6 +244,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Sat Sep 12 2009 David Juran <djuran@redhat.com> - 4.2.0.8-1
+- Upgrade to 4.2.0.8
+
 * Tue Aug  4 2009 David Juran <david@juran.se> - 4.2.0.4-2
 - Fix Bz 515228 properly
 
