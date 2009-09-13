@@ -1,17 +1,27 @@
---- origorg/gudy/azureus2/ui/swt/update/UpdateMonitor.java	2007-11-30 10:44:14.000000000 -0500
-+++ org/gudy/azureus2/ui/swt/update/UpdateMonitor.java	2008-01-29 10:08:47.000000000 -0500
-@@ -89,70 +89,6 @@
+diff -up azureus-4.2.0.8/org/gudy/azureus2/ui/swt/update/UpdateMonitor.java.no-update-manager-UpdateMonitor azureus-4.2.0.8/org/gudy/azureus2/ui/swt/update/UpdateMonitor.java
+--- azureus-4.2.0.8/org/gudy/azureus2/ui/swt/update/UpdateMonitor.java.no-update-manager-UpdateMonitor	2009-07-08 19:00:26.000000000 +0200
++++ azureus-4.2.0.8/org/gudy/azureus2/ui/swt/update/UpdateMonitor.java	2009-09-13 13:24:24.000000000 +0200
+@@ -100,66 +100,66 @@ public class UpdateMonitor
  	protected UpdateMonitor(AzureusCore _azureus_core) {
  		azCore = _azureus_core;
  
--		PluginInterface defPI = azCore.getPluginManager().getDefaultPluginInterface();
+-		PluginInterface defPI = PluginInitializer.getDefaultInterface();
 -		UpdateManager um = defPI.getUpdateManager();
--
++// 		PluginInterface defPI = PluginInitializer.getDefaultInterface();
++// 		UpdateManager um = defPI.getUpdateManager();
+ 
 -		um.addListener(new UpdateManagerListener() {
 -			public void checkInstanceCreated(UpdateCheckInstance instance) {
 -				instance.addListener(UpdateMonitor.this);
--				
--				new updateStatusChanger(instance);
++// 		um.addListener(new UpdateManagerListener() {
++// 			public void checkInstanceCreated(UpdateCheckInstance instance) {
++// 				instance.addListener(UpdateMonitor.this);
+ 				
+-				if ( !instance.isLowNoise()){
++// 				if ( !instance.isLowNoise()){
+ 				
+-					new updateStatusChanger(instance);
+-				}
 -			}
 -		});
 -
@@ -61,17 +71,61 @@
 -						performAutoCheck(false);
 -					}
 -				});
--
--		// wait a bit before starting check to give rest of AZ time to initialise 
--		new DelayedEvent("UpdateMon:wait", 2500, new AERunnable() {
--			public void runSupport() {
--				performAutoCheck(true);
--			}
--		});
- 	}
++// 					new updateStatusChanger(instance);
++// 				}
++// 			}
++// 		});
++
++// 		um.addVerificationListener(new UpdateManagerVerificationListener() {
++// 			public boolean acceptUnVerifiedUpdate(final Update update) {
++// 				UIFunctions uiFunctions = UIFunctionsManager.getUIFunctions();
++// 				if (uiFunctions != null) {
++// 					String title = MessageText.getString(MSG_PREFIX
++// 							+ "accept.unverified.title");
++// 					String text = MessageText.getString(MSG_PREFIX
++// 							+ "accept.unverified.text", new String[] {
++// 						update.getName()
++// 					});
++// 					return uiFunctions.promptUser(title, text, new String[] {
++// 						MessageText.getString("Button.yes"),
++// 						MessageText.getString("Button.no")
++// 					}, 1, MSG_PREFIX + "accept.unverified",
++// 							MessageText.getString("MessageBoxWindow.nomoreprompting"), false,
++// 							0) == 0;
++// 				}
++
++// 				return false;
++// 			}
++
++// 			public void verificationFailed(final Update update, final Throwable cause) {
++// 				final String cause_str = Debug.getNestedExceptionMessage(cause);
++// 				UIFunctions uiFunctions = UIFunctionsManager.getUIFunctions();
++// 				if (uiFunctions != null) {
++// 					String title = MessageText.getString(MSG_PREFIX
++// 							+ "verification.failed.title");
++// 					String text = MessageText.getString(MSG_PREFIX
++// 							+ "verification.failed.text", new String[] {
++// 						update.getName(),
++// 						cause_str
++// 					});
++// 					uiFunctions.promptUser(title, text, new String[] {
++// 						MessageText.getString("Button.ok")
++// 					}, 0, null, null, false, 0);
++// 				}
++// 			}
++// 		});
++
++
++// 		SimpleTimer.addPeriodicEvent("UpdateMon:autocheck",
++// 				AUTO_UPDATE_CHECK_PERIOD, new TimerEventPerformer() {
++// 					public void perform(TimerEvent ev) {
++// 						performAutoCheck(false);
++// 					}
++// 				});
  
- 	protected class updateStatusChanger
-@@ -306,43 +242,6 @@
+ 		DelayedTask delayed_task = 
+ 			UtilitiesImpl.addDelayedTask(
+@@ -381,43 +381,6 @@ public class UpdateMonitor
  	}
  	
  	protected void performAutoCheck(final boolean start_of_day) {
@@ -115,7 +169,7 @@
  	}
  
  	public void 
-@@ -352,76 +251,6 @@
+@@ -427,76 +390,7 @@ public class UpdateMonitor
  		final boolean						isRecheck,
  		final UpdateCheckInstanceListener 	l ) 
  	{
@@ -170,7 +224,7 @@
 -
 -		AEThread2 t = new AEThread2("UpdateMonitor:kickoff", true) {
 -			public void run() {
--				UpdateManager um = azCore.getPluginManager().getDefaultPluginInterface().getUpdateManager();
+-				UpdateManager um = PluginInitializer.getDefaultInterface().getUpdateManager();
 -
 -				current_update_instance = um.createUpdateCheckInstance(bForce
 -						? UpdateCheckInstance.UCI_INSTALL : UpdateCheckInstance.UCI_UPDATE,
@@ -187,8 +241,8 @@
 -				current_update_instance.start();
 -			}
 -		};
--
+ 
 -		t.start();
  	}
  
- 	public void complete(UpdateCheckInstance instance) {
+ 	public void complete( final UpdateCheckInstance instance) {

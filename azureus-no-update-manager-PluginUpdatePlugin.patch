@@ -1,11 +1,13 @@
---- org/gudy/azureus2/pluginsimpl/update/PluginUpdatePlugin.java.orig	2006-02-09 23:32:49.000000000 -0500
-+++ org/gudy/azureus2/pluginsimpl/update/PluginUpdatePlugin.java	2006-02-09 23:33:49.000000000 -0500
-@@ -130,20 +130,6 @@
- 		
- 		config.addBooleanParameter2( "enable.update", "Plugin.pluginupdate.enablecheck", true );
- 				
+diff -up azureus-4.0.0.4/org/gudy/azureus2/pluginsimpl/update/PluginUpdatePlugin.java.no-update-manager-PluginUpdatePlugin azureus-4.0.0.4/org/gudy/azureus2/pluginsimpl/update/PluginUpdatePlugin.java
+--- azureus-4.0.0.4/org/gudy/azureus2/pluginsimpl/update/PluginUpdatePlugin.java.no-update-manager-PluginUpdatePlugin	2008-09-25 14:32:04.000000000 +0300
++++ azureus-4.0.0.4/org/gudy/azureus2/pluginsimpl/update/PluginUpdatePlugin.java	2009-09-05 17:29:07.000000000 +0300
+@@ -138,19 +138,19 @@ PluginUpdatePlugin
+ 	initComplete(
+ 		final PluginConfig		plugin_config )
+ 	{
 -		UpdateManager	update_manager = plugin_interface.getUpdateManager();
--		
++// 		UpdateManager	update_manager = plugin_interface.getUpdateManager();
+ 		
 -		update_manager.addListener(
 -			new UpdateManagerListener()
 -			{
@@ -15,17 +17,25 @@
 -				{
 -					SFPluginDetailsLoaderFactory.getSingleton().reset();
 -				}
--				
++// 		update_manager.addListener(
++// 			new UpdateManagerListener()
++// 			{
++// 				public void
++// 				checkInstanceCreated(
++// 					UpdateCheckInstance	inst )
++// 				{
++// 					SFPluginDetailsLoaderFactory.getSingleton().reset();
++// 				}
+ 				
 -			});
--		
++// 			});
+ 		
  		final PluginManager	plugin_manager = plugin_interface.getPluginManager();
  		
- 		PluginInterface[]	plugins = plugin_manager.getPlugins();
-@@ -169,134 +155,6 @@
- 		
+@@ -178,133 +178,133 @@ PluginUpdatePlugin
  		final int f_non_mandatory_count	= non_mandatory_count;
  		final int f_mandatory_count		= mandatory_count;
--		
+ 		
 -		update_manager.registerUpdatableComponent( 
 -			new UpdatableComponent()
 -			{
@@ -34,51 +44,86 @@
 -				{
 -					return( "Non-mandatory plugins" );
 -				}
--				
++// 		update_manager.registerUpdatableComponent( 
++// 			new UpdatableComponent()
++// 			{
++// 				public String
++// 				getName()
++// 				{
++// 					return( "Non-mandatory plugins" );
++// 				}
+ 				
 -				public int
 -				getMaximumCheckTime()
 -				{
 -					return( f_non_mandatory_count * (( RD_SIZE_RETRIES * RD_SIZE_TIMEOUT )/1000));
 -				}	
--				
++// 				public int
++// 				getMaximumCheckTime()
++// 				{
++// 					return( f_non_mandatory_count * (( RD_SIZE_RETRIES * RD_SIZE_TIMEOUT )/1000));
++// 				}	
+ 				
 -				public void
 -				checkForUpdate(
 -					UpdateChecker	checker )
 -				{
 -					if ( checkForUpdateSupport( checker, null, false ) == 0 ){
--						
++// 				public void
++// 				checkForUpdate(
++// 					UpdateChecker	checker )
++// 				{
++// 					if ( checkForUpdateSupport( checker, null, false ) == 0 ){
+ 						
 -						String[] rps = VersionCheckClient.getSingleton(). getRecommendedPlugins();
--						
++// 						String[] rps = VersionCheckClient.getSingleton(). getRecommendedPlugins();
+ 						
 -						boolean	found_one = false;
--						
++// 						boolean	found_one = false;
+ 						
 -						for (int i=0;i<rps.length;i++){
--							
++// 						for (int i=0;i<rps.length;i++){
+ 							
 -							String	rp_id = rps[i];
--							
--							if ( plugin_manager.getPluginInterfaceByID( rp_id ) != null ){
--								
++// 							String	rp_id = rps[i];
+ 							
+-							if ( plugin_manager.getPluginInterfaceByID( rp_id, false ) != null ){
++// 							if ( plugin_manager.getPluginInterfaceByID( rp_id, false ) != null ){
+ 								
 -									// already installed
--								
++// 									// already installed
+ 								
 -								continue;
 -							}
--							
++// 								continue;
++// 							}
+ 							
 -							final String	config_key = "recommended.processed." + rp_id;
--							
++// 							final String	config_key = "recommended.processed." + rp_id;
+ 							
 -							if ( !plugin_config.getPluginBooleanParameter( config_key, false )){
--								
++// 							if ( !plugin_config.getPluginBooleanParameter( config_key, false )){
+ 								
 -								try{
 -									final PluginInstaller installer = plugin_interface.getPluginManager().getPluginInstaller();
--									
++// 								try{
++// 									final PluginInstaller installer = plugin_interface.getPluginManager().getPluginInstaller();
+ 									
 -									StandardPlugin[]	sps = installer.getStandardPlugins();
--									
++// 									StandardPlugin[]	sps = installer.getStandardPlugins();
+ 									
 -									for (int j=0;j<sps.length;j++){
--										
++// 									for (int j=0;j<sps.length;j++){
+ 										
 -										final StandardPlugin	sp = sps[j];
--										
++// 										final StandardPlugin	sp = sps[j];
+ 										
 -										if ( sp.getId().equals( rp_id )){
--										
++// 										if ( sp.getId().equals( rp_id )){
+ 										
 -											found_one = true;
--											
++// 											found_one = true;
+ 											
 -											checker.getCheckInstance().addListener(
 -												new UpdateCheckInstanceListener()
 -												{
@@ -87,15 +132,29 @@
 -														UpdateCheckInstance		instance )
 -													{													
 -													}
--													
++// 											checker.getCheckInstance().addListener(
++// 												new UpdateCheckInstanceListener()
++// 												{
++// 													public void
++// 													cancelled(
++// 														UpdateCheckInstance		instance )
++// 													{													
++// 													}
+ 													
 -													public void
 -													complete(
 -														UpdateCheckInstance		instance )
 -													{
 -														if ( instance.getUpdates().length == 0 ){
--															
++// 													public void
++// 													complete(
++// 														UpdateCheckInstance		instance )
++// 													{
++// 														if ( instance.getUpdates().length == 0 ){
+ 															
 -															installRecommendedPlugin( installer, sp );
--															
++// 															installRecommendedPlugin( installer, sp );
+ 															
 -															plugin_config.setPluginParameter( config_key, true );
 -														}
 -													}
@@ -153,6 +212,63 @@
 -					log.log( LoggerChannel.LT_INFORMATION, "**** Update check starts ****" );
 -				}
 -			});
++// 															plugin_config.setPluginParameter( config_key, true );
++// 														}
++// 													}
++// 												});
++											
++// 											break;
++// 										}
++// 									}
++									
++// 								}catch( Throwable e ){
++									
++// 								}
++// 							}
++							
++// 							if ( found_one ){
++								
++// 								break;
++// 							}
++// 						}
++// 					}
++// 				}
++				
++// 			}, false );
++		
++// 		update_manager.registerUpdatableComponent( 
++// 				new UpdatableComponent()
++// 				{
++// 					public String
++// 					getName()
++// 					{
++// 						return( "Mandatory plugins" );
++// 					}
++					
++// 					public int
++// 					getMaximumCheckTime()
++// 					{
++// 						return( f_mandatory_count * (( RD_SIZE_RETRIES * RD_SIZE_TIMEOUT )/1000));
++// 					}
++					
++// 					public void
++// 					checkForUpdate(
++// 						UpdateChecker	checker )
++// 					{
++// 						checkForUpdateSupport( checker, null, true );
++// 					}			
++// 				}, true );
++		
++// 		update_manager.addListener(
++// 			new UpdateManagerListener()
++// 			{
++// 				public void
++// 				checkInstanceCreated(
++// 					UpdateCheckInstance	instance )
++// 				{
++// 					log.log( LoggerChannel.LT_INFORMATION, "**** Update check starts ****" );
++// 				}
++// 			});
  	}
  	
  	protected void

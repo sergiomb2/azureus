@@ -2,7 +2,7 @@
 
 Name:		azureus
 Version:	4.2.0.8
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 License:	GPLv2+
@@ -18,16 +18,15 @@ Source3:	azureus.applications
 Patch2:		azureus-cache-size.patch
 Patch3:		azureus-remove-manifest-classpath.patch
 Patch9:		azureus-no-shared-plugins.patch
-#Patch12:	azureus-no-updates-PluginInitializer.patch
-#Patch13:	azureus-no-updates-PluginInterfaceImpl.patch
+Patch12:	azureus-no-updates-PluginInitializer.patch
+Patch13:	azureus-no-updates-PluginInterfaceImpl.patch
 Patch14:	azureus-no-update-manager-AzureusCoreImpl.patch
 Patch15:	azureus-no-update-manager-CorePatchChecker.patch
-#Patch16:	azureus-no-update-manager-CoreUpdateChecker.patch
-#Patch18:	azureus-no-update-manager-PluginInstallerImpl.patch
-#Patch19:	azureus-no-update-manager-PluginUpdatePlugin.patch
-#Patch20:	azureus-no-update-manager-SWTUpdateChecker.patch
-#Patch22:	azureus-no-update-manager-UpdateMonitor.patch
-#Patch23:	azureus-no-update-manager-PluginInstallerImpl-2.patch
+Patch16:	azureus-no-update-manager-CoreUpdateChecker.patch
+Patch18:	azureus-no-update-manager-PluginInstallerImpl.patch
+Patch19:	azureus-no-update-manager-PluginUpdatePlugin.patch
+Patch20:	azureus-no-update-manager-SWTUpdateChecker.patch
+Patch22:	azureus-no-update-manager-UpdateMonitor.patch
 Patch27:	azureus-SecureMessageServiceClientHelper-bcprov.patch
 Patch28:	azureus-configuration.patch
 #Patch31:	azureus-fix-menu-MainMenu.patch
@@ -76,16 +75,15 @@ advanced users.
 %patch2 -p0
 %patch3 -p1 -b .remove-manifest-classpath
 %patch9 -p0
-#%patch12 -p0
-#%patch13 -p0
+%patch12 -p1 -b .no-updates-PluginInitializer
+%patch13 -p1 -b .no-updates-PluginInterfaceImpl
 %patch14 -p0
 %patch15 -p0
-#%patch16 -p0
-#%patch18 -p0
-#%patch19 -p0
-#%patch20 -p0
-#%patch22 -p0
-#%patch23 -p0
+%patch16 -p1 -b .no-update-manager-CoreUpdateChecker
+%patch18 -p1 -b .no-update-manager-PluginInstallerImpl
+%patch19 -p1 -b .no-update-manager-PluginUpdatePlugin
+%patch20 -p1 -b .no-update-manager-SWTUpdateChecker
+%patch22 -p1 -b .no-update-manager-UpdateMonitor
 %patch27 -p1 -b .nobcprov
 %patch28 -p0
 #%patch31 -p0
@@ -244,6 +242,10 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Sun Sep  13 2009 David Juran <djuran@redhat.com> - 4.2.0.8-2
+- revive the no-updates patches (Bz515131)
+- fix start-script to work when  /usr/share/azureus/plugins/ is empty
+
 * Sat Sep 12 2009 David Juran <djuran@redhat.com> - 4.2.0.8-1
 - Upgrade to 4.2.0.8
 
