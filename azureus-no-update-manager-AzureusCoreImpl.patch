@@ -1,9 +1,11 @@
---- com/aelitis/azureus/core/impl/AzureusCoreImpl.java.orig	2006-03-25 14:17:49.000000000 -0800
-+++ com/aelitis/azureus/core/impl/AzureusCoreImpl.java	2006-03-25 15:14:01.000000000 -0800
-@@ -584,14 +584,6 @@
+diff -up azureus-4.3.0.0/com/aelitis/azureus/core/impl/AzureusCoreImpl.java.no-update-manager-AzureusCoreImpl azureus-4.3.0.0/com/aelitis/azureus/core/impl/AzureusCoreImpl.java
+--- azureus-4.3.0.0/com/aelitis/azureus/core/impl/AzureusCoreImpl.java.no-update-manager-AzureusCoreImpl	2009-11-10 23:07:36.000000000 +0200
++++ azureus-4.3.0.0/com/aelitis/azureus/core/impl/AzureusCoreImpl.java	2009-11-19 21:10:10.000000000 +0200
+@@ -1341,14 +1341,6 @@ AzureusCoreImpl 
+ 	
  			if (Logger.isEnabled())
  				Logger.log(new LogEvent(LOGID, "Stop operation completes"));
- 	
+-	
 -				// if any installers exist then we need to closedown via the updater
 -			
 -			if ( 	apply_updates && 
@@ -11,7 +13,6 @@
 -				
 -				AzureusRestarterFactory.create( this ).restart( true );
 -			}
--			
- 			try{
- 				ThreadGroup	tg = Thread.currentThread().getThreadGroup();
- 				
+ 			
+ 			try {
+ 	      Class c = Class.forName( "sun.awt.AWTAutoShutdown" );

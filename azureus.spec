@@ -1,8 +1,8 @@
 %define		_newname Vuze
 
 Name:		azureus
-Version:	4.2.0.8
-Release:	2%{?dist}
+Version:	4.3.0.0
+Release:	1%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 License:	GPLv2+
@@ -77,7 +77,7 @@ advanced users.
 %patch9 -p0
 %patch12 -p1 -b .no-updates-PluginInitializer
 %patch13 -p1 -b .no-updates-PluginInterfaceImpl
-%patch14 -p0
+%patch14 -p1 -b .no-update-manager-AzureusCoreImpl
 %patch15 -p0
 %patch16 -p1 -b .no-update-manager-CoreUpdateChecker
 %patch18 -p1 -b .no-update-manager-PluginInstallerImpl
@@ -125,7 +125,7 @@ rm org/gudy/azureus2/platform/win32/PlatformManagerUpdateChecker.java
 rm org/gudy/azureus2/ui/swt/osx/CarbonUIEnhancer.java
 rm org/gudy/azureus2/ui/swt/osx/Start.java
 rm org/gudy/azureus2/ui/swt/win32/Win32UIEnhancer.java
-%patch51 -b .boo-osx
+%patch51 -p1 -b .boo-osx
 %patch52 -b .orig
 %patch53 -p1 -b .boo-updating-w32
 %patch54 -b .orig
@@ -242,6 +242,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Thu Nov 19 2009 David Juran <djuran@redhat.com> - 4.3.0.0-1
+- upgrade to azureus-4.3.0.0
+
 * Sun Sep  13 2009 David Juran <djuran@redhat.com> - 4.2.0.8-2
 - revive the no-updates patches (Bz515131)
 - fix start-script to work when  /usr/share/azureus/plugins/ is empty

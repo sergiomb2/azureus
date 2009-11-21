@@ -1,31 +1,61 @@
-diff -up azureus-4.2.0.4/org/gudy/azureus2/ui/swt/mainwindow/SWTThread.java.boo-osx azureus-4.2.0.4/org/gudy/azureus2/ui/swt/mainwindow/SWTThread.java
---- org/gudy/azureus2/ui/swt/mainwindow/SWTThread.java.boo-osx	2009-04-16 20:46:42.000000000 +0300
-+++ org/gudy/azureus2/ui/swt/mainwindow/SWTThread.java	2009-07-31 19:35:41.000000000 +0300
-@@ -153,25 +153,6 @@ public class SWTThread {
+diff -up azureus-4.3.0.0/org/gudy/azureus2/ui/swt/mainwindow/SWTThread.java.boo-osx azureus-4.3.0.0/org/gudy/azureus2/ui/swt/mainwindow/SWTThread.java
+--- azureus-4.3.0.0/org/gudy/azureus2/ui/swt/mainwindow/SWTThread.java.boo-osx	2009-10-30 01:16:06.000000000 +0200
++++ azureus-4.3.0.0/org/gudy/azureus2/ui/swt/mainwindow/SWTThread.java	2009-11-19 21:24:45.000000000 +0200
+@@ -175,57 +175,6 @@ public class SWTThread {
  			}
  		});
-     
--    if ( Constants.isOSX && SWT.getPlatform().equals("carbon") ){
--    	
--    		// use reflection here so we decouple generic SWT from OSX specific stuff to an extent
--    	
--    	 try{
--    	 	
--            Class ehancerClass = Class.forName("org.gudy.azureus2.ui.swt.osx.CarbonUIEnhancer");
--            
--            Constructor constructor = ehancerClass.getConstructor(new Class[]{});
--            
--            constructor.newInstance(new Object[] {});
+ 
+-		if (Constants.isOSX) {
+-			
+-			// On Cocoa, we get a Close trigger on display.  Need to check if all
+-			// platforms send this.
+-			display.addListener(SWT.Close, new Listener() {
+-				public void handleEvent(Event event) {
+-					event.doit = UIFunctionsManager.getUIFunctions().dispose(false, false);
+-				}
+-			});
 -
--        } catch (Exception e) {
--        	
--            Debug.printStackTrace(e);
--        }
--    }
--    
+-			String platform = SWT.getPlatform();
+-			// use reflection here so we decouple generic SWT from OSX specific stuff to an extent
+-
+-			if (platform.equals("carbon")) {
+-				try {
+-
+-					Class<?> ehancerClass = Class.forName("org.gudy.azureus2.ui.swt.osx.CarbonUIEnhancer");
+-
+-					Constructor<?> constructor = ehancerClass.getConstructor(new Class[] {});
+-
+-					constructor.newInstance(new Object[] {});
+-
+-				} catch (Throwable e) {
+-
+-					Debug.printStackTrace(e);
+-				}
+-			} else if (platform.equals("cocoa")) {
+-				try {
+-
+-					Class<?> ehancerClass = Class.forName("org.gudy.azureus2.ui.swt.osx.CocoaUIEnhancer");
+-
+-					Method mGetInstance = ehancerClass.getMethod("getInstance", new Class[0]);
+-					Object claObj = mGetInstance.invoke(null, new Object[0] );
+-
+-					Method mHookAppMenu = claObj.getClass().getMethod("hookApplicationMenu", new Class[] {});
+-					if (mHookAppMenu != null) {
+-						mHookAppMenu.invoke(claObj, new Object[0]);
+-					}
+-
+-					Method mHookDocOpen = claObj.getClass().getMethod("hookDocumentOpen", new Class[] {});
+-					if (mHookDocOpen != null) {
+-						mHookDocOpen.invoke(claObj, new Object[0]);
+-					}
+-					
+-				} catch (Throwable e) {
+-
+-					Debug.printStackTrace(e);
+-				}
+-			}
+-		}   
 -
  		if (app != null) {
  			app.runInSWTThread();
  			runner = new Thread(new AERunnable() {
-diff -up azureus-4.2.0.4/org/gudy/azureus2/ui/swt/osx/Start.java.boo-osx azureus-4.2.0.4/org/gudy/azureus2/ui/swt/osx/Start.java
-diff -up azureus-4.2.0.4/org/gudy/azureus2/ui/swt/win32/Win32UIEnhancer.java.boo-osx azureus-4.2.0.4/org/gudy/azureus2/ui/swt/win32/Win32UIEnhancer.java
