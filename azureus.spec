@@ -1,7 +1,7 @@
 %define		_newname Vuze
 
 Name:		azureus
-Version:	4.3.0.0
+Version:	4.3.0.4
 Release:	1%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
@@ -242,6 +242,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Tue Dec  1 2009 David Juran <djuran@redhat.com> - 4.3.0.4-1
+- upgrade to 4.3.0.4
+
 * Thu Nov 19 2009 David Juran <djuran@redhat.com> - 4.3.0.0-1
 - upgrade to azureus-4.3.0.0
 
