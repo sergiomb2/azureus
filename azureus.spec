@@ -2,7 +2,7 @@
 
 Name:		azureus
 Version:	4.3.0.4
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 License:	GPLv2+
@@ -149,7 +149,13 @@ chmod 644 *.txt
 mkdir -p build/libs
 build-jar-repository -p build/libs bcprov jakarta-commons-cli log4j \
   gtk2.8 glib0.2 junit
-ln -s %{_libdir}/eclipse/swt.jar build/libs
+
+#ppc seems to have eclipse-swt.ppc64 installed so libdir can't be used
+if [ -e /usr/lib/eclipse/swt.jar ];then
+  ln -s /usr/lib/eclipse/swt.jar build/libs
+else
+  ln -s /usr/lib64/eclipse/swt.jar build/libs
+fi
 
 ant jar
 
@@ -242,6 +248,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Thu Dec  3 2009 David Juran <djuran@redhat.com> - 4.3.0.4-2
+- fix build, even on ppc
+
 * Wed Dec  2 2009 David Juran <djuran@redhat.com> - 4.3.0.4-1
 - upgrade to 4.3.0.4 (Bz 540179)
 
