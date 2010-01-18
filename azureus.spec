@@ -48,11 +48,11 @@ BuildRequires:	ant, jpackage-utils >= 1.5, xml-commons-apis
 BuildRequires:	jakarta-commons-cli, log4j
 BuildRequires:	libgconf-java
 BuildRequires:	bouncycastle >= 1.33-3
-BuildRequires:	eclipse-swt >= 3.4.0
+BuildRequires:	eclipse-swt >= 3.5
 BuildRequires:	junit
 Requires:	jakarta-commons-cli, log4j
 Requires:	xulrunner
-Requires:	eclipse-swt >= 3.4.0
+Requires:	eclipse-swt >= 3.5
 Requires:	libgconf-java
 Requires:	 bouncycastle >= 1.33-3
 Requires:	 java >= 1:1.6.0
@@ -72,20 +72,20 @@ advanced users.
 %setup -q -c
 
 #%patch0 -p0
-%patch2 -p0
+%patch2 -p0 -b .cache-size
 %patch3 -p1 -b .remove-manifest-classpath
-%patch9 -p0
+%patch9 -p0 -b .no-shared-plugins
 %patch12 -p1 -b .no-updates-PluginInitializer
 %patch13 -p1 -b .no-updates-PluginInterfaceImpl
 %patch14 -p1 -b .no-update-manager-AzureusCoreImpl
-%patch15 -p0
+%patch15 -p0 -b .no-update-manager-CorePatchChecker
 %patch16 -p1 -b .no-update-manager-CoreUpdateChecker
 %patch18 -p1 -b .no-update-manager-PluginInstallerImpl
 %patch19 -p1 -b .no-update-manager-PluginUpdatePlugin
 %patch20 -p1 -b .no-update-manager-SWTUpdateChecker
 %patch22 -p1 -b .no-update-manager-UpdateMonitor
 %patch27 -p1 -b .nobcprov
-%patch28 -p0
+%patch28 -p0 -b .configuration
 #%patch31 -p0
 #rm com/aelitis/azureus/core/update -rf
 #find ./ -name osx | xargs rm -r
@@ -126,12 +126,12 @@ rm org/gudy/azureus2/ui/swt/osx/CarbonUIEnhancer.java
 rm org/gudy/azureus2/ui/swt/osx/Start.java
 rm org/gudy/azureus2/ui/swt/win32/Win32UIEnhancer.java
 %patch51 -p1 -b .boo-osx
-%patch52 -b .orig
+%patch52 -b .screw-w32-tests
 %patch53 -p1 -b .boo-updating-w32
-%patch54 -b .orig
-%patch55 -b .orig
+%patch54 -b .screw-win32utils
+%patch55 -b .oops-return
 %patch56 -p1 -b .silly-java-tricks-are-for-kids
-%patch57 -b .orig -p1
+%patch57  -p1 -b stupid-invalid-characters
 
 %patch58 -p1 -b .java5
 
@@ -248,6 +248,10 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Mon Jan 18 2010 David Juran <djuran@redhat.com> - 4.3.0.4-2
+- apply -s to all patches
+- update to 4.3.0.6
+
 * Thu Dec  3 2009 David Juran <djuran@redhat.com> - 4.3.0.4-2
 - fix build, even on ppc
 
