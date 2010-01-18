@@ -1,8 +1,8 @@
 %define		_newname Vuze
 
 Name:		azureus
-Version:	4.3.0.4
-Release:	3%{?dist}
+Version:	4.3.0.6
+Release:	1%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 License:	GPLv2+
@@ -48,11 +48,11 @@ BuildRequires:	ant, jpackage-utils >= 1.5, xml-commons-apis
 BuildRequires:	jakarta-commons-cli, log4j
 BuildRequires:	libgconf-java
 BuildRequires:	bouncycastle >= 1.33-3
-BuildRequires:	eclipse-swt >= 3.4.0
+BuildRequires:	eclipse-swt >= 3.5
 BuildRequires:	junit
 Requires:	jakarta-commons-cli, log4j
 Requires:	xulrunner
-Requires:	eclipse-swt >= 3.4.0
+Requires:	eclipse-swt >= 3.5
 Requires:	libgconf-java
 Requires:	 bouncycastle >= 1.33-3
 Requires:	 java >= 1:1.6.0
@@ -248,6 +248,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Mon Jan 18 2010 David Juran <djuran@redhat.com> - 4.3.0.6-1
+- update to 4.3.0.6
+
 * Sun Dec  13 2009 David Juran <djuran@redhat.com> - 4.3.0.4-3
 - fix build, even on ppc
 - apply -s to all patches
