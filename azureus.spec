@@ -1,7 +1,7 @@
 %define		_newname Vuze
 
 Name:		azureus
-Version:	4.3.0.6
+Version:	4.3.1.4
 Release:	1%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
@@ -36,7 +36,7 @@ Patch51:	azureus-4.0.0.4-boo-osx.diff
 Patch52:	azureus-4.0.0.4-screw-w32-tests.diff
 Patch53:	azureus-4.0.0.4-boo-updating-w32.diff
 Patch54:	azureus-4.0.0.4-screw-win32utils.diff
-Patch55:	azureus-4.0.0.4-oops-return.diff
+
 Patch56:	azureus-4.0.0.4-silly-java-tricks-are-for-kids.diff
 Patch57:	azureus-4.0.0.4-stupid-invalid-characters.diff
 
@@ -129,7 +129,7 @@ rm org/gudy/azureus2/ui/swt/win32/Win32UIEnhancer.java
 %patch52 -b .screw-w32-tests
 %patch53 -p1 -b .boo-updating-w32
 %patch54 -b .screw-win32utils
-%patch55 -b .oops-return
+
 %patch56 -p1 -b .silly-java-tricks-are-for-kids
 %patch57  -p1 -b stupid-invalid-characters
 
@@ -248,6 +248,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Fri Feb 12 2010 David Juran <djuran@redhat.com> - 4.3.1.4-1
+- upgrade to 4.3.1.4
+
 * Mon Jan 18 2010 David Juran <djuran@redhat.com> - 4.3.0.6-1
 - update to 4.3.0.6
 

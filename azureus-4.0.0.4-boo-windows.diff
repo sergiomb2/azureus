@@ -1,6 +1,6 @@
-diff -up azureus-4.2.0.8/org/gudy/azureus2/platform/PlatformManagerFactory.java.boo-windows azureus-4.2.0.8/org/gudy/azureus2/platform/PlatformManagerFactory.java
---- azureus-4.2.0.8/org/gudy/azureus2/platform/PlatformManagerFactory.java.boo-windows	2009-05-13 20:50:56.000000000 +0200
-+++ azureus-4.2.0.8/org/gudy/azureus2/platform/PlatformManagerFactory.java	2009-09-13 09:11:45.000000000 +0200
+diff -up azureus-4.3.1.4/org/gudy/azureus2/platform/PlatformManagerFactory.java.boo-windows azureus-4.3.1.4/org/gudy/azureus2/platform/PlatformManagerFactory.java
+--- azureus-4.3.1.4/org/gudy/azureus2/platform/PlatformManagerFactory.java.boo-windows	2009-05-13 18:50:56.000000000 +0300
++++ azureus-4.3.1.4/org/gudy/azureus2/platform/PlatformManagerFactory.java	2010-02-12 22:49:14.000000000 +0200
 @@ -48,19 +48,9 @@ PlatformManagerFactory 
  			if ( platform_manager == null && !force_dummy ){
  										  
@@ -34,9 +34,9 @@ diff -up azureus-4.2.0.8/org/gudy/azureus2/platform/PlatformManagerFactory.java.
  			}
  			
  			return( platform_manager );
-diff -up azureus-4.2.0.8/org/gudy/azureus2/platform/PlatformManagerPluginDelegate.java.boo-windows azureus-4.2.0.8/org/gudy/azureus2/platform/PlatformManagerPluginDelegate.java
---- azureus-4.2.0.8/org/gudy/azureus2/platform/PlatformManagerPluginDelegate.java.boo-windows	2009-08-25 02:14:26.000000000 +0200
-+++ azureus-4.2.0.8/org/gudy/azureus2/platform/PlatformManagerPluginDelegate.java	2009-09-13 09:16:41.000000000 +0200
+diff -up azureus-4.3.1.4/org/gudy/azureus2/platform/PlatformManagerPluginDelegate.java.boo-windows azureus-4.3.1.4/org/gudy/azureus2/platform/PlatformManagerPluginDelegate.java
+--- azureus-4.3.1.4/org/gudy/azureus2/platform/PlatformManagerPluginDelegate.java.boo-windows	2009-08-25 00:14:26.000000000 +0300
++++ azureus-4.3.1.4/org/gudy/azureus2/platform/PlatformManagerPluginDelegate.java	2010-02-12 22:49:14.000000000 +0200
 @@ -44,10 +44,11 @@ public class PlatformManagerPluginDelega
  		PlatformManager platform = PlatformManagerFactory.getPlatformManager();
  
@@ -53,61 +53,70 @@ diff -up azureus-4.2.0.8/org/gudy/azureus2/platform/PlatformManagerPluginDelegat
  			org.gudy.azureus2.platform.macosx.PlatformManagerUpdateChecker plugin = new org.gudy.azureus2.platform.macosx.PlatformManagerUpdateChecker();
  			plugin.initialize(pluginInterface);
  		}else if ( platformType == PlatformManager.PT_UNIX ){
-diff -up azureus-4.2.0.8/org/gudy/azureus2/update/CoreUpdateChecker.java.boo-windows azureus-4.2.0.8/org/gudy/azureus2/update/CoreUpdateChecker.java
---- azureus-4.2.0.8/org/gudy/azureus2/update/CoreUpdateChecker.java.boo-windows	2009-07-07 00:52:10.000000000 +0200
-+++ azureus-4.2.0.8/org/gudy/azureus2/update/CoreUpdateChecker.java	2009-09-13 09:11:45.000000000 +0200
-@@ -38,8 +38,8 @@ import org.gudy.azureus2.core3.logging.*
- import org.gudy.azureus2.core3.config.*;
+diff -up azureus-4.3.1.4/org/gudy/azureus2/update/CoreUpdateChecker.java.boo-windows azureus-4.3.1.4/org/gudy/azureus2/update/CoreUpdateChecker.java
+--- azureus-4.3.1.4/org/gudy/azureus2/update/CoreUpdateChecker.java.boo-windows	2010-02-12 22:49:14.000000000 +0200
++++ azureus-4.3.1.4/org/gudy/azureus2/update/CoreUpdateChecker.java	2010-02-12 22:54:43.000000000 +0200
+@@ -39,8 +39,6 @@ import org.gudy.azureus2.core3.config.*;
  import org.gudy.azureus2.core3.html.*;
+ import org.gudy.azureus2.core3.internat.MessageText;
  
 -import org.gudy.azureus2.platform.win32.access.AEWin32Access;
 -import org.gudy.azureus2.platform.win32.access.AEWin32Manager;
-+//import org.gudy.azureus2.platform.win32.access.AEWin32Access;
-+//import org.gudy.azureus2.platform.win32.access.AEWin32Manager;
  import org.gudy.azureus2.plugins.*;
  import org.gudy.azureus2.plugins.logging.LoggerChannel;
- import org.gudy.azureus2.plugins.update.*;
-@@ -949,27 +949,30 @@ CoreUpdateChecker
- 		try{
+ import org.gudy.azureus2.plugins.ui.UIManager;
+@@ -718,51 +716,12 @@ CoreUpdateChecker
  				// hack here to allow testing of osx on windows (parg) - should replace with
  				// Constants.isWindows etc
+ 			
 +
 +		    //Shouldn't happen on Fedora
- 			
++
  			if ( file.getName().endsWith( ".exe" )){
  				
 -				try{
 -					AEWin32Access accessor = AEWin32Manager.getAccessor(true);
-+
-+				// try{
-+// 					AEWin32Access accessor = AEWin32Manager.getAccessor(true);
- 					
+-					
 -					// accessor.createProcess( , false );
-+// 					// accessor.createProcess( , false );
- 					
+-					
+-					String	s_args = null;
+-					
+-					if ( args.length > 0 ){
+-					
+-						s_args = "";
+-						
+-						for ( String s: args ){
+-							
+-							s_args += (s_args.length()==0?"":" ") + s;
+-						}
+-					}
+-					
 -					accessor.shellExecute( 
 -						null, 
 -						file.getAbsolutePath(), 
--						null,
+-						s_args,
 -						SystemProperties.getApplicationPath(),
 -						AEWin32Access.SW_NORMAL );
-+// 					accessor.shellExecute( 
-+// 						null, 
-+// 						file.getAbsolutePath(), 
-+// 						null,
-+// 						SystemProperties.getApplicationPath(),
-+// 						AEWin32Access.SW_NORMAL );
- 					
+-					
 -				}catch( Throwable e ){
-+// 				}catch( Throwable e ){
- 					
+-					
 -					Logger.log( new LogEvent( LogIDs.LOGGER, "AEWin32Access failed", e  ));
-+// 					Logger.log( new LogEvent( LogIDs.LOGGER, "AEWin32Access failed", e  ));
  
--					Runtime.getRuntime().exec( file.getAbsolutePath() );
+-					if ( args.length > 0 ){
+-					
+-						String[] s_args = new String[args.length+1];
+-						
+-						s_args[0] = file.getAbsolutePath();
+-						
+-						System.arraycopy( args, 0, s_args, 1, args.length );
+-						
+-						Runtime.getRuntime().exec( s_args );
+-						
+-					}else{
+-					
+-						Runtime.getRuntime().exec( file.getAbsolutePath() );
+-					}
 -				}
-+// 					Runtime.getRuntime().exec( file.getAbsolutePath() );
-+// 				}
  			}else{
  					// osx, need to unzip .app and launch
  				

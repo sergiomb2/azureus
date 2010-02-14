@@ -1,6 +1,6 @@
-diff -up azureus-4.2.0.4/com/aelitis/azureus/core/update/impl/AzureusRestarterImpl.java.boo-updating-w32 azureus-4.2.0.4/com/aelitis/azureus/core/update/impl/AzureusRestarterImpl.java
---- azureus-4.2.0.4/com/aelitis/azureus/core/update/impl/AzureusRestarterImpl.java.boo-updating-w32	2009-07-08 19:00:28.000000000 +0300
-+++ azureus-4.2.0.4/com/aelitis/azureus/core/update/impl/AzureusRestarterImpl.java	2009-07-31 20:20:12.000000000 +0300
+diff -up azureus-4.3.1.4/com/aelitis/azureus/core/update/impl/AzureusRestarterImpl.java.boo-updating-w32 azureus-4.3.1.4/com/aelitis/azureus/core/update/impl/AzureusRestarterImpl.java
+--- azureus-4.3.1.4/com/aelitis/azureus/core/update/impl/AzureusRestarterImpl.java.boo-updating-w32	2010-01-11 04:26:48.000000000 +0200
++++ azureus-4.3.1.4/com/aelitis/azureus/core/update/impl/AzureusRestarterImpl.java	2010-02-14 17:25:31.000000000 +0200
 @@ -30,8 +30,8 @@ import org.gudy.azureus2.core3.util.*;
  import org.gudy.azureus2.platform.PlatformManager;
  import org.gudy.azureus2.platform.PlatformManagerFactory;
@@ -12,7 +12,7 @@ diff -up azureus-4.2.0.4/com/aelitis/azureus/core/update/impl/AzureusRestarterIm
  import org.gudy.azureus2.plugins.PluginInterface;
  import org.gudy.azureus2.plugins.platform.PlatformManagerException;
  import org.gudy.azureus2.pluginsimpl.local.PluginInitializer;
-@@ -218,20 +218,6 @@ AzureusRestarterImpl 
+@@ -252,20 +252,7 @@ AzureusRestarterImpl 
  		PrintWriter	log,
  		String		exec )
  	{
@@ -30,10 +30,11 @@ diff -up azureus-4.2.0.4/com/aelitis/azureus/core/update/impl/AzureusRestarterIm
 -	        
 -	        return( false );
 -	    }
++          return true;
  	}
  	
  
-@@ -294,131 +280,6 @@ AzureusRestarterImpl 
+@@ -303,131 +290,6 @@ AzureusRestarterImpl 
        String backupJavaRunString,
        boolean update_only) 
    {
@@ -165,20 +166,36 @@ diff -up azureus-4.2.0.4/com/aelitis/azureus/core/update/impl/AzureusRestarterIm
  		return true;
  	}
    
-@@ -444,9 +305,6 @@ AzureusRestarterImpl 
+@@ -445,60 +307,15 @@ AzureusRestarterImpl 
+     String[]  parameters,
+     boolean update_only) 
+   {
+-    if(Constants.isOSX){
+-    	
+-    	return( restartAzureus_OSX(log,mainClass,properties,parameters));
+-    	
+-    }else if( Constants.isUnix ){
++      if( Constants.isUnix ){
      	
-     	restartAzureus_Unix(log,mainClass,properties,parameters);
+     	return( restartAzureus_Unix(log,mainClass,properties,parameters));
        
 -    }else{
 -    	
--    	restartAzureus_win32(log,mainClass,properties,parameters,update_only);
-     }
+-    	return( restartAzureus_win32(log,mainClass,properties,parameters,update_only));
+-    }
++      }
++      log.println("Shouldn't get here on Fedora");
++      return false;
    }
    
-@@ -458,35 +316,7 @@ AzureusRestarterImpl 
-     String[]  parameters,
-     boolean	update_only) 
-   {
+-  private boolean 
+-  restartAzureus_win32(
+-      PrintWriter log,
+-    String    mainClass,
+-    String[]  properties,
+-    String[]  parameters,
+-    boolean	update_only) 
+-  {
 -  	String exeUpdater = getExeUpdater(log);  // Not for Updater.java
 -
 -  	String exec;
@@ -197,25 +214,34 @@ diff -up azureus-4.2.0.4/com/aelitis/azureus/core/update/impl/AzureusRestarterIm
 -		}
 -
 -		if (exeUpdater != null) {
--			restartViaEXE(log, exeUpdater, properties, parameters, exec, update_only);
+-			return( restartViaEXE(log, exeUpdater, properties, parameters, exec, update_only));
 -		} else {
 -			if (log != null) {
 -				log.println("  " + exec);
 -			}
 -
 -			if (!win32NativeRestart(log, exec)) {
--				javaSpawn(log, exec);
+-				return( javaSpawn(log, exec));
+-			}else{
+-				return( true );
 -			}
 -		}
 -	}
-+  }
-   
+-  
  
  	private boolean
-@@ -519,20 +349,6 @@ AzureusRestarterImpl 
-     String[]  properties,
-     String[] parameters) 
-   {
+ 	javaSpawn(
+@@ -523,30 +340,6 @@ AzureusRestarterImpl 
+ 		}
+ 	}
+ 
+-	private boolean 
+-  restartAzureus_OSX(
+-      PrintWriter log,
+-    String mainClass,
+-    String[]  properties,
+-    String[] parameters) 
+-  {
 -
 -     String exec = "\"" + JAVA_EXEC_DIR + "java\" " + getClassPath() + getLibraryPath();
 -  	 
@@ -229,7 +255,10 @@ diff -up azureus-4.2.0.4/com/aelitis/azureus/core/update/impl/AzureusRestarterIm
 -    	 exec += " \"" + parameters[i] + "\"";
 -     }
 -
--     runExternalCommandViaUnixShell( log, exec );
-   }
+-     return( runExternalCommandViaUnixShell( log, exec ));
+-  }
+-  
+-  
    
-   
+   private int getUnixScriptVersion() {
+ 		String sVersion = System.getProperty("azureus.script.version", "0");
