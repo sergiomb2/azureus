@@ -1,18 +1,21 @@
 %define		_newname Vuze
 
 Name:		azureus
-Version:	4.3.1.4
+Version:	4.5.0.0
 Release:	1%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 License:	GPLv2+
 URL:		http://azureus.sourceforge.net
 
-Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_%{version}_source.zip
+Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_4500_source.zip
 
 Source1:	azureus.script
 Source2:	Azureus.desktop
 Source3:	azureus.applications
+
+#ant build script from Azureus-4.3.0.6
+Source4:	build.xml
 
 #Patch0:		azureus-remove-win32-osx-platforms.patch
 Patch2:		azureus-cache-size.patch
@@ -41,6 +44,7 @@ Patch56:	azureus-4.0.0.4-silly-java-tricks-are-for-kids.diff
 Patch57:	azureus-4.0.0.4-stupid-invalid-characters.diff
 
 Patch58:	azureus-4.2.0.4-java5.patch
+Patch59:	azureus-4.5.0.0-no-Tree2.patch
 
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -71,6 +75,8 @@ advanced users.
 %prep
 %setup -q -c
 
+cp %{SOURCE4} .
+
 #%patch0 -p0
 %patch2 -p0 -b .cache-size
 %patch3 -p1 -b .remove-manifest-classpath
@@ -78,9 +84,9 @@ advanced users.
 %patch12 -p1 -b .no-updates-PluginInitializer
 %patch13 -p1 -b .no-updates-PluginInterfaceImpl
 %patch14 -p1 -b .no-update-manager-AzureusCoreImpl
-%patch15 -p0 -b .no-update-manager-CorePatchChecker
+%patch15 -p1 -b .no-update-manager-CorePatchChecker
 %patch16 -p1 -b .no-update-manager-CoreUpdateChecker
-%patch18 -p1 -b .no-update-manager-PluginInstallerImpl
+#%patch18 -p1 -b .no-update-manager-PluginInstallerImpl
 %patch19 -p1 -b .no-update-manager-PluginUpdatePlugin
 %patch20 -p1 -b .no-update-manager-SWTUpdateChecker
 %patch22 -p1 -b .no-update-manager-UpdateMonitor
@@ -100,25 +106,15 @@ rm org/gudy/azureus2/platform/win32/PlatformManagerImpl.java
 rm org/gudy/azureus2/platform/macosx/access/jnilib/OSXAccess.java
 rm org/gudy/azureus2/platform/win32/access/AEWin32Access.java
 rm org/gudy/azureus2/platform/win32/access/impl/AEWin32AccessInterface.java
-rm org/gudy/azureus2/platform/win32/access/impl/aereg.cpp
 rm org/gudy/azureus2/platform/win32/access/impl/AEWin32AccessImpl.java
-rm org/gudy/azureus2/platform/win32/access/impl/org_gudy_azureus2_platform_win32_access_impl_AEWin32AccessInterface.h
 rm org/gudy/azureus2/platform/win32/access/impl/Test.java
 rm org/gudy/azureus2/platform/macosx/NativeInvocationBridge.java
 rm org/gudy/azureus2/platform/macosx/PListEditor.java
 rm org/gudy/azureus2/platform/win32/access/AEWin32AccessException.java
 rm org/gudy/azureus2/platform/win32/access/AEWin32AccessListener.java
 rm org/gudy/azureus2/platform/win32/access/AEWin32Manager.java
-rm org/gudy/azureus2/platform/win32/access/impl/aenet.cpp
-rm org/gudy/azureus2/platform/win32/access/impl/aenet.h
-rm org/gudy/azureus2/platform/win32/access/impl/aereg.dsp
-rm org/gudy/azureus2/platform/win32/access/impl/aereg.dsw
-rm org/gudy/azureus2/platform/win32/access/impl/aereg.h
 rm org/gudy/azureus2/platform/win32/access/impl/AEWin32AccessCallback.java
 rm org/gudy/azureus2/platform/win32/access/impl/AEWin32AccessExceptionImpl.java
-rm org/gudy/azureus2/platform/win32/access/impl/generate_ini.bat
-rm org/gudy/azureus2/platform/win32/access/impl/StdAfx.cpp
-rm org/gudy/azureus2/platform/win32/access/impl/StdAfx.h
 rm org/gudy/azureus2/platform/win32/PlatformManagerUpdateChecker.java
 %patch50 -p1 -b .boo-windows
 
@@ -126,7 +122,7 @@ rm org/gudy/azureus2/ui/swt/osx/CarbonUIEnhancer.java
 rm org/gudy/azureus2/ui/swt/osx/Start.java
 rm org/gudy/azureus2/ui/swt/win32/Win32UIEnhancer.java
 %patch51 -p1 -b .boo-osx
-%patch52 -b .screw-w32-tests
+#%patch52 -b .screw-w32-tests
 %patch53 -p1 -b .boo-updating-w32
 %patch54 -b .screw-win32utils
 
@@ -135,7 +131,11 @@ rm org/gudy/azureus2/ui/swt/win32/Win32UIEnhancer.java
 
 %patch58 -p1 -b .java5
 
-rm org/gudy/azureus2/ui/swt/test/PrintTransferTypes.java
+#hacks to org.eclipse.swt.widgets.Tree2 don't compile.
+rm -fR org/eclipse
+%patch59 -p1 -b .no-Tree2
+
+
 #sed -i -e \
 #  "s|sun.security.action.GetPropertyAction|gnu.java.security.action.GetPropertyAction|" \
 #  org/gudy/azureus2/core3/internat/MessageText.java
@@ -248,6 +248,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Thu Aug  5 2010 David Juran <david@juran.se> - 4.5.0.0-1
+- upgrade to 4.5.0.0
+
 * Fri Feb 12 2010 David Juran <djuran@redhat.com> - 4.3.1.4-1
 - upgrade to 4.3.1.4
 

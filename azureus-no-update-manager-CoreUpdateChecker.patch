@@ -1,7 +1,7 @@
-diff -up azureus-4.3.0.0/org/gudy/azureus2/update/CoreUpdateChecker.java.no-update-manager-CoreUpdateChecker azureus-4.3.0.0/org/gudy/azureus2/update/CoreUpdateChecker.java
---- azureus-4.3.0.0/org/gudy/azureus2/update/CoreUpdateChecker.java.no-update-manager-CoreUpdateChecker	2009-11-04 03:23:06.000000000 +0200
-+++ azureus-4.3.0.0/org/gudy/azureus2/update/CoreUpdateChecker.java	2009-11-19 21:15:38.000000000 +0200
-@@ -127,8 +127,6 @@ CoreUpdateChecker
+diff -up azureus-4.5.0.0/org/gudy/azureus2/update/CoreUpdateChecker.java.no-update-manager-CoreUpdateChecker azureus-4.5.0.0/org/gudy/azureus2/update/CoreUpdateChecker.java
+--- azureus-4.5.0.0/org/gudy/azureus2/update/CoreUpdateChecker.java.no-update-manager-CoreUpdateChecker	2010-07-31 01:00:36.000000000 +0300
++++ azureus-4.5.0.0/org/gudy/azureus2/update/CoreUpdateChecker.java	2010-08-05 20:43:44.000000000 +0300
+@@ -132,8 +132,6 @@ CoreUpdateChecker
  		props.setProperty( "plugin.version", plugin_interface.getAzureusVersion());
  		
  		rdf = plugin_interface.getUtilities().getResourceDownloaderFactory();
@@ -10,7 +10,7 @@ diff -up azureus-4.3.0.0/org/gudy/azureus2/update/CoreUpdateChecker.java.no-upda
  	}
  	
  	public String
-@@ -147,309 +145,11 @@ CoreUpdateChecker
+@@ -152,319 +150,11 @@ CoreUpdateChecker
  	checkForUpdate(
  		final UpdateChecker	checker )
  	{
@@ -108,7 +108,7 @@ diff -up azureus-4.3.0.0/org/gudy/azureus2/update/CoreUpdateChecker.java.no-upda
 -				ResourceDownloader[]	primary_mirrors;
 -									
 -				primary_mirrors = getPrimaryDownloaders( latest_file_name );
--	
+ 	
 -					// the download hierarchy is primary mirrors first (randomised alternate)
 -					// then backup mirrors (randomised alternate)
 -				
@@ -300,6 +300,16 @@ diff -up azureus-4.3.0.0/org/gudy/azureus2/update/CoreUpdateChecker.java.no-upda
 -									
 -							return( true );
 -						}
+-						
+-						public void
+-						failed(
+-							ResourceDownloader			downloader,
+-							ResourceDownloaderException e )
+-						{
+-							Debug.out( downloader.getName() + " failed", e );
+-							
+-							update.complete( false );
+-						}
 -					});
 -		}catch( Throwable e ){
 -			
@@ -312,13 +322,11 @@ diff -up azureus-4.3.0.0/org/gudy/azureus2/update/CoreUpdateChecker.java.no-upda
 -			checker.failed();
 -			
 -		}finally{
--			
-+	    			
+ 			
  			checker.completed();
  			
  			first_check = false;
 -		}
-+	
  	}
  	
        

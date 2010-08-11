@@ -1,7 +1,7 @@
-diff -up azureus-4.3.0.0/org/gudy/azureus2/ui/swt/update/UpdateMonitor.java.no-update-manager-UpdateMonitor azureus-4.3.0.0/org/gudy/azureus2/ui/swt/update/UpdateMonitor.java
---- azureus-4.3.0.0/org/gudy/azureus2/ui/swt/update/UpdateMonitor.java.no-update-manager-UpdateMonitor	2009-10-21 02:26:22.000000000 +0300
-+++ azureus-4.3.0.0/org/gudy/azureus2/ui/swt/update/UpdateMonitor.java	2009-11-19 21:19:57.000000000 +0200
-@@ -98,70 +98,6 @@ public class UpdateMonitor
+diff -up azureus-4.5.0.0/org/gudy/azureus2/ui/swt/update/UpdateMonitor.java.no-update-manager-UpdateMonitor azureus-4.5.0.0/org/gudy/azureus2/ui/swt/update/UpdateMonitor.java
+--- azureus-4.5.0.0/org/gudy/azureus2/ui/swt/update/UpdateMonitor.java.no-update-manager-UpdateMonitor	2010-07-31 01:02:28.000000000 +0300
++++ azureus-4.5.0.0/org/gudy/azureus2/ui/swt/update/UpdateMonitor.java	2010-08-06 22:32:16.000000000 +0300
+@@ -100,71 +100,6 @@ public class UpdateMonitor
  	protected UpdateMonitor(AzureusCore _azureus_core) {
  		azCore = _azureus_core;
  
@@ -63,7 +63,8 @@ diff -up azureus-4.3.0.0/org/gudy/azureus2/ui/swt/update/UpdateMonitor.java.no-u
 -
 -
 -		SimpleTimer.addPeriodicEvent("UpdateMon:autocheck",
--				AUTO_UPDATE_CHECK_PERIOD, new TimerEventPerformer() {
+-				COConfigurationManager.getBooleanParameter( "Beta Programme Enabled" )?AUTO_UPDATE_CHECK_PERIOD_BETA:AUTO_UPDATE_CHECK_PERIOD,
+-				new TimerEventPerformer() {
 -					public void perform(TimerEvent ev) {
 -						performAutoCheck(false);
 -					}
@@ -72,7 +73,7 @@ diff -up azureus-4.3.0.0/org/gudy/azureus2/ui/swt/update/UpdateMonitor.java.no-u
  		DelayedTask delayed_task = 
  			UtilitiesImpl.addDelayedTask(
  				"Update Check", 
-@@ -381,43 +317,6 @@ public class UpdateMonitor
+@@ -384,43 +319,6 @@ public class UpdateMonitor
  	}
  	
  	protected void performAutoCheck(final boolean start_of_day) {
@@ -116,7 +117,7 @@ diff -up azureus-4.3.0.0/org/gudy/azureus2/ui/swt/update/UpdateMonitor.java.no-u
  	}
  
  	public void 
-@@ -427,76 +326,7 @@ public class UpdateMonitor
+@@ -430,81 +328,11 @@ public class UpdateMonitor
  		final boolean						isRecheck,
  		final UpdateCheckInstanceListener 	l ) 
  	{
@@ -160,7 +161,12 @@ diff -up azureus-4.3.0.0/org/gudy/azureus2/ui/swt/update/UpdateMonitor.java.no-u
 -
 -			current_update_instance.cancel();
 -		}
--
+ 
+ 		if ( bForce ){
+ 			
+ 			VersionCheckClient.getSingleton().clearCache();
+ 		}
+-		
 -		UIFunctions uiFunctions = UIFunctionsManager.getUIFunctions();
 -		if (uiFunctions != null) {
 -			// XXX What kind of format is this!?
@@ -188,7 +194,7 @@ diff -up azureus-4.3.0.0/org/gudy/azureus2/ui/swt/update/UpdateMonitor.java.no-u
 -				current_update_instance.start();
 -			}
 -		};
- 
+-
 -		t.start();
  	}
  

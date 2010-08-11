@@ -1,7 +1,7 @@
-diff -up azureus-4.0.0.4/org/gudy/azureus2/pluginsimpl/update/PluginUpdatePlugin.java.no-update-manager-PluginUpdatePlugin azureus-4.0.0.4/org/gudy/azureus2/pluginsimpl/update/PluginUpdatePlugin.java
---- azureus-4.0.0.4/org/gudy/azureus2/pluginsimpl/update/PluginUpdatePlugin.java.no-update-manager-PluginUpdatePlugin	2008-09-25 14:32:04.000000000 +0300
-+++ azureus-4.0.0.4/org/gudy/azureus2/pluginsimpl/update/PluginUpdatePlugin.java	2009-09-05 17:29:07.000000000 +0300
-@@ -138,19 +138,19 @@ PluginUpdatePlugin
+diff -up azureus-4.5.0.0/org/gudy/azureus2/pluginsimpl/update/PluginUpdatePlugin.java.no-update-manager-PluginUpdatePlugin azureus-4.5.0.0/org/gudy/azureus2/pluginsimpl/update/PluginUpdatePlugin.java
+--- azureus-4.5.0.0/org/gudy/azureus2/pluginsimpl/update/PluginUpdatePlugin.java.no-update-manager-PluginUpdatePlugin	2010-07-31 01:00:38.000000000 +0300
++++ azureus-4.5.0.0/org/gudy/azureus2/pluginsimpl/update/PluginUpdatePlugin.java	2010-08-06 22:16:15.000000000 +0300
+@@ -142,19 +142,19 @@ PluginUpdatePlugin
  	initComplete(
  		final PluginConfig		plugin_config )
  	{
@@ -32,10 +32,11 @@ diff -up azureus-4.0.0.4/org/gudy/azureus2/pluginsimpl/update/PluginUpdatePlugin
  		
  		final PluginManager	plugin_manager = plugin_interface.getPluginManager();
  		
-@@ -178,133 +178,133 @@ PluginUpdatePlugin
+@@ -181,302 +181,7 @@ PluginUpdatePlugin
+ 		
  		final int f_non_mandatory_count	= non_mandatory_count;
  		final int f_mandatory_count		= mandatory_count;
- 		
+-		
 -		update_manager.registerUpdatableComponent( 
 -			new UpdatableComponent()
 -			{
@@ -44,86 +45,53 @@ diff -up azureus-4.0.0.4/org/gudy/azureus2/pluginsimpl/update/PluginUpdatePlugin
 -				{
 -					return( "Non-mandatory plugins" );
 -				}
-+// 		update_manager.registerUpdatableComponent( 
-+// 			new UpdatableComponent()
-+// 			{
-+// 				public String
-+// 				getName()
-+// 				{
-+// 					return( "Non-mandatory plugins" );
-+// 				}
- 				
+-				
 -				public int
 -				getMaximumCheckTime()
 -				{
 -					return( f_non_mandatory_count * (( RD_SIZE_RETRIES * RD_SIZE_TIMEOUT )/1000));
 -				}	
-+// 				public int
-+// 				getMaximumCheckTime()
-+// 				{
-+// 					return( f_non_mandatory_count * (( RD_SIZE_RETRIES * RD_SIZE_TIMEOUT )/1000));
-+// 				}	
- 				
+-				
 -				public void
 -				checkForUpdate(
 -					UpdateChecker	checker )
 -				{
 -					if ( checkForUpdateSupport( checker, null, false ) == 0 ){
-+// 				public void
-+// 				checkForUpdate(
-+// 					UpdateChecker	checker )
-+// 				{
-+// 					if ( checkForUpdateSupport( checker, null, false ) == 0 ){
- 						
--						String[] rps = VersionCheckClient.getSingleton(). getRecommendedPlugins();
-+// 						String[] rps = VersionCheckClient.getSingleton(). getRecommendedPlugins();
- 						
+-						
+-						VersionCheckClient vc = VersionCheckClient.getSingleton();
+-						
+-						String[] rps = vc.getRecommendedPlugins();
+-						
 -						boolean	found_one = false;
-+// 						boolean	found_one = false;
- 						
+-						
 -						for (int i=0;i<rps.length;i++){
-+// 						for (int i=0;i<rps.length;i++){
- 							
+-							
 -							String	rp_id = rps[i];
-+// 							String	rp_id = rps[i];
- 							
+-							
 -							if ( plugin_manager.getPluginInterfaceByID( rp_id, false ) != null ){
-+// 							if ( plugin_manager.getPluginInterfaceByID( rp_id, false ) != null ){
- 								
+-								
 -									// already installed
-+// 									// already installed
- 								
+-								
 -								continue;
 -							}
-+// 								continue;
-+// 							}
- 							
+-							
 -							final String	config_key = "recommended.processed." + rp_id;
-+// 							final String	config_key = "recommended.processed." + rp_id;
- 							
+-							
 -							if ( !plugin_config.getPluginBooleanParameter( config_key, false )){
-+// 							if ( !plugin_config.getPluginBooleanParameter( config_key, false )){
- 								
+-								
 -								try{
 -									final PluginInstaller installer = plugin_interface.getPluginManager().getPluginInstaller();
-+// 								try{
-+// 									final PluginInstaller installer = plugin_interface.getPluginManager().getPluginInstaller();
- 									
+-									
 -									StandardPlugin[]	sps = installer.getStandardPlugins();
-+// 									StandardPlugin[]	sps = installer.getStandardPlugins();
- 									
+-									
 -									for (int j=0;j<sps.length;j++){
-+// 									for (int j=0;j<sps.length;j++){
- 										
+-										
 -										final StandardPlugin	sp = sps[j];
-+// 										final StandardPlugin	sp = sps[j];
- 										
+-										
 -										if ( sp.getId().equals( rp_id )){
-+// 										if ( sp.getId().equals( rp_id )){
- 										
+-										
 -											found_one = true;
-+// 											found_one = true;
- 											
+-											
 -											checker.getCheckInstance().addListener(
 -												new UpdateCheckInstanceListener()
 -												{
@@ -132,29 +100,15 @@ diff -up azureus-4.0.0.4/org/gudy/azureus2/pluginsimpl/update/PluginUpdatePlugin
 -														UpdateCheckInstance		instance )
 -													{													
 -													}
-+// 											checker.getCheckInstance().addListener(
-+// 												new UpdateCheckInstanceListener()
-+// 												{
-+// 													public void
-+// 													cancelled(
-+// 														UpdateCheckInstance		instance )
-+// 													{													
-+// 													}
- 													
+-													
 -													public void
 -													complete(
 -														UpdateCheckInstance		instance )
 -													{
 -														if ( instance.getUpdates().length == 0 ){
-+// 													public void
-+// 													complete(
-+// 														UpdateCheckInstance		instance )
-+// 													{
-+// 														if ( instance.getUpdates().length == 0 ){
- 															
+-															
 -															installRecommendedPlugin( installer, sp );
-+// 															installRecommendedPlugin( installer, sp );
- 															
+-															
 -															plugin_config.setPluginParameter( config_key, true );
 -														}
 -													}
@@ -172,6 +126,172 @@ diff -up azureus-4.0.0.4/org/gudy/azureus2/pluginsimpl/update/PluginUpdatePlugin
 -							if ( found_one ){
 -								
 -								break;
+-							}
+-						}
+-						
+-						if ( !found_one ){
+-							
+-							Set<String>	auto_install = vc.getAutoInstallPluginIDs();
+-							
+-							final List<String>	to_do = new ArrayList<String>();
+-							
+-							for ( String pid: auto_install ){
+-								
+-								if ( plugin_manager.getPluginInterfaceByID( pid, false ) == null ){
+-									
+-									to_do.add( pid );
+-								}
+-							}
+-							
+-							if ( to_do.size() > 0 ){
+-								
+-								new AEThread2( "pup:autoinst" )
+-								{
+-									public void 
+-									run() 
+-									{		
+-										try{
+-											Thread.sleep( 120*1000 );
+-											
+-										}catch( Throwable e ){
+-											
+-											Debug.out( e );
+-											
+-											return;
+-										}
+-										
+-										UpdateManager update_manager = plugin_interface.getUpdateManager();
+-										
+-										final List<UpdateCheckInstance>	l_instances = new ArrayList<UpdateCheckInstance>();
+-										
+-										update_manager.addListener( 
+-											new UpdateManagerListener()
+-											{
+-												public void
+-												checkInstanceCreated(
+-													UpdateCheckInstance	instance )
+-												{
+-													synchronized( l_instances ){
+-														
+-														l_instances.add( instance );
+-													}
+-												}
+-											});
+-										
+-										UpdateCheckInstance[] instances = update_manager.getCheckInstances();
+-										
+-										l_instances.addAll( Arrays.asList( instances ));
+-										
+-										long start = SystemTime.getMonotonousTime();
+-										
+-										while( true ){
+-											
+-											if ( SystemTime.getMonotonousTime() - start >= 5*60*1000 ){
+-												
+-												break;
+-											}
+-											
+-											try{
+-												Thread.sleep(5000);
+-												
+-											}catch( Throwable e ){
+-												
+-												Debug.out( e );
+-												
+-												return;
+-											}
+-											
+-											if ( l_instances.size() > 0 ){
+-											
+-												boolean	all_done = true;
+-												
+-												for ( UpdateCheckInstance instance: l_instances ){
+-													
+-													if ( !instance.isCompleteOrCancelled()){
+-														
+-														all_done = false;
+-														
+-														break;
+-													}
+-												}
+-												
+-												if ( all_done ){
+-													
+-													break;
+-												}
+-											}
+-										}
+-										
+-										if ( update_manager.getInstallers().length > 0 ){
+-											
+-											return;
+-										}
+-										
+-										PluginInstaller installer = plugin_interface.getPluginManager().getPluginInstaller();
+-										
+-										List<InstallablePlugin>	sps = new ArrayList<InstallablePlugin>();
+-										
+-										for ( String pid: to_do ){
+-											
+-											try{
+-												StandardPlugin sp = installer.getStandardPlugin( pid );
+-												
+-												if ( sp != null ){
+-													
+-													log.log( "Auto-installing " + pid );
+-													
+-													sps.add( sp );
+-													
+-												}else{
+-													
+-													log.log( "Standard plugin '" + pid + "' missing" );
+-												}
+-											}catch( Throwable e ){
+-												
+-												log.log( "Standard plugin '" + pid + "' missing", e );
+-											}
+-										}	
+-								 		
+-										if ( sps.size() > 0 ){
+-											
+-											Map<Integer, Object> properties = new HashMap<Integer, Object>();
+-									
+-											properties.put( UpdateCheckInstance.PT_UI_STYLE, UpdateCheckInstance.PT_UI_STYLE_NONE );
+-												
+-											properties.put(UpdateCheckInstance.PT_UI_DISABLE_ON_SUCCESS_SLIDEY, true);
+-	
+-											try{
+-												installer.install(
+-													sps.toArray( new InstallablePlugin[ sps.size()]),
+-													false,
+-													properties,
+-													new PluginInstallationListener() {
+-		
+-														public void
+-														completed()
+-														{
+-														}
+-														
+-														public void
+-														cancelled()
+-														{
+-														}
+-														
+-														public void
+-														failed(
+-															PluginException	e )
+-														{
+-			
+-														}
+-													});
+-												
+-											}catch( Throwable e ){
+-												
+-												log.log( "Auto install failed", e );
+-											}
+-										}
+-									};
+-								}.start();
 -							}
 -						}
 -					}
@@ -212,63 +332,7 @@ diff -up azureus-4.0.0.4/org/gudy/azureus2/pluginsimpl/update/PluginUpdatePlugin
 -					log.log( LoggerChannel.LT_INFORMATION, "**** Update check starts ****" );
 -				}
 -			});
-+// 															plugin_config.setPluginParameter( config_key, true );
-+// 														}
-+// 													}
-+// 												});
-+											
-+// 											break;
-+// 										}
-+// 									}
-+									
-+// 								}catch( Throwable e ){
-+									
-+// 								}
-+// 							}
-+							
-+// 							if ( found_one ){
-+								
-+// 								break;
-+// 							}
-+// 						}
-+// 					}
-+// 				}
-+				
-+// 			}, false );
-+		
-+// 		update_manager.registerUpdatableComponent( 
-+// 				new UpdatableComponent()
-+// 				{
-+// 					public String
-+// 					getName()
-+// 					{
-+// 						return( "Mandatory plugins" );
-+// 					}
-+					
-+// 					public int
-+// 					getMaximumCheckTime()
-+// 					{
-+// 						return( f_mandatory_count * (( RD_SIZE_RETRIES * RD_SIZE_TIMEOUT )/1000));
-+// 					}
-+					
-+// 					public void
-+// 					checkForUpdate(
-+// 						UpdateChecker	checker )
-+// 					{
-+// 						checkForUpdateSupport( checker, null, true );
-+// 					}			
-+// 				}, true );
-+		
-+// 		update_manager.addListener(
-+// 			new UpdateManagerListener()
-+// 			{
-+// 				public void
-+// 				checkInstanceCreated(
-+// 					UpdateCheckInstance	instance )
-+// 				{
-+// 					log.log( LoggerChannel.LT_INFORMATION, "**** Update check starts ****" );
-+// 				}
-+// 			});
++
  	}
  	
  	protected void

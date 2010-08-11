@@ -1,11 +1,10 @@
-diff -up azureus-4.2.0.8/org/gudy/azureus2/pluginsimpl/local/installer/PluginInstallerImpl.java.no-update-manager-PluginInstallerImpl azureus-4.2.0.8/org/gudy/azureus2/pluginsimpl/local/installer/PluginInstallerImpl.java
---- azureus-4.2.0.8/org/gudy/azureus2/pluginsimpl/local/installer/PluginInstallerImpl.java.no-update-manager-PluginInstallerImpl	2009-03-09 20:25:32.000000000 +0100
-+++ azureus-4.2.0.8/org/gudy/azureus2/pluginsimpl/local/installer/PluginInstallerImpl.java	2009-09-13 17:14:11.000000000 +0200
-@@ -464,97 +464,7 @@ PluginInstallerImpl
- 		throws PluginException
- 	{
- 		PluginUpdatePlugin	pup = (PluginUpdatePlugin)manager.getPluginInterfaceByClass( PluginUpdatePlugin.class ).getPlugin();
--		
+diff -up azureus-4.5.0.0/org/gudy/azureus2/pluginsimpl/local/installer/PluginInstallerImpl.java.no-update-manager-PluginInstallerImpl azureus-4.5.0.0/org/gudy/azureus2/pluginsimpl/local/installer/PluginInstallerImpl.java
+--- azureus-4.5.0.0/org/gudy/azureus2/pluginsimpl/local/installer/PluginInstallerImpl.java.no-update-manager-PluginInstallerImpl	2010-07-31 01:00:42.000000000 +0300
++++ azureus-4.5.0.0/org/gudy/azureus2/pluginsimpl/local/installer/PluginInstallerImpl.java	2010-08-05 20:57:52.000000000 +0300
+@@ -478,112 +478,6 @@ PluginInstallerImpl
+ 		
+ 		PluginUpdatePlugin	pup = (PluginUpdatePlugin)pup_pi.getPlugin();
+ 		
 -		UpdateManagerImpl	uman = (UpdateManagerImpl)manager.getDefaultPluginInterface().getUpdateManager();
 -		
 -		UpdateCheckInstanceImpl	inst = 
@@ -17,7 +16,7 @@ diff -up azureus-4.2.0.8/org/gudy/azureus2/pluginsimpl/local/installer/PluginIns
 -		if ( properties != null ){
 -			
 -			for ( Map.Entry<Integer,Object> entry: properties.entrySet()){
- 				
+-				
 -				inst.setProperty( entry.getKey(), entry.getValue());
 -			}
 -		}
@@ -72,11 +71,18 @@ diff -up azureus-4.2.0.8/org/gudy/azureus2/pluginsimpl/local/installer/PluginIns
 -										protected void
 -										check()
 -										{
--											for (int i=0;i<updates.length;i++){
+-											Update failed_update = null;
+-											
+-											for ( Update update: updates ){
 -												
--												if ( !updates[i].isCancelled() && !updates[i].isComplete()){
+-												if ( !update.isCancelled() && !update.isComplete()){
 -													
 -													return;
+-												}
+-												
+-												if ( !update.wasSuccessful()){
+-													
+-													failed_update = update;
 -												}
 -											}
 -											
@@ -86,7 +92,16 @@ diff -up azureus-4.2.0.8/org/gudy/azureus2/pluginsimpl/local/installer/PluginIns
 -												
 -											}else{
 -												
--												listener.completed();
+-												if ( failed_update == null ){
+-													
+-													listener.completed();
+-													
+-												}else{
+-												
+-													listener.failed(
+-														new PluginException(
+-															"Install of " + failed_update.getName() + " failed" ));
+-												}
 -											}
 -										}
 -									});
@@ -99,13 +114,12 @@ diff -up azureus-4.2.0.8/org/gudy/azureus2/pluginsimpl/local/installer/PluginIns
  		try{
  			
  			for (int i=0;i<plugins.length;i++){
-@@ -619,56 +529,52 @@ PluginInstallerImpl
+@@ -648,47 +542,6 @@ PluginInstallerImpl
  				
  					final PluginInterface dummy_plugin_interface = manager.getPluginInterfaceByID( plugin_id, false );
  					
 -					((InstallablePluginImpl)plugin).addUpdate( inst, pup, dummy_plugin, dummy_plugin_interface );
-+// 					((InstallablePluginImpl)plugin).addUpdate( inst, pup, dummy_plugin, dummy_plugin_interface );
- 							
+-							
 -					inst.addListener(
 -						new UpdateCheckInstanceListener()
 -						{
@@ -114,105 +128,59 @@ diff -up azureus-4.2.0.8/org/gudy/azureus2/pluginsimpl/local/installer/PluginIns
 -								UpdateCheckInstance		instance )
 -							{
 -								try{
-+// 					inst.addListener(
-+// 						new UpdateCheckInstanceListener()
-+// 						{
-+// 							public void
-+// 							cancelled(
-+// 								UpdateCheckInstance		instance )
-+// 							{
-+// 								try{
- 								
+-								
 -									dummy_plugin_interface.getPluginState().unload();
-+// 									dummy_plugin_interface.getPluginState().unload();
- 									
+-									
 -								}catch( Throwable e ){
-+// 								}catch( Throwable e ){
- 									
+-									
 -									Debug.out( "Failed to unload plugin", e );
 -								}
 -							}
-+// 									Debug.out( "Failed to unload plugin", e );
-+// 								}
-+// 							}
- 							
+-							
 -							public void
 -							complete(
 -								UpdateCheckInstance		instance )
 -							{
 -								PluginInterface pi = manager.getPluginInterfaceByID( plugin_id, false );
-+// 							public void
-+// 							complete(
-+// 								UpdateCheckInstance		instance )
-+// 							{
-+// 								PluginInterface pi = manager.getPluginInterfaceByID( plugin_id, false );
- 								
+-								
 -								if ( pi != null && pi.getPlugin() instanceof FailedPlugin ){
-+// 								if ( pi != null && pi.getPlugin() instanceof FailedPlugin ){
- 									
+-									
 -									try{
 -										pi.getPluginState().unload();
-+// 									try{
-+// 										pi.getPluginState().unload();
- 										
+-										
 -									}catch( Throwable e ){
-+// 									}catch( Throwable e ){
- 										
+-										
 -										Debug.out( "Failed to unload plugin", e );
 -									}
 -								}
-+// 										Debug.out( "Failed to unload plugin", e );
-+// 									}
-+// 								}
- 
+-
 -							}
 -						});
 -				}else{
-+// 							}
-+// 						});
-+// 				}else{
- 					
+-					
 -					((InstallablePluginImpl)plugin).addUpdate( inst, pup, existing_plugin, existing_plugin_interface );
-+// 					((InstallablePluginImpl)plugin).addUpdate( inst, pup, existing_plugin, existing_plugin_interface );
  				}
  			}
  		
--			inst.start();
--			
- 		}catch( Throwable e ){
- 			
--			inst.cancel();
--			
- 			if ( e instanceof PluginException ){
- 				
- 				throw((PluginException)e);
-@@ -732,138 +638,138 @@ PluginInstallerImpl
+@@ -762,154 +615,6 @@ PluginInstallerImpl
+ 				throw( new PluginException( "Plugin '" + pi.getPluginID() + "' is not loaded from the file system, can't uninstall" ));
  			}
  		}
- 		
+-		
 -		try{
 -			UpdateManager	uman = manager.getDefaultPluginInterface().getUpdateManager();
-+// 		try{
-+// 			UpdateManager	uman = manager.getDefaultPluginInterface().getUpdateManager();
- 			
+-			
 -			UpdateCheckInstance	inst = 
 -				uman.createEmptyUpdateCheckInstance(
 -						UpdateCheckInstance.UCI_UNINSTALL,
 -						"update.instance.uninstall");
-+// 			UpdateCheckInstance	inst = 
-+// 				uman.createEmptyUpdateCheckInstance(
-+// 						UpdateCheckInstance.UCI_UNINSTALL,
-+// 						"update.instance.uninstall");
- 
+-
 -			for (int i=0;i<pis.length;i++){
-+// 			for (int i=0;i<pis.length;i++){
- 				
+-				
 -				final PluginInterface	pi = pis[i];
-+// 				final PluginInterface	pi = pis[i];
- 				
+-				
 -				final String	plugin_dir = pi.getPluginDirectoryName();
-+// 				final String	plugin_dir = pi.getPluginDirectoryName();
- 
+-
 -				inst.addUpdatableComponent(
 -					new UpdatableComponent()
 -					{
@@ -227,21 +195,7 @@ diff -up azureus-4.2.0.8/org/gudy/azureus2/pluginsimpl/local/installer/PluginIns
 -						{
 -							return( 0 );
 -						}
-+// 				inst.addUpdatableComponent(
-+// 					new UpdatableComponent()
-+// 					{
-+// 						public String
-+// 						getName()
-+// 						{
-+// 							return( pi.getPluginName());
-+// 						}
-+					
-+// 						public int
-+// 						getMaximumCheckTime()
-+// 						{
-+// 							return( 0 );
-+// 						}
- 						
+-						
 -						public void
 -						checkForUpdate(
 -							final UpdateChecker	checker )
@@ -249,103 +203,13 @@ diff -up azureus-4.2.0.8/org/gudy/azureus2/pluginsimpl/local/installer/PluginIns
 -							try{
 -								ResourceDownloader rd = 
 -									manager.getDefaultPluginInterface().getUtilities().getResourceDownloaderFactory().create( new File( plugin_dir ));
-+// 						public void
-+// 						checkForUpdate(
-+// 							final UpdateChecker	checker )
-+// 						{
-+// 							try{
-+// 								ResourceDownloader rd = 
-+// 									manager.getDefaultPluginInterface().getUtilities().getResourceDownloaderFactory().create( new File( plugin_dir ));
- 								
--								rd.addListener(
--									new ResourceDownloaderAdapter()
--									{
--										public boolean
--										completed(
--											ResourceDownloader	downloader,
--											InputStream			data )
--										{
--											try{
--												if ( pi.getPluginState().isUnloadable()){
-+// 								rd.addListener(
-+// 									new ResourceDownloaderAdapter()
-+// 									{
-+// 										public boolean
-+// 										completed(
-+// 											ResourceDownloader	downloader,
-+// 											InputStream			data )
-+// 										{
-+// 											try{
-+// 												if ( pi.getPluginState().isUnloadable()){
- 											
--													pi.getPluginState().unload();
-+// 													pi.getPluginState().unload();
- 													
--													FileUtil.recursiveDelete( new File( plugin_dir ));
-+// 													FileUtil.recursiveDelete( new File( plugin_dir ));
- 												
--												}
-+// 												}
- 																
--												UpdateInstaller installer = checker.createInstaller();
-+// 												UpdateInstaller installer = checker.createInstaller();
- 													
--												installer.addRemoveAction( new File( plugin_dir ).getCanonicalPath());
-+// 												installer.addRemoveAction( new File( plugin_dir ).getCanonicalPath());
- 											
- 												
--											}catch( Throwable e ){
-+// 											}catch( Throwable e ){
- 												
--												Debug.printStackTrace(e);
--												Logger.log(new LogAlert(LogAlert.REPEATABLE,
--														"Plugin uninstall failed", e));
--											}
-+// 												Debug.printStackTrace(e);
-+// 												Logger.log(new LogAlert(LogAlert.REPEATABLE,
-+// 														"Plugin uninstall failed", e));
-+// 											}
- 											
--												// don't close the stream as we process it later
-+// 												// don't close the stream as we process it later
- 												
--											return( true );
--										}
-+// 											return( true );
-+// 										}
- 										
--										public void
--										failed(
--											ResourceDownloader			downloader,
--											ResourceDownloaderException e )
--										{
--											if ( !downloader.isCancelled()){
--												Logger.log(new LogAlert(LogAlert.REPEATABLE,
--														"Plugin uninstall failed", e));
--											}
--										}
--									});
-+// 										public void
-+// 										failed(
-+// 											ResourceDownloader			downloader,
-+// 											ResourceDownloaderException e )
-+// 										{
-+// 											if ( !downloader.isCancelled()){
-+// 												Logger.log(new LogAlert(LogAlert.REPEATABLE,
-+// 														"Plugin uninstall failed", e));
-+// 											}
-+// 										}
-+// 									});
- 	
+-	
 -									// the plugin may have > 1 plugin interfaces, make the name up appropriately
-+// 									// the plugin may have > 1 plugin interfaces, make the name up appropriately
- 								
+-								
 -								String	update_name = "";
-+// 								String	update_name = "";
- 									
+-									
 -								PluginInterface[]	ifs = manager.getPluginInterfaces();
-+// 								PluginInterface[]	ifs = manager.getPluginInterfaces();
- 								
+-								
 -							    Arrays.sort( 
 -							    		ifs,
 -									  	new Comparator()
@@ -358,70 +222,98 @@ diff -up azureus-4.2.0.8/org/gudy/azureus2/pluginsimpl/local/installer/PluginIns
 -								      			return(((PluginInterface)o1).getPluginName().compareTo(((PluginInterface)o2).getPluginName()));
 -								      		}
 -										});
-+// 							    Arrays.sort( 
-+// 							    		ifs,
-+// 									  	new Comparator()
-+// 										{
-+// 								      		public int 
-+// 											compare(
-+// 												Object o1, 
-+// 												Object o2)
-+// 								      		{
-+// 								      			return(((PluginInterface)o1).getPluginName().compareTo(((PluginInterface)o2).getPluginName()));
-+// 								      		}
-+// 										});
- 							    
+-							    
 -								for (int i=0;i<ifs.length;i++){
-+// 								for (int i=0;i<ifs.length;i++){
- 									
+-									
 -									if ( ifs[i].getPluginID().equals(pi.getPluginID())){
-+// 									if ( ifs[i].getPluginID().equals(pi.getPluginID())){
- 									
+-									
 -										update_name += (update_name.length()==0?"":",") + ifs[i].getPluginName();
 -									}
 -								}
-+// 										update_name += (update_name.length()==0?"":",") + ifs[i].getPluginName();
-+// 									}
-+// 								}
- 								
--								checker.addUpdate(
+-								
+-								final Update update = checker.addUpdate(
 -									update_name,
 -									new String[]{ "Uninstall: " + plugin_dir},
 -									pi.getPluginVersion(),
 -									rd,
 -									pi.getPluginState().isUnloadable()?Update.RESTART_REQUIRED_NO:Update.RESTART_REQUIRED_YES );
-+// 								checker.addUpdate(
-+// 									update_name,
-+// 									new String[]{ "Uninstall: " + plugin_dir},
-+// 									pi.getPluginVersion(),
-+// 									rd,
-+// 									pi.getPluginState().isUnloadable()?Update.RESTART_REQUIRED_NO:Update.RESTART_REQUIRED_YES );
- 									
+-									
+-								rd.addListener(
+-										new ResourceDownloaderAdapter()
+-										{
+-											public boolean
+-											completed(
+-												ResourceDownloader	downloader,
+-												InputStream			data )
+-											{
+-												try{
+-													if ( pi.getPluginState().isUnloadable()){
+-												
+-														pi.getPluginState().unload();
+-														
+-														FileUtil.recursiveDelete( new File( plugin_dir ));
+-													
+-													}
+-																	
+-													UpdateInstaller installer = checker.createInstaller();
+-														
+-													installer.addRemoveAction( new File( plugin_dir ).getCanonicalPath());
+-												
+-													update.complete( true );
+-													
+-													try{
+-														PluginInitializer.fireEvent(
+-															PluginEvent.PEV_PLUGIN_UNINSTALLED,
+-															pi.getPluginID());
+-														
+-													}catch( Throwable e ){
+-														
+-														Debug.out( e );
+-													}
+-												}catch( Throwable e ){
+-													
+-													update.complete( false );
+-													
+-													Debug.printStackTrace(e);
+-													
+-													Logger.log(new LogAlert(LogAlert.REPEATABLE,
+-															"Plugin uninstall failed", e));
+-												}
+-												
+-													// don't close the stream as we process it later
+-													
+-												return( true );
+-											}
+-											
+-											public void
+-											failed(
+-												ResourceDownloader			downloader,
+-												ResourceDownloaderException e )
+-											{
+-												update.complete( false );
+-												
+-												if ( !downloader.isCancelled()){
+-													
+-													Logger.log(new LogAlert(LogAlert.REPEATABLE,
+-															"Plugin uninstall failed", e));
+-												}
+-											}
+-										});
 -							}finally{
-+// 							}finally{
- 								
+-								
 -								checker.completed();
 -							}
-+// 								checker.completed();
-+// 							}
- 								
+-								
 -						}
 -					}, false );
 -			}
-+// 						}
-+// 					}, false );
-+// 			}
- 
+-
 -			inst.start();
-+// 			inst.start();
- 			
+-			
 -		}catch( Throwable e ){
-+// 		}catch( Throwable e ){
- 			
+-			
 -			Debug.printStackTrace(e);
 -		}
-+// 			Debug.printStackTrace(e);
-+// 		}
  	}
  	
  	protected PluginInterface

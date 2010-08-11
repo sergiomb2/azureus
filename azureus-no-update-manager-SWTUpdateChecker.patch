@@ -1,12 +1,11 @@
-diff -up azureus-4.2.0.8/org/gudy/azureus2/ui/swt/updater2/SWTUpdateChecker.java.no-update-manager-SWTUpdateChecker azureus-4.2.0.8/org/gudy/azureus2/ui/swt/updater2/SWTUpdateChecker.java
---- azureus-4.2.0.8/org/gudy/azureus2/ui/swt/updater2/SWTUpdateChecker.java.no-update-manager-SWTUpdateChecker	2009-04-16 20:46:42.000000000 +0200
-+++ azureus-4.2.0.8/org/gudy/azureus2/ui/swt/updater2/SWTUpdateChecker.java	2009-09-13 12:57:58.000000000 +0200
-@@ -64,180 +64,14 @@ public class SWTUpdateChecker implements
+diff -up azureus-4.5.0.0/org/gudy/azureus2/ui/swt/updater2/SWTUpdateChecker.java.no-update-manager-SWTUpdateChecker azureus-4.5.0.0/org/gudy/azureus2/ui/swt/updater2/SWTUpdateChecker.java
+--- azureus-4.5.0.0/org/gudy/azureus2/ui/swt/updater2/SWTUpdateChecker.java.no-update-manager-SWTUpdateChecker	2010-05-04 02:50:24.000000000 +0300
++++ azureus-4.5.0.0/org/gudy/azureus2/ui/swt/updater2/SWTUpdateChecker.java	2010-08-06 22:20:40.000000000 +0300
+@@ -64,195 +64,12 @@ public class SWTUpdateChecker implements
    public static void
    initialize()
    {
 -  	PluginInitializer.getDefaultInterface().getUpdateManager().registerUpdatableComponent(new SWTUpdateChecker(),true);
-+
    }
    
    public SWTUpdateChecker() {    
@@ -21,7 +20,7 @@ diff -up azureus-4.2.0.8/org/gudy/azureus2/ui/swt/updater2/SWTUpdateChecker.java
 -	    if ( update_required ){
 -        	    
 -	       	int	update_prevented_version = COConfigurationManager.getIntParameter( "swt.update.prevented.version", -1 );
- 
+-
 -	    	try{
 -		        URL	swt_url = SWT.class.getClassLoader().getResource("org/eclipse/swt/SWT.class");
 -		        
@@ -164,10 +163,25 @@ diff -up azureus-4.2.0.8/org/gudy/azureus2/ui/swt/updater2/SWTUpdateChecker.java
 -	      
 -	      swtDownloader.addListener(new ResourceDownloaderAdapter() {
 -		        
--		        public boolean completed(ResourceDownloader downloader, InputStream data) {
--		          //On completion, process the InputStream to store temp files
+-		        public boolean 
+-		        completed(
+-		        	ResourceDownloader downloader, 
+-		        	InputStream data) 
+-		        {
+-		        		//On completion, process the InputStream to store temp files
+-		        	
 -		          return processData(checker,update,downloader,data);
 -		        }
+-		        
+-				public void
+-				failed(
+-					ResourceDownloader			downloader,
+-					ResourceDownloaderException e )
+-				{
+-					Debug.out( downloader.getName() + " failed", e );
+-					
+-					update.complete( false );
+-				}
 -		      });
 -	    }
 -  	}catch( Throwable e ){

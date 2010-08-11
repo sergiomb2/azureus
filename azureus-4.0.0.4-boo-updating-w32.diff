@@ -1,6 +1,6 @@
-diff -up azureus-4.3.1.4/com/aelitis/azureus/core/update/impl/AzureusRestarterImpl.java.boo-updating-w32 azureus-4.3.1.4/com/aelitis/azureus/core/update/impl/AzureusRestarterImpl.java
---- azureus-4.3.1.4/com/aelitis/azureus/core/update/impl/AzureusRestarterImpl.java.boo-updating-w32	2010-01-11 04:26:48.000000000 +0200
-+++ azureus-4.3.1.4/com/aelitis/azureus/core/update/impl/AzureusRestarterImpl.java	2010-02-14 17:25:31.000000000 +0200
+diff -up azureus-4.5.0.0/com/aelitis/azureus/core/update/impl/AzureusRestarterImpl.java.boo-updating-w32 azureus-4.5.0.0/com/aelitis/azureus/core/update/impl/AzureusRestarterImpl.java
+--- azureus-4.5.0.0/com/aelitis/azureus/core/update/impl/AzureusRestarterImpl.java.boo-updating-w32	2010-05-04 02:58:40.000000000 +0300
++++ azureus-4.5.0.0/com/aelitis/azureus/core/update/impl/AzureusRestarterImpl.java	2010-08-06 22:40:45.000000000 +0300
 @@ -30,8 +30,8 @@ import org.gudy.azureus2.core3.util.*;
  import org.gudy.azureus2.platform.PlatformManager;
  import org.gudy.azureus2.platform.PlatformManagerFactory;
@@ -34,7 +34,7 @@ diff -up azureus-4.3.1.4/com/aelitis/azureus/core/update/impl/AzureusRestarterIm
  	}
  	
  
-@@ -303,131 +290,6 @@ AzureusRestarterImpl 
+@@ -303,147 +290,6 @@ AzureusRestarterImpl 
        String backupJavaRunString,
        boolean update_only) 
    {
@@ -67,7 +67,23 @@ diff -up azureus-4.3.1.4/com/aelitis/azureus/core/update/impl/AzureusRestarterIm
 -					}
 -					s += "\r\n";
 -					s += "start \"\" \"" + azRunner + "\"";
--					FileUtil.writeBytesAsFile(fileRestart.getAbsolutePath(), s.getBytes());
+-					
+-					byte[]	bytes;
+-					
+-					String	encoding = FileUtil.getScriptCharsetEncoding();
+-					
+-					if ( encoding == null ){
+-						bytes = s.getBytes();
+-					}else{
+-						try{
+-							bytes = s.getBytes( encoding );
+-						}catch( Throwable e){
+-							e.printStackTrace();
+-							
+-							bytes = s.getBytes();
+-						}
+-					}
+-					FileUtil.writeBytesAsFile(fileRestart.getAbsolutePath(),bytes);
 -
 -					result = accessor.shellExecute(null, fileRestart.getAbsolutePath(),
 -							null, SystemProperties.getApplicationPath(),
@@ -166,7 +182,7 @@ diff -up azureus-4.3.1.4/com/aelitis/azureus/core/update/impl/AzureusRestarterIm
  		return true;
  	}
    
-@@ -445,60 +307,15 @@ AzureusRestarterImpl 
+@@ -461,60 +307,15 @@ AzureusRestarterImpl 
      String[]  parameters,
      boolean update_only) 
    {
@@ -231,7 +247,7 @@ diff -up azureus-4.3.1.4/com/aelitis/azureus/core/update/impl/AzureusRestarterIm
  
  	private boolean
  	javaSpawn(
-@@ -523,30 +340,6 @@ AzureusRestarterImpl 
+@@ -539,30 +340,6 @@ AzureusRestarterImpl 
  		}
  	}
  
