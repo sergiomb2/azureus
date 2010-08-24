@@ -1,14 +1,14 @@
 %define		_newname Vuze
 
 Name:		azureus
-Version:	4.5.0.0
+Version:	4.5.0.2
 Release:	1%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 License:	GPLv2+
 URL:		http://azureus.sourceforge.net
 
-Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_4500_source.zip
+Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_4502_source.zip
 
 Source1:	azureus.script
 Source2:	Azureus.desktop
@@ -248,6 +248,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Wed Aug 18 2010 David Juran <david@juran.se> - 4.5.0.2-1
+- upgrade to 4.5.0.2
+
 * Thu Aug  5 2010 David Juran <david@juran.se> - 4.5.0.0-1
 - upgrade to 4.5.0.0
 
