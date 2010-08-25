@@ -1,8 +1,8 @@
-%define		_newname Vuze
+%global		_newname Vuze
 
 Name:		azureus
 Version:	4.5.0.2
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 License:	GPLv2+
@@ -50,14 +50,12 @@ BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:	ant, jpackage-utils >= 1.5, xml-commons-apis
 BuildRequires:	jakarta-commons-cli, log4j
-BuildRequires:	libgconf-java
 BuildRequires:	bouncycastle >= 1.33-3
 BuildRequires:	eclipse-swt >= 3.5
 BuildRequires:	junit
 Requires:	jakarta-commons-cli, log4j
 Requires:	xulrunner
 Requires:	eclipse-swt >= 3.5
-Requires:	libgconf-java
 Requires:	 bouncycastle >= 1.33-3
 Requires:	 java >= 1:1.6.0
 BuildRequires:	 java-devel >= 1:1.6.0
@@ -148,7 +146,7 @@ chmod 644 *.txt
 %build
 mkdir -p build/libs
 build-jar-repository -p build/libs bcprov jakarta-commons-cli log4j \
-  gtk2.8 glib0.2 junit
+  junit
 
 #ppc seems to have eclipse-swt.ppc64 installed so libdir can't be used
 if [ -e /usr/lib/eclipse/swt.jar ];then
@@ -248,6 +246,10 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Wed Aug 25 2010 Alexander Kurtakov <akurtako@redhat.com> 4.5.0.2-2
+- Remove libgconf-java false BR/R.
+- Use global instead of define.
+
 * Wed Aug 18 2010 David Juran <david@juran.se> - 4.5.0.2-1
 - upgrade to 4.5.0.2
 
