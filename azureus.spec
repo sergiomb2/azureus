@@ -2,7 +2,7 @@
 
 Name:		azureus
 Version:	4.5.1.0
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 License:	GPLv2+
@@ -145,7 +145,7 @@ chmod 644 *.txt
 
 %build
 mkdir -p build/libs
-build-jar-repository -p build/libs bcprov jakarta-commons-cli log4j \
+build-jar-repository -p build/libs bcprov apache-commons-cli log4j \
   junit
 
 #ppc seems to have eclipse-swt.ppc64 installed so libdir can't be used
@@ -246,6 +246,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Tue Dec  7 2010 David Juran <djuran@redhat.com> - 4.5.1.0-2
+- jakarta-commons-cli changed to apache-commons-cli (Bz 661057)
+
 * Thu Oct  7 2010 David Juran <djuran@redhat.com> - 4.5.1.0-1
 - upgrade to 4.5.1.0
 
