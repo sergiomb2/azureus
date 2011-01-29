@@ -1,14 +1,14 @@
 %global		_newname Vuze
 
 Name:		azureus
-Version:	4.5.1.0
+Version:	4.6.0.0
 Release:	2%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 License:	GPLv2+
 URL:		http://azureus.sourceforge.net
 
-Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_4510_source.zip
+Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_4600_source.zip
 
 Source1:	azureus.script
 Source2:	Azureus.desktop
@@ -44,7 +44,6 @@ Patch56:	azureus-4.0.0.4-silly-java-tricks-are-for-kids.diff
 Patch57:	azureus-4.0.0.4-stupid-invalid-characters.diff
 
 Patch58:	azureus-4.2.0.4-java5.patch
-Patch59:	azureus-4.5.0.0-no-Tree2.patch
 
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
@@ -131,7 +130,6 @@ rm org/gudy/azureus2/ui/swt/win32/Win32UIEnhancer.java
 
 #hacks to org.eclipse.swt.widgets.Tree2 don't compile.
 rm -fR org/eclipse
-%patch59 -p1 -b .no-Tree2
 
 
 #sed -i -e \
@@ -246,6 +244,13 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Sat Jan 29 2011 David Juran <david@juran.se> - 4.6.0.0-2
+- fix path to apache-commons-cli in start script
+- fix path to xulrunner
+
+* Sun Jan 23 2011 David Juran <djuran@redhat.com> - 4.6.0.0-1
+- upgrade to 4.6.0.0
+
 * Tue Dec  7 2010 David Juran <djuran@redhat.com> - 4.5.1.0-2
 - jakarta-commons-cli changed to apache-commons-cli (Bz 661057)
 
