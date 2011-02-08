@@ -2,7 +2,7 @@
 
 Name:		azureus
 Version:	4.6.0.0
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 License:	GPLv2+
@@ -244,6 +244,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Mon Feb 07 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 4.6.0.0-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
+
 * Sat Jan 29 2011 David Juran <david@juran.se> - 4.6.0.0-2
 - fix path to apache-commons-cli in start script
 - fix path to xulrunner
