@@ -1,14 +1,14 @@
 %global		_newname Vuze
 
 Name:		azureus
-Version:	4.6.0.0
-Release:	3%{?dist}
+Version:	4.6.0.2
+Release:	1%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 License:	GPLv2+
 URL:		http://azureus.sourceforge.net
 
-Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_4600_source.zip
+Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_4602_source.zip
 
 Source1:	azureus.script
 Source2:	Azureus.desktop
@@ -17,7 +17,6 @@ Source3:	azureus.applications
 #ant build script from Azureus-4.3.0.6
 Source4:	build.xml
 
-#Patch0:		azureus-remove-win32-osx-platforms.patch
 Patch2:		azureus-cache-size.patch
 Patch3:		azureus-remove-manifest-classpath.patch
 Patch9:		azureus-no-shared-plugins.patch
@@ -26,17 +25,14 @@ Patch13:	azureus-no-updates-PluginInterfaceImpl.patch
 Patch14:	azureus-no-update-manager-AzureusCoreImpl.patch
 Patch15:	azureus-no-update-manager-CorePatchChecker.patch
 Patch16:	azureus-no-update-manager-CoreUpdateChecker.patch
-Patch18:	azureus-no-update-manager-PluginInstallerImpl.patch
 Patch19:	azureus-no-update-manager-PluginUpdatePlugin.patch
 Patch20:	azureus-no-update-manager-SWTUpdateChecker.patch
 Patch22:	azureus-no-update-manager-UpdateMonitor.patch
 Patch27:	azureus-SecureMessageServiceClientHelper-bcprov.patch
 Patch28:	azureus-configuration.patch
-#Patch31:	azureus-fix-menu-MainMenu.patch
 
 Patch50:	azureus-4.0.0.4-boo-windows.diff
 Patch51:	azureus-4.0.0.4-boo-osx.diff
-Patch52:	azureus-4.0.0.4-screw-w32-tests.diff
 Patch53:	azureus-4.0.0.4-boo-updating-w32.diff
 Patch54:	azureus-4.0.0.4-screw-win32utils.diff
 
@@ -74,7 +70,6 @@ advanced users.
 
 cp %{SOURCE4} .
 
-#%patch0 -p0
 %patch2 -p0 -b .cache-size
 %patch3 -p1 -b .remove-manifest-classpath
 %patch9 -p0 -b .no-shared-plugins
@@ -83,13 +78,12 @@ cp %{SOURCE4} .
 %patch14 -p1 -b .no-update-manager-AzureusCoreImpl
 %patch15 -p1 -b .no-update-manager-CorePatchChecker
 %patch16 -p1 -b .no-update-manager-CoreUpdateChecker
-#%patch18 -p1 -b .no-update-manager-PluginInstallerImpl
 %patch19 -p1 -b .no-update-manager-PluginUpdatePlugin
 %patch20 -p1 -b .no-update-manager-SWTUpdateChecker
 %patch22 -p1 -b .no-update-manager-UpdateMonitor
 %patch27 -p1 -b .nobcprov
 %patch28 -p0 -b .configuration
-#%patch31 -p0
+
 #rm com/aelitis/azureus/core/update -rf
 #find ./ -name osx | xargs rm -r
 #find ./ -name macosx | xargs rm -r
@@ -119,7 +113,6 @@ rm org/gudy/azureus2/ui/swt/osx/CarbonUIEnhancer.java
 rm org/gudy/azureus2/ui/swt/osx/Start.java
 rm org/gudy/azureus2/ui/swt/win32/Win32UIEnhancer.java
 %patch51 -p1 -b .boo-osx
-#%patch52 -b .screw-w32-tests
 %patch53 -p1 -b .boo-updating-w32
 %patch54 -b .screw-win32utils
 
@@ -244,6 +237,10 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Thu Feb 10 2011 David Juran <djuran@redhat.com> - 4.6.0.2-1
+- upgrade to Vuze 4.6.0.2
+- clean up not needed patches
+
 * Mon Feb 07 2011 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 4.6.0.0-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_15_Mass_Rebuild
 
