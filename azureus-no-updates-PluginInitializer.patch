@@ -1,7 +1,7 @@
-diff -up azureus-4.5.0.0/org/gudy/azureus2/pluginsimpl/local/PluginInitializer.java.no-updates-PluginInitializer azureus-4.5.0.0/org/gudy/azureus2/pluginsimpl/local/PluginInitializer.java
---- azureus-4.5.0.0/org/gudy/azureus2/pluginsimpl/local/PluginInitializer.java.no-updates-PluginInitializer	2010-07-31 01:00:40.000000000 +0300
-+++ azureus-4.5.0.0/org/gudy/azureus2/pluginsimpl/local/PluginInitializer.java	2010-08-05 20:33:30.000000000 +0300
-@@ -40,12 +40,8 @@ import org.gudy.azureus2.core3.util.*;
+diff -up azureus-4.6.0.4/org/gudy/azureus2/pluginsimpl/local/PluginInitializer.java.no-updates-PluginInitializer azureus-4.6.0.4/org/gudy/azureus2/pluginsimpl/local/PluginInitializer.java
+--- azureus-4.6.0.4/org/gudy/azureus2/pluginsimpl/local/PluginInitializer.java.no-updates-PluginInitializer	2011-03-08 19:09:54.000000000 +0200
++++ azureus-4.6.0.4/org/gudy/azureus2/pluginsimpl/local/PluginInitializer.java	2011-04-02 17:15:52.000000000 +0300
+@@ -41,12 +41,8 @@ import org.gudy.azureus2.core3.util.*;
  import org.gudy.azureus2.plugins.*;
  import org.gudy.azureus2.pluginsimpl.local.launch.PluginLauncherImpl;
  import org.gudy.azureus2.pluginsimpl.local.ui.UIManagerImpl;
@@ -14,7 +14,7 @@ diff -up azureus-4.5.0.0/org/gudy/azureus2/pluginsimpl/local/PluginInitializer.j
  
  import com.aelitis.azureus.core.*;
  import com.aelitis.azureus.core.versioncheck.VersionCheckClient;
-@@ -97,12 +93,12 @@ PluginInitializer
+@@ -98,12 +94,12 @@ PluginInitializer
     					"ShareHoster",
  					"true",
  					"false"},
@@ -33,7 +33,7 @@ diff -up azureus-4.5.0.0/org/gudy/azureus2/pluginsimpl/local/PluginInitializer.j
  			{	 PluginManagerDefaults.PID_UPNP, 
  				    "com.aelitis.azureus.plugins.upnp.UPnPPlugin", 
  				    "azbpupnp", 
-@@ -127,18 +123,18 @@ PluginInitializer
+@@ -128,18 +124,18 @@ PluginInitializer
  					"Magnet URI Handler",
  					"true",
  					"false"},
@@ -64,7 +64,7 @@ diff -up azureus-4.5.0.0/org/gudy/azureus2/pluginsimpl/local/PluginInitializer.j
  	   		{	 PluginManagerDefaults.PID_PLATFORM_CHECKER, 
     					"org.gudy.azureus2.platform.PlatformManagerPluginDelegate", 
     					"azplatform2", 
-@@ -457,7 +453,7 @@ PluginInitializer
+@@ -458,7 +454,7 @@ PluginInitializer
    	
    	core_operation 	= _core_operation;
      
@@ -73,7 +73,7 @@ diff -up azureus-4.5.0.0/org/gudy/azureus2/pluginsimpl/local/PluginInitializer.j
         
      plugin_manager = PluginManagerImpl.getSingleton( this );
      
-@@ -479,7 +475,7 @@ PluginInitializer
+@@ -480,7 +476,7 @@ PluginInitializer
      	}
      }
      
@@ -82,21 +82,21 @@ diff -up azureus-4.5.0.0/org/gudy/azureus2/pluginsimpl/local/PluginInitializer.j
    }
    
    protected void
-@@ -1233,9 +1229,6 @@ PluginInitializer
- 		      if ( load_failure != null ){
- 		    	  plugin_interface.setAsFailed();
- 		    	  
--		    	// don't complain about our internal one
--		    	  if ( !pid.equals(UpdaterUpdateChecker.getPluginID())){
--		    		  
- 			      	String msg = "Error loading plugin '" + pluginName + "' / '" + plugin_class_string + "'";
- 			      	LogAlert la;
- 			      	if (load_failure instanceof UnsupportedClassVersionError) {
-@@ -1247,7 +1240,6 @@ PluginInitializer
- 			      	Logger.log(la);
- 		
- 			      	System.out.println( msg + ": " + load_failure);
--			      }
- 		      }
- 	  		}
-   		}
+@@ -1291,9 +1287,6 @@ PluginInitializer
+ 					  if ( load_failure != null ){
+ 						  plugin_interface.setAsFailed();
+ 
+-						  // don't complain about our internal one
+-						  if ( !pid.equals(UpdaterUpdateChecker.getPluginID())){
+-
+ 							  String msg = "Error loading plugin '" + pluginName + "' / '" + plugin_class_string + "'";
+ 							  LogAlert la;
+ 							  if (load_failure instanceof UnsupportedClassVersionError) {
+@@ -1305,7 +1298,6 @@ PluginInitializer
+ 							  Logger.log(la);
+ 
+ 							  System.out.println( msg + ": " + load_failure);
+-						  }
+ 					  }
+ 				  }
+ 			  }

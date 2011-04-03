@@ -1,14 +1,14 @@
 %global		_newname Vuze
 
 Name:		azureus
-Version:	4.6.0.2
+Version:	4.6.0.4
 Release:	1%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 License:	GPLv2+
 URL:		http://azureus.sourceforge.net
 
-Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_4602_source.zip
+Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_4604_source.zip
 
 Source1:	azureus.script
 Source2:	Azureus.desktop
@@ -237,6 +237,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Sat Apr  2 2011 David Juran <djuran@redhat.com> - 4.6.0.4-1
+- upgrade to Vuxe 4.6.0.4
+
 * Thu Feb 10 2011 David Juran <djuran@redhat.com> - 4.6.0.2-1
 - upgrade to Vuze 4.6.0.2
 - clean up not needed patches
