@@ -2,7 +2,7 @@
 
 Name:		azureus
 Version:	4.6.0.4
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 License:	GPLv2+
@@ -49,7 +49,6 @@ BuildRequires:	bouncycastle >= 1.33-3
 BuildRequires:	eclipse-swt >= 3.5
 BuildRequires:	junit
 Requires:	jakarta-commons-cli, log4j
-Requires:	xulrunner
 Requires:	eclipse-swt >= 3.5
 Requires:	 bouncycastle >= 1.33-3
 Requires:	 java >= 1:1.6.0
@@ -237,8 +236,11 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Mon Apr 18 2011 David Juran <djuran@redhat.com> - 4.6.0.4-2
+- use webkit instead of xulrunner, works around Bz 674838
+
 * Sat Apr  2 2011 David Juran <djuran@redhat.com> - 4.6.0.4-1
-- upgrade to Vuxe 4.6.0.4
+- upgrade to Vuze 4.6.0.4
 
 * Thu Feb 10 2011 David Juran <djuran@redhat.com> - 4.6.0.2-1
 - upgrade to Vuze 4.6.0.2
