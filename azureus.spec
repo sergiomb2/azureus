@@ -2,7 +2,7 @@
 
 Name:		azureus
 Version:	4.6.0.4
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 License:	GPLv2+
@@ -72,16 +72,16 @@ cp %{SOURCE4} .
 %patch2 -p0 -b .cache-size
 %patch3 -p1 -b .remove-manifest-classpath
 %patch9 -p0 -b .no-shared-plugins
-%patch12 -p1 -b .no-updates-PluginInitializer
-%patch13 -p1 -b .no-updates-PluginInterfaceImpl
-%patch14 -p1 -b .no-update-manager-AzureusCoreImpl
-%patch15 -p1 -b .no-update-manager-CorePatchChecker
-%patch16 -p1 -b .no-update-manager-CoreUpdateChecker
-%patch19 -p1 -b .no-update-manager-PluginUpdatePlugin
-%patch20 -p1 -b .no-update-manager-SWTUpdateChecker
-%patch22 -p1 -b .no-update-manager-UpdateMonitor
+#%patch12 -p1 -b .no-updates-PluginInitializer
+#%patch13 -p1 -b .no-updates-PluginInterfaceImpl
+#%patch14 -p1 -b .no-update-manager-AzureusCoreImpl
+#%patch15 -p1 -b .no-update-manager-CorePatchChecker
+#%patch16 -p1 -b .no-update-manager-CoreUpdateChecker
+#%patch19 -p1 -b .no-update-manager-PluginUpdatePlugin
+#%patch20 -p1 -b .no-update-manager-SWTUpdateChecker
+#%patch22 -p1 -b .no-update-manager-UpdateMonitor
 %patch27 -p1 -b .nobcprov
-%patch28 -p0 -b .configuration
+#%patch28 -p0 -b .configuration 
 
 #rm com/aelitis/azureus/core/update -rf
 #find ./ -name osx | xargs rm -r
@@ -236,6 +236,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Thu Aug 25 2011 David Juran <djuran@redhat.com> - 4.6.0.4-3
+- Fix installation of plugins (Bz 540638)
+
 * Mon Apr 18 2011 David Juran <djuran@redhat.com> - 4.6.0.4-2
 - use webkit instead of xulrunner, works around Bz 674838
 
