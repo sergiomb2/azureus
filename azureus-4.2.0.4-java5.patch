@@ -6,7 +6,7 @@ diff -up azureus-4.2.0.4/build.xml.java5 azureus-4.2.0.4/build.xml
        </path>
     
 -   	<javac srcdir="${root.dir}" destdir="${root.dir}" nowarn="yes" source="1.4" target="1.4" includeAntRuntime="no" debug="true" debuglevel="lines,vars,source" >
-+   	<javac srcdir="${root.dir}" destdir="${root.dir}" nowarn="yes" includeAntRuntime="no" debug="true" debuglevel="lines,vars,source" >
++   	<javac encoding="8859_1" srcdir="${root.dir}" destdir="${root.dir}" nowarn="yes" includeAntRuntime="no" debug="true" debuglevel="lines,vars,source" >
           <classpath refid="libs.classpath" />
        </javac>
     </target>

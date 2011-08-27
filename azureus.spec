@@ -2,7 +2,7 @@
 
 Name:		azureus
 Version:	4.6.0.4
-Release:	3%{?dist}
+Release:	4%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 License:	GPLv2+
@@ -236,6 +236,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Sat Aug 27 2011 David Juran <djuran@redhat.com> - 4.6.0.4-4
+- fix character encoding for java 7
+
 * Thu Aug 25 2011 David Juran <djuran@redhat.com> - 4.6.0.4-3
 - Fix installation of plugins (Bz 540638)
 
