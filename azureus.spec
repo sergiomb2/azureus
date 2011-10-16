@@ -1,14 +1,14 @@
 %global		_newname Vuze
 
 Name:		azureus
-Version:	4.6.0.4
-Release:	4%{?dist}
+Version:	4.7.0.0
+Release:	1%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 License:	GPLv2+
 URL:		http://azureus.sourceforge.net
 
-Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_4604_source.zip
+Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_4700_source.zip
 
 Source1:	azureus.script
 Source2:	Azureus.desktop
@@ -97,7 +97,6 @@ rm org/gudy/azureus2/platform/macosx/access/jnilib/OSXAccess.java
 rm org/gudy/azureus2/platform/win32/access/AEWin32Access.java
 rm org/gudy/azureus2/platform/win32/access/impl/AEWin32AccessInterface.java
 rm org/gudy/azureus2/platform/win32/access/impl/AEWin32AccessImpl.java
-rm org/gudy/azureus2/platform/win32/access/impl/Test.java
 rm org/gudy/azureus2/platform/macosx/NativeInvocationBridge.java
 rm org/gudy/azureus2/platform/macosx/PListEditor.java
 rm org/gudy/azureus2/platform/win32/access/AEWin32AccessException.java
@@ -113,7 +112,7 @@ rm org/gudy/azureus2/ui/swt/osx/Start.java
 rm org/gudy/azureus2/ui/swt/win32/Win32UIEnhancer.java
 %patch51 -p1 -b .boo-osx
 %patch53 -p1 -b .boo-updating-w32
-%patch54 -b .screw-win32utils
+#%patch54 -b .screw-win32utils
 
 %patch56 -p1 -b .silly-java-tricks-are-for-kids
 %patch57  -p1 -b stupid-invalid-characters
@@ -236,6 +235,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Sun Oct 16 2011 David Juran <djuran@redhat.com> - 4.7.0.0-1
+- upgrade to azureus 4.7.0.0
+
 * Sat Aug 27 2011 David Juran <djuran@redhat.com> - 4.6.0.4-4
 - fix character encoding for java 7
 

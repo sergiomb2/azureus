@@ -1,6 +1,6 @@
-diff -up azureus-4.3.1.4/org/gudy/azureus2/platform/PlatformManagerFactory.java.boo-windows azureus-4.3.1.4/org/gudy/azureus2/platform/PlatformManagerFactory.java
---- azureus-4.3.1.4/org/gudy/azureus2/platform/PlatformManagerFactory.java.boo-windows	2009-05-13 18:50:56.000000000 +0300
-+++ azureus-4.3.1.4/org/gudy/azureus2/platform/PlatformManagerFactory.java	2010-02-12 22:49:14.000000000 +0200
+diff -up azureus-4.7.0.0/org/gudy/azureus2/platform/PlatformManagerFactory.java.boo-windows azureus-4.7.0.0/org/gudy/azureus2/platform/PlatformManagerFactory.java
+--- azureus-4.7.0.0/org/gudy/azureus2/platform/PlatformManagerFactory.java.boo-windows	2011-09-21 21:16:26.000000000 +0300
++++ azureus-4.7.0.0/org/gudy/azureus2/platform/PlatformManagerFactory.java	2011-10-16 19:42:58.000000000 +0300
 @@ -48,19 +48,9 @@ PlatformManagerFactory 
  			if ( platform_manager == null && !force_dummy ){
  										  
@@ -34,10 +34,10 @@ diff -up azureus-4.3.1.4/org/gudy/azureus2/platform/PlatformManagerFactory.java.
  			}
  			
  			return( platform_manager );
-diff -up azureus-4.3.1.4/org/gudy/azureus2/platform/PlatformManagerPluginDelegate.java.boo-windows azureus-4.3.1.4/org/gudy/azureus2/platform/PlatformManagerPluginDelegate.java
---- azureus-4.3.1.4/org/gudy/azureus2/platform/PlatformManagerPluginDelegate.java.boo-windows	2009-08-25 00:14:26.000000000 +0300
-+++ azureus-4.3.1.4/org/gudy/azureus2/platform/PlatformManagerPluginDelegate.java	2010-02-12 22:49:14.000000000 +0200
-@@ -44,10 +44,11 @@ public class PlatformManagerPluginDelega
+diff -up azureus-4.7.0.0/org/gudy/azureus2/platform/PlatformManagerPluginDelegate.java.boo-windows azureus-4.7.0.0/org/gudy/azureus2/platform/PlatformManagerPluginDelegate.java
+--- azureus-4.7.0.0/org/gudy/azureus2/platform/PlatformManagerPluginDelegate.java.boo-windows	2011-09-21 21:16:26.000000000 +0300
++++ azureus-4.7.0.0/org/gudy/azureus2/platform/PlatformManagerPluginDelegate.java	2011-10-16 19:42:58.000000000 +0300
+@@ -54,10 +54,11 @@ public class PlatformManagerPluginDelega
  		PlatformManager platform = PlatformManagerFactory.getPlatformManager();
  
  		int platformType = platform.getPlatformType();
@@ -53,11 +53,11 @@ diff -up azureus-4.3.1.4/org/gudy/azureus2/platform/PlatformManagerPluginDelegat
  			org.gudy.azureus2.platform.macosx.PlatformManagerUpdateChecker plugin = new org.gudy.azureus2.platform.macosx.PlatformManagerUpdateChecker();
  			plugin.initialize(pluginInterface);
  		}else if ( platformType == PlatformManager.PT_UNIX ){
-diff -up azureus-4.3.1.4/org/gudy/azureus2/update/CoreUpdateChecker.java.boo-windows azureus-4.3.1.4/org/gudy/azureus2/update/CoreUpdateChecker.java
---- azureus-4.3.1.4/org/gudy/azureus2/update/CoreUpdateChecker.java.boo-windows	2010-02-12 22:49:14.000000000 +0200
-+++ azureus-4.3.1.4/org/gudy/azureus2/update/CoreUpdateChecker.java	2010-02-12 22:54:43.000000000 +0200
-@@ -39,8 +39,6 @@ import org.gudy.azureus2.core3.config.*;
- import org.gudy.azureus2.core3.html.*;
+diff -up azureus-4.7.0.0/org/gudy/azureus2/update/CoreUpdateChecker.java.boo-windows azureus-4.7.0.0/org/gudy/azureus2/update/CoreUpdateChecker.java
+--- azureus-4.7.0.0/org/gudy/azureus2/update/CoreUpdateChecker.java.boo-windows	2011-09-21 21:15:08.000000000 +0300
++++ azureus-4.7.0.0/org/gudy/azureus2/update/CoreUpdateChecker.java	2011-10-16 19:52:25.000000000 +0300
+@@ -38,8 +38,6 @@ import org.gudy.azureus2.core3.logging.*
+ import org.gudy.azureus2.core3.config.*;
  import org.gudy.azureus2.core3.internat.MessageText;
  
 -import org.gudy.azureus2.platform.win32.access.AEWin32Access;
@@ -65,7 +65,7 @@ diff -up azureus-4.3.1.4/org/gudy/azureus2/update/CoreUpdateChecker.java.boo-win
  import org.gudy.azureus2.plugins.*;
  import org.gudy.azureus2.plugins.logging.LoggerChannel;
  import org.gudy.azureus2.plugins.ui.UIManager;
-@@ -718,51 +716,12 @@ CoreUpdateChecker
+@@ -1078,51 +1076,12 @@ CoreUpdateChecker
  				// hack here to allow testing of osx on windows (parg) - should replace with
  				// Constants.isWindows etc
  			
