@@ -2,7 +2,7 @@
 
 Name:		azureus
 Version:	4.7.0.0
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 License:	GPLv2+
