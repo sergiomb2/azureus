@@ -2,7 +2,7 @@
 
 Name:		azureus
 Version:	4.7.0.0
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 License:	GPLv2+
@@ -235,6 +235,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Thu Jan 12 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 4.7.0.0-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
+
 * Sun Oct 16 2011 David Juran <djuran@redhat.com> - 4.7.0.0-1
 - upgrade to azureus 4.7.0.0
 
