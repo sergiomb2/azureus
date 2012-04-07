@@ -1,14 +1,14 @@
 %global		_newname Vuze
 
 Name:		azureus
-Version:	4.7.0.0
-Release:	3%{?dist}
+Version:	4.7.0.2
+Release:	1%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 License:	GPLv2+
 URL:		http://azureus.sourceforge.net
 
-Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_4700_source.zip
+Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_4702_source.zip
 
 Source1:	azureus.script
 Source2:	Azureus.desktop
@@ -235,6 +235,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Wed Apr  4 2012 David Juran <djuran@redhat.com> - 4.7.0.2-1
+- upgrade to azureus 4.7.0.2
+
 * Thu Jan 12 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 4.7.0.0-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_17_Mass_Rebuild
 
