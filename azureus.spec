@@ -1,14 +1,14 @@
 %global		_newname Vuze
 
 Name:		azureus
-Version:	4.7.0.2
+Version:	4.7.1.2
 Release:	2%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 License:	GPLv2+
 URL:		http://azureus.sourceforge.net
 
-Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_4702_source.zip
+Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_4712_source.zip
 
 Source1:	azureus.script
 Source2:	Azureus.desktop
@@ -44,11 +44,11 @@ Patch58:	azureus-4.2.0.4-java5.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:	ant, jpackage-utils >= 1.5, xml-commons-apis
-BuildRequires:	jakarta-commons-cli, log4j
+BuildRequires:	apache-commons-cli, log4j
 BuildRequires:	bouncycastle >= 1.33-3
 BuildRequires:	eclipse-swt >= 3.5
 BuildRequires:	junit
-Requires:	jakarta-commons-cli, log4j
+Requires:	apache-commons-cli, log4j
 Requires:	eclipse-swt >= 3.5
 Requires:	 bouncycastle >= 1.33-3
 Requires:	 java >= 1:1.6.0
@@ -235,6 +235,12 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Sat Aug 11 2012 David Juran <david@juran.se> - 4.7.1.2-2
+- change jakarta-commons-cli requirement to apache-commons-cli (Bz 818490)
+
+* Sat Aug 11 2012 David Juran <david@juran.se> - 4.7.1.2-1
+- upgrade to 4.7.1.2
+
 * Wed Jul 18 2012 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 4.7.0.2-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_18_Mass_Rebuild
 
