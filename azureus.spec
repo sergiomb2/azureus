@@ -1,14 +1,14 @@
 %global		_newname Vuze
 
 Name:		azureus
-Version:	4.7.1.2
-Release:	2%{?dist}
+Version:	4.7.2.0
+Release:	1%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 License:	GPLv2+
 URL:		http://azureus.sourceforge.net
 
-Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_4712_source.zip
+Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_4720_source.zip
 
 Source1:	azureus.script
 Source2:	Azureus.desktop
@@ -235,6 +235,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Sun Oct 14 2012 David Juran <djuran@redhat.com> - 4.7.2.0-1
+- upgrade to 4.7.2.0
+
 * Sat Aug 11 2012 David Juran <david@juran.se> - 4.7.1.2-2
 - change jakarta-commons-cli requirement to apache-commons-cli (Bz 818490)
 
