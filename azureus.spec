@@ -1,14 +1,14 @@
 %global		_newname Vuze
 
 Name:		azureus
-Version:	4.7.2.0
+Version:	4.8.0.0
 Release:	1%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 License:	GPLv2+
 URL:		http://azureus.sourceforge.net
 
-Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_4720_source.zip
+Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_4800_source.zip
 
 Source1:	azureus.script
 Source2:	Azureus.desktop
@@ -235,6 +235,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Sat Nov 10 2012 David Juran <djuran@redhat.com> - 4.8.0.0-1
+- upgrade to 4.8.0.0
+
 * Sun Oct 14 2012 David Juran <djuran@redhat.com> - 4.7.2.0-1
 - upgrade to 4.7.2.0
 
