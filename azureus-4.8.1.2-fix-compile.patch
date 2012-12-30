@@ -1,0 +1,15 @@
+diff -up azureus-4.8.1.2/com/aelitis/net/udp/uc/impl/PRUDPPacketHandlerImpl.java.compile azureus-4.8.1.2/com/aelitis/net/udp/uc/impl/PRUDPPacketHandlerImpl.java
+--- azureus-4.8.1.2/com/aelitis/net/udp/uc/impl/PRUDPPacketHandlerImpl.java.compile	2012-12-30 13:22:11.797130285 +0100
++++ azureus-4.8.1.2/com/aelitis/net/udp/uc/impl/PRUDPPacketHandlerImpl.java	2012-12-30 13:25:32.612244079 +0100
+@@ -1338,10 +1338,7 @@ PRUDPPacketHandlerImpl
+ 				
+ 				throw( e );
+ 			}
+-		}catch( PRUDPPacketHandlerException e ){
+-			
+-			throw( e );
+-			
++
+ 		}catch( Throwable e ){
+ 			
+ 			// AMC: I've seen this in debug logs - just wonder where it's

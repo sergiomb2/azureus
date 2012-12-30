@@ -1,14 +1,14 @@
 %global		_newname Vuze
 
 Name:		azureus
-Version:	4.8.0.0
+Version:	4.8.1.2
 Release:	1%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 License:	GPLv2+
 URL:		http://azureus.sourceforge.net
 
-Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_4800_source.zip
+Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_4812_source.zip
 
 Source1:	azureus.script
 Source2:	Azureus.desktop
@@ -41,6 +41,8 @@ Patch57:	azureus-4.0.0.4-stupid-invalid-characters.diff
 
 Patch58:	azureus-4.2.0.4-java5.patch
 
+Patch59:	azureus-4.8.1.2-fix-compile.patch
+
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 BuildRequires:	ant, jpackage-utils >= 1.5, xml-commons-apis
@@ -56,6 +58,9 @@ BuildRequires:	 java-devel >= 1:1.6.0
 BuildRequires:	 desktop-file-utils
 Requires(post):	 desktop-file-utils
 Requires(postun):	desktop-file-utils
+
+Provides:		Vuze
+
 BuildArch:	noarch
 
 
@@ -118,6 +123,8 @@ rm org/gudy/azureus2/ui/swt/win32/Win32UIEnhancer.java
 %patch57  -p1 -b stupid-invalid-characters
 
 %patch58 -p1 -b .java5
+
+%patch59 -p1 -b .fix-compile
 
 #hacks to org.eclipse.swt.widgets.Tree2 don't compile.
 rm -fR org/eclipse
@@ -235,6 +242,10 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Sun Dec 30 2012 David Juran <djuran@redhat.com> - 4.8.1.2-1
+- upgrade to Vuze 4.8.1.2
+- provides Vuze
+
 * Sat Nov 10 2012 David Juran <djuran@redhat.com> - 4.8.0.0-1
 - upgrade to 4.8.0.0
 
