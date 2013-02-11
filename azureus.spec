@@ -2,7 +2,7 @@
 
 Name:		azureus
 Version:	4.8.1.2
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 License:	GPLv2+
@@ -43,8 +43,6 @@ Patch58:	azureus-4.2.0.4-java5.patch
 
 Patch59:	azureus-4.8.1.2-fix-compile.patch
 
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-
 BuildRequires:	ant, jpackage-utils >= 1.5, xml-commons-apis
 BuildRequires:	apache-commons-cli, log4j
 BuildRequires:	bouncycastle >= 1.33-3
@@ -59,7 +57,7 @@ BuildRequires:	 desktop-file-utils
 Requires(post):	 desktop-file-utils
 Requires(postun):	desktop-file-utils
 
-Provides:		Vuze
+Provides:	vuze = %{version}-%{release}
 
 BuildArch:	noarch
 
@@ -176,8 +174,6 @@ ant jar
 #popd
 
 %install
-rm -rf $RPM_BUILD_ROOT
-
 install -dm 755 $RPM_BUILD_ROOT%{_datadir}/azureus/plugins
 install -pm 644 dist/Azureus2.jar $RPM_BUILD_ROOT%{_datadir}/azureus/Azureus2.jar
 # TODO: fix launcher to be multilib-safe
@@ -201,17 +197,10 @@ install -m 644 org/gudy/azureus2/ui/icons/a32.png $RPM_BUILD_ROOT%{_datadir}/ico
 install -m 644 org/gudy/azureus2/ui/icons/a64.png $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/64x64/apps/azureus.png
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install --vendor fedora					\
-		     --dir ${RPM_BUILD_ROOT}%{_datadir}/applications	\
-		     --add-category X-Fedora				\
-	%{SOURCE2}
+desktop-file-install --dir ${RPM_BUILD_ROOT}%{_datadir}/applications %{SOURCE2}
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/application-registry
 install -m644 %{SOURCE3} $RPM_BUILD_ROOT%{_datadir}/application-registry
-
-
-%clean
-rm -rf $RPM_BUILD_ROOT
 
 %post
 update-desktop-database %{_datadir}/applications
@@ -230,7 +219,6 @@ if [ -x /usr/bin/gtk-update-icon-cache ]; then
 fi
 
 %files
-%defattr(-,root,root)
 %doc ChangeLog.txt GPL.txt
 %{_datadir}/applications/*
 %{_datadir}/application-registry/*
@@ -242,6 +230,10 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Sun Feb 10 2013 Rahul Sundaram <sundaram@fedoraproject.org> - 4.8.1.2-2
+- remove vendor tag from desktop file. https://fedorahosted.org/fpc/ticket/247
+- clean up spec to follow current guidelines
+
 * Sun Dec 30 2012 David Juran <djuran@redhat.com> - 4.8.1.2-1
 - upgrade to Vuze 4.8.1.2
 - provides Vuze
@@ -333,7 +325,7 @@ fi
 
 * Sun Sep  13 2009 David Juran <djuran@redhat.com> - 4.2.0.8-2
 - revive the no-updates patches (Bz515131)
-- fix start-script to work when  /usr/share/azureus/plugins/ is empty
+- fix start-script to work when /usr/share/azureus/plugins/ is empty
 
 * Sat Sep 12 2009 David Juran <djuran@redhat.com> - 4.2.0.8-1
 - Upgrade to 4.2.0.8
