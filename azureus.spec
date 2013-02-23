@@ -2,7 +2,7 @@
 
 Name:		azureus
 Version:	4.8.1.2
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 License:	GPLv2+
@@ -43,8 +43,11 @@ Patch58:	azureus-4.2.0.4-java5.patch
 
 Patch59:	azureus-4.8.1.2-fix-compile.patch
 
+Patch60:	azureus-4.8.1.2-no-bundled-apache-commons.patch
+
 BuildRequires:	ant, jpackage-utils >= 1.5, xml-commons-apis
 BuildRequires:	apache-commons-cli, log4j
+BuildRequires:	apache-commons-lang
 BuildRequires:	bouncycastle >= 1.33-3
 BuildRequires:	eclipse-swt >= 3.5
 BuildRequires:	junit
@@ -124,6 +127,8 @@ rm org/gudy/azureus2/ui/swt/win32/Win32UIEnhancer.java
 
 %patch59 -p1 -b .fix-compile
 
+%patch60 -p1 -b .no-bundled-apache-commons
+
 #hacks to org.eclipse.swt.widgets.Tree2 don't compile.
 rm -fR org/eclipse
 
@@ -136,11 +141,13 @@ rm -fR org/eclipse
 sed -i 's/\r//' ChangeLog.txt
 chmod 644 *.txt
 
+#remove bundled libs
+rm -fR org/apache
 
 %build
 mkdir -p build/libs
 build-jar-repository -p build/libs bcprov apache-commons-cli log4j \
-  junit
+  junit apache-commons-lang
 
 #ppc seems to have eclipse-swt.ppc64 installed so libdir can't be used
 if [ -e /usr/lib/eclipse/swt.jar ];then
@@ -230,6 +237,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Sat Feb 23 2013 David Juran <djuran@redhat.com> - 4.8.1.2-3
+- removed bundeled apache-commons (BZ 820117)
+
 * Sun Feb 10 2013 Rahul Sundaram <sundaram@fedoraproject.org> - 4.8.1.2-2
 - remove vendor tag from desktop file. https://fedorahosted.org/fpc/ticket/247
 - clean up spec to follow current guidelines
