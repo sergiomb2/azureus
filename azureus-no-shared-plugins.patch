@@ -1,30 +1,20 @@
---- org/gudy/azureus2/ui/swt/pluginsinstaller/IPWListPanel.java	2006-02-08 17:17:47.000000000 -0500
-+++ org/gudy/azureus2/ui/swt/pluginsinstaller/IPWListPanel.java.orig	2005-12-13 02:37:15.000000000 -0500
-@@ -237,14 +237,14 @@
+diff -up azureus-4.9.0.0/org/gudy/azureus2/ui/swt/pluginsinstaller/IPWListPanel.java.no-shared-plugins azureus-4.9.0.0/org/gudy/azureus2/ui/swt/pluginsinstaller/IPWListPanel.java
+--- azureus-4.9.0.0/org/gudy/azureus2/ui/swt/pluginsinstaller/IPWListPanel.java.no-shared-plugins	2013-02-15 22:09:54.000000000 +0100
++++ azureus-4.9.0.0/org/gudy/azureus2/ui/swt/pluginsinstaller/IPWListPanel.java	2013-03-24 17:30:05.067797191 +0100
+@@ -234,13 +234,13 @@ public class IPWListPanel extends Abstra
    	}
    
  	public boolean 
 -	isNextEnabled() 
-+	isFinishEnabled()
++	isFinishEnabled() 
  	{
  		return(((InstallPluginWizard)wizard).getPluginList().size() > 0 );
  	}
  	
--  public IWizardPanel getNextPanel() {
+-  public IWizardPanel<InstallPluginWizard> getNextPanel() {
 -    return new IPWInstallModePanel(wizard,this);
--  }
-+ 	public IWizardPanel getFinishPanel() {
-+ 	    return new IPWFinishPanel(wizard,this);
-+	}
++  public IWizardPanel<InstallPluginWizard> getFinishPanel() {
++    return new IPWFinishPanel(wizard,this);
+   }
  	
    public void updateList() {
-     ArrayList list = new ArrayList();
-@@ -255,7 +255,7 @@
-       }
-     }
-     ((InstallPluginWizard)wizard).setPluginList(list);
-+    ((InstallPluginWizard)wizard).setFinishEnabled( isFinishEnabled() );
--    ((InstallPluginWizard)wizard).setNextEnabled( isNextEnabled() );
-     
-   }
- }

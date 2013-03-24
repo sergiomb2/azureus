@@ -1,14 +1,14 @@
 %global		_newname Vuze
 
 Name:		azureus
-Version:	4.8.1.2
-Release:	3%{?dist}
+Version:	4.9.0.0
+Release:	1%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 License:	GPLv2+
 URL:		http://azureus.sourceforge.net
 
-Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_4812_source.zip
+Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_4900_source.zip
 
 Source1:	azureus.script
 Source2:	Azureus.desktop
@@ -31,12 +31,12 @@ Patch22:	azureus-no-update-manager-UpdateMonitor.patch
 Patch27:	azureus-SecureMessageServiceClientHelper-bcprov.patch
 Patch28:	azureus-configuration.patch
 
-Patch50:	azureus-4.0.0.4-boo-windows.diff
+#Patch50:	azureus-4.0.0.4-boo-windows.diff
 Patch51:	azureus-4.0.0.4-boo-osx.diff
 Patch53:	azureus-4.0.0.4-boo-updating-w32.diff
 Patch54:	azureus-4.0.0.4-screw-win32utils.diff
 
-Patch56:	azureus-4.0.0.4-silly-java-tricks-are-for-kids.diff
+#Patch56:	azureus-4.0.0.4-silly-java-tricks-are-for-kids.diff
 Patch57:	azureus-4.0.0.4-stupid-invalid-characters.diff
 
 Patch58:	azureus-4.2.0.4-java5.patch
@@ -77,50 +77,17 @@ cp %{SOURCE4} .
 
 %patch2 -p0 -b .cache-size
 %patch3 -p1 -b .remove-manifest-classpath
-%patch9 -p0 -b .no-shared-plugins
-#%patch12 -p1 -b .no-updates-PluginInitializer
-#%patch13 -p1 -b .no-updates-PluginInterfaceImpl
-#%patch14 -p1 -b .no-update-manager-AzureusCoreImpl
-#%patch15 -p1 -b .no-update-manager-CorePatchChecker
-#%patch16 -p1 -b .no-update-manager-CoreUpdateChecker
-#%patch19 -p1 -b .no-update-manager-PluginUpdatePlugin
-#%patch20 -p1 -b .no-update-manager-SWTUpdateChecker
-#%patch22 -p1 -b .no-update-manager-UpdateMonitor
+%patch9 -p1 -b .no-shared-plugins
+
 %patch27 -p1 -b .nobcprov
-#%patch28 -p0 -b .configuration 
 
-#rm com/aelitis/azureus/core/update -rf
-#find ./ -name osx | xargs rm -r
-#find ./ -name macosx | xargs rm -r
-#find ./ -name win32 | xargs rm -r
-#find ./ -name Win32\* | xargs rm -r
-# Remove test code
-
-rm org/gudy/azureus2/platform/macosx/access/cocoa/CocoaJavaBridge.java
-rm org/gudy/azureus2/platform/macosx/PlatformManagerImpl.java
-rm org/gudy/azureus2/platform/win32/PlatformManagerImpl.java
-rm org/gudy/azureus2/platform/macosx/access/jnilib/OSXAccess.java
-rm org/gudy/azureus2/platform/win32/access/AEWin32Access.java
-rm org/gudy/azureus2/platform/win32/access/impl/AEWin32AccessInterface.java
-rm org/gudy/azureus2/platform/win32/access/impl/AEWin32AccessImpl.java
-rm org/gudy/azureus2/platform/macosx/NativeInvocationBridge.java
-rm org/gudy/azureus2/platform/macosx/PListEditor.java
-rm org/gudy/azureus2/platform/win32/access/AEWin32AccessException.java
-rm org/gudy/azureus2/platform/win32/access/AEWin32AccessListener.java
-rm org/gudy/azureus2/platform/win32/access/AEWin32Manager.java
-rm org/gudy/azureus2/platform/win32/access/impl/AEWin32AccessCallback.java
-rm org/gudy/azureus2/platform/win32/access/impl/AEWin32AccessExceptionImpl.java
-rm org/gudy/azureus2/platform/win32/PlatformManagerUpdateChecker.java
-%patch50 -p1 -b .boo-windows
 
 rm org/gudy/azureus2/ui/swt/osx/CarbonUIEnhancer.java
 rm org/gudy/azureus2/ui/swt/osx/Start.java
 rm org/gudy/azureus2/ui/swt/win32/Win32UIEnhancer.java
 %patch51 -p1 -b .boo-osx
 %patch53 -p1 -b .boo-updating-w32
-#%patch54 -b .screw-win32utils
 
-%patch56 -p1 -b .silly-java-tricks-are-for-kids
 %patch57  -p1 -b stupid-invalid-characters
 
 %patch58 -p1 -b .java5
@@ -131,11 +98,6 @@ rm org/gudy/azureus2/ui/swt/win32/Win32UIEnhancer.java
 
 #hacks to org.eclipse.swt.widgets.Tree2 don't compile.
 rm -fR org/eclipse
-
-
-#sed -i -e \
-#  "s|sun.security.action.GetPropertyAction|gnu.java.security.action.GetPropertyAction|" \
-#  org/gudy/azureus2/core3/internat/MessageText.java
 
 # Convert line endings...
 sed -i 's/\r//' ChangeLog.txt
@@ -237,6 +199,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Sun Mar 17 2013 David Juran <djuran@redhat.com> - 4.9.0.0-1
+- upgrade to 4.9.0.0
+
 * Sat Feb 23 2013 David Juran <djuran@redhat.com> - 4.8.1.2-3
 - removed bundeled apache-commons (BZ 820117)
 
