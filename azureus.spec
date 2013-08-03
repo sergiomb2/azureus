@@ -2,7 +2,7 @@
 
 Name:		azureus
 Version:	5.0.0.0
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 License:	GPLv2+
@@ -157,6 +157,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5.0.0.0-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
+
 * Mon May 20 2013 Alexander Kurtakov <akurtako@redhat.com> 5.0.0.0-1
 - Update to 5.0.0.0.
 - Remove unused patches.
