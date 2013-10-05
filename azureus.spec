@@ -1,14 +1,14 @@
 %global		_newname Vuze
 
 Name:		azureus
-Version:	5.0.0.0
-Release:	2%{?dist}
+Version:	5.1.0.0
+Release:	1%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 License:	GPLv2+
 URL:		http://azureus.sourceforge.net
 
-Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_5000_source.zip
+Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_5100_source.zip
 
 Source1:	azureus.script
 Source2:	Azureus.desktop
@@ -157,6 +157,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Sat Oct 05 2013 David Juran <djuran@redhat.com> - 5.1.0.0-1
+- upgrade to 5.1.0.0
+
 * Sat Aug 03 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5.0.0.0-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
 
