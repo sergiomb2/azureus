@@ -463,7 +463,7 @@ fi
 - Updated sources.
 - Update azplugins jar file.
 
-* Wed May 29 2006 Anthony Green <green@redhat.com> - 2.4.0.3-0.20060529cvs_1
+* Mon May 29 2006 Anthony Green <green@redhat.com> - 2.4.0.3-0.20060529cvs_1
 - Updated sources.
 - Re-enable close button on tabs in nativetabs patch.
 - Use proper ChangeLog.txt file.
