@@ -1,14 +1,14 @@
 %global		_newname Vuze
 
 Name:		azureus
-Version:	5.1.0.0
+Version:	5.2.0.0
 Release:	1%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 License:	GPLv2+
 URL:		http://azureus.sourceforge.net
 
-Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_5100_source.zip
+Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_5200_source.zip
 
 Source1:	azureus.script
 Source2:	Azureus.desktop
@@ -23,13 +23,10 @@ Patch2:		azureus-no-shared-plugins.patch
 Patch3:	azureus-SecureMessageServiceClientHelper-bcprov.patch
 
 Patch4:	azureus-4.0.0.4-boo-osx.diff
-Patch5:	azureus-4.0.0.4-boo-updating-w32.diff
 
 Patch6:	azureus-4.0.0.4-stupid-invalid-characters.diff
 
 Patch7:	azureus-4.2.0.4-java5.patch
-
-Patch8:	azureus-4.8.1.2-fix-compile.patch
 
 Patch9:	azureus-4.8.1.2-no-bundled-apache-commons.patch
 
@@ -74,13 +71,10 @@ rm org/gudy/azureus2/ui/swt/osx/CarbonUIEnhancer.java
 rm org/gudy/azureus2/ui/swt/osx/Start.java
 rm org/gudy/azureus2/ui/swt/win32/Win32UIEnhancer.java
 %patch4 -p1 -b .boo-osx
-%patch5 -p1 -b .boo-updating-w32
 
 %patch6  -p1 -b stupid-invalid-characters
 
 %patch7 -p1 -b .java5
-
-%patch8 -p1 -b .fix-compile
 
 %patch9 -p1 -b .no-bundled-apache-commons
 
@@ -157,6 +151,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Sun Dec 08 2013 David Juran <djuran@redhat.com> - 5.2.0.0-1
+- upgrade to 5.2.0.0
+
 * Sat Oct 05 2013 David Juran <djuran@redhat.com> - 5.1.0.0-1
 - upgrade to 5.1.0.0
 
