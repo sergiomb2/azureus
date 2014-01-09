@@ -2,7 +2,7 @@
 
 Name:		azureus
 Version:	5.2.0.0
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 License:	GPLv2+
@@ -10,7 +10,6 @@ URL:		http://azureus.sourceforge.net
 
 Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_5200_source.zip
 
-Source1:	azureus.script
 Source2:	Azureus.desktop
 Source3:	azureus.applications
 
@@ -29,6 +28,8 @@ Patch6:	azureus-4.0.0.4-stupid-invalid-characters.diff
 Patch7:	azureus-4.2.0.4-java5.patch
 
 Patch9:	azureus-4.8.1.2-no-bundled-apache-commons.patch
+
+Patch10: azureus-5.2.0.0-startupScript.patch
 
 BuildRequires:	ant, jpackage-utils >= 1.5, xml-commons-apis
 BuildRequires:	apache-commons-cli, log4j
@@ -78,6 +79,8 @@ rm org/gudy/azureus2/ui/swt/win32/Win32UIEnhancer.java
 
 %patch9 -p1 -b .no-bundled-apache-commons
 
+%patch10 -p1 -b .startupScript
+
 #hacks to org.eclipse.swt.widgets.Tree2 don't compile.
 rm -fR org/eclipse
 
@@ -105,8 +108,8 @@ ant jar
 %install
 install -dm 755 $RPM_BUILD_ROOT%{_datadir}/azureus/plugins
 install -pm 644 dist/Azureus2.jar $RPM_BUILD_ROOT%{_datadir}/azureus/Azureus2.jar
-# TODO: fix launcher to be multilib-safe
-install -p -D -m 0755 %{SOURCE1} $RPM_BUILD_ROOT%{_bindir}/azureus
+
+install -p -D -m 0755 org/gudy/azureus2/platform/unix/startupScript $RPM_BUILD_ROOT%{_bindir}/azureus
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/pixmaps
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/16x16/apps
@@ -151,6 +154,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Thu Jan 09 2014 David Juran <djuran@redhat.com> - 5.2.0.0-1
+- update startup script (Bz1040625)
+
 * Sun Dec 08 2013 David Juran <djuran@redhat.com> - 5.2.0.0-1
 - upgrade to 5.2.0.0
 
