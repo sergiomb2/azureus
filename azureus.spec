@@ -2,7 +2,7 @@
 
 Name:		azureus
 Version:	5.2.0.0
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 License:	GPLv2+
@@ -154,6 +154,10 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Thu Feb 06 2014 David Juran <djuran@redhat.com> - 5.2.0.0-3
+- Fix warning re: /usr/share/azureus not beeing writable (Sergio Monteiro Basto)
+- Revert limiting java heap size (Bz1040625)
+
 * Thu Jan 09 2014 David Juran <djuran@redhat.com> - 5.2.0.0-1
 - update startup script (Bz1040625)
 
