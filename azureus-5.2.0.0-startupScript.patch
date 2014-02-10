@@ -1,6 +1,6 @@
 diff -up azureus-5.2.0.0/org/gudy/azureus2/platform/unix/startupScript.startupScript azureus-5.2.0.0/org/gudy/azureus2/platform/unix/startupScript
 --- azureus-5.2.0.0/org/gudy/azureus2/platform/unix/startupScript.startupScript	2012-09-17 19:51:24.000000000 +0200
-+++ azureus-5.2.0.0/org/gudy/azureus2/platform/unix/startupScript	2014-02-06 19:36:09.000000000 +0100
++++ azureus-5.2.0.0/org/gudy/azureus2/platform/unix/startupScript	2014-02-10 20:34:25.000000000 +0100
 @@ -1,10 +1,25 @@
  #!/bin/bash
  
@@ -27,7 +27,7 @@ diff -up azureus-5.2.0.0/org/gudy/azureus2/platform/unix/startupScript.startupSc
 +esac
 +
 +
-+export LD_LIBRARY_PATH=$LIBDIR/eclipse/plugins/:$LIBDIR/eclipse/:$LIBDIR CLASSPATH=$SWT:`build-classpath bcprov apache-commons-cli log4j`:/usr/share/azureus/Azureus2.jar
++export LD_LIBRARY_PATH=$LIBDIR/eclipse/plugins/:$LIBDIR/eclipse/:$LIBDIR CLASSPATH=$SWT:`build-classpath json_simple bcprov apache-commons-cli log4j`:/usr/share/azureus/Azureus2.jar
  
  #export MOZILLA_FIVE_HOME="/path/to/gre"	# Full path to GRE/Mozilla. When commenting out this line, also comment out the next line
  #if [ "$LD_LIBRARY_PATH x" = " x" ]; then export LD_LIBRARY_PATH=$MOZILLA_FIVE_HOME; else export LD_LIBRARY_PATH=$MOZILLA_FIVE_HOME:$LD_LIBRARY_PATH; fi

@@ -1,0 +1,42 @@
+--- azureus-5.2.0.0/com/aelitis/azureus/util/ImportExportUtils.java.orig	2014-02-09 17:34:09.214700559 +0000
++++ azureus-5.2.0.0/com/aelitis/azureus/util/ImportExportUtils.java	2014-02-09 17:34:19.114801052 +0000
+@@ -360,7 +360,7 @@ public final class ImportExportUtils {
+ 	
+ 		throws IOException
+ 	{
+-		List	l = new JSONArray(data.length);
++		List	l = new JSONArray();
+ 		
+ 		map.put( key, l );
+ 		
+--- azureus-5.2.0.0/com/aelitis/azureus/util/JSONUtils.java.orig	2014-02-09 17:36:41.882250193 +0000
++++ azureus-5.2.0.0/com/aelitis/azureus/util/JSONUtils.java	2014-02-09 17:36:49.410326603 +0000
+@@ -74,7 +74,7 @@ public class JSONUtils
+ 	 * @since 3.0.1.5
+ 	 */
+ 	public static JSONObject encodeToJSONObject(Map map) {
+-		JSONObject newMap = new JSONObject((int)(map.size()*1.5));
++		JSONObject newMap = new JSONObject();
+ 
+ 		for (Map.Entry<String, Object> entry: ((Map<String,Object>)map).entrySet()){
+ 			String key 		= entry.getKey();
+@@ -105,9 +105,7 @@ public class JSONUtils
+ 	 */
+ 	public static String encodeToJSON(Map map) {
+ 		JSONObject jobj = encodeToJSONObject(map);		
+-		StringBuilder	sb = new StringBuilder(8192);
+-		jobj.toString( sb );
+-		return( sb.toString());
++		return( jobj.toString());
+ 	}
+ 
+ 	public static String encodeToJSON(Collection list) {
+@@ -138,7 +136,7 @@ public class JSONUtils
+ 	 * @since 3.0.1.5
+ 	 */
+ 	private static JSONArray encodeToJSONArray(Collection list) {
+-		JSONArray newList = new JSONArray(list.size());
++		JSONArray newList = new JSONArray();
+ 
+ 		for ( Object value: list ){
+ 

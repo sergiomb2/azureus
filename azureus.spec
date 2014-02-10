@@ -2,7 +2,7 @@
 
 Name:		azureus
 Version:	5.2.0.0
-Release:	3%{?dist}
+Release:	4%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 License:	GPLv2+
@@ -31,16 +31,21 @@ Patch9:	azureus-4.8.1.2-no-bundled-apache-commons.patch
 
 Patch10: azureus-5.2.0.0-startupScript.patch
 
+Patch11:	azureus-5.2-no-bundled-json.patch
+
 BuildRequires:	ant, jpackage-utils >= 1.5, xml-commons-apis
 BuildRequires:	apache-commons-cli, log4j
 BuildRequires:	apache-commons-lang
 BuildRequires:	bouncycastle >= 1.33-3
+BuildRequires:	json_simple
 BuildRequires:	eclipse-swt >= 3.5
 BuildRequires:	junit
 Requires:	apache-commons-cli, log4j
+Requires:	apache-commons-lang
 Requires:	eclipse-swt >= 3.5
 Requires:	 bouncycastle >= 1.33-3
 Requires:	 java >= 1:1.6.0
+Requires:	json_simple
 BuildRequires:	 java-devel >= 1:1.6.0
 BuildRequires:	 desktop-file-utils
 Requires(post):	 desktop-file-utils
@@ -67,7 +72,6 @@ cp %{SOURCE4} .
 
 %patch3 -p1 -b .nobcprov
 
-
 rm org/gudy/azureus2/ui/swt/osx/CarbonUIEnhancer.java
 rm org/gudy/azureus2/ui/swt/osx/Start.java
 rm org/gudy/azureus2/ui/swt/win32/Win32UIEnhancer.java
@@ -81,6 +85,8 @@ rm org/gudy/azureus2/ui/swt/win32/Win32UIEnhancer.java
 
 %patch10 -p1 -b .startupScript
 
+%patch11 -p1 -b .no-bundled-json
+
 #hacks to org.eclipse.swt.widgets.Tree2 don't compile.
 rm -fR org/eclipse
 
@@ -91,10 +97,18 @@ chmod 644 *.txt
 #remove bundled libs
 rm -fR org/apache
 
+# requires org.bouncycastle.jce.provider 
+# http://www.cs.berkeley.edu/~jonah/bc/org/bouncycastle/jce/provider/JCEECDHKeyAgreement.html
+# Bouncy Castle Cryptography Library 1.37
+#rm -fR org/bouncycastle
+rm -fR org/json
+# http://www.programmers-friend.org/download/ not found in fedora repos 
+#rm -fR org/pf
+
 %build
 mkdir -p build/libs
 build-jar-repository -p build/libs bcprov apache-commons-cli log4j \
-  junit apache-commons-lang
+  junit apache-commons-lang json_simple
 
 #ppc seems to have eclipse-swt.ppc64 installed so libdir can't be used
 if [ -e /usr/lib/eclipse/swt.jar ];then
@@ -154,6 +168,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Sun Feb 09 2014 Sérgio Basto <sergio@serjux.com> - 5.2.0.0-4
+- Unbundle json (Bz 820117)
+
 * Thu Feb 06 2014 David Juran <djuran@redhat.com> - 5.2.0.0-3
 - Fix warning re: /usr/share/azureus not beeing writable (Sergio Monteiro Basto)
 - Revert limiting java heap size (Bz1040625)
