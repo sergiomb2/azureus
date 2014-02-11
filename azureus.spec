@@ -1,14 +1,14 @@
 %global		_newname Vuze
 
 Name:		azureus
-Version:	5.2.0.0
-Release:	4%{?dist}
+Version:	5.3.0.0
+Release:	1%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 License:	GPLv2+
 URL:		http://azureus.sourceforge.net
 
-Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_5200_source.zip
+Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_5300_source.zip
 
 Source2:	Azureus.desktop
 Source3:	azureus.applications
@@ -168,6 +168,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Tue Feb 11 2014 David Juran <djuran@redhat.com> - 5.3.0.0-1
+- Upgrade to azureus-5.3.0.0
+
 * Sun Feb 09 2014 Sérgio Basto <sergio@serjux.com> - 5.2.0.0-4
 - Unbundle json (Bz 820117)
 
