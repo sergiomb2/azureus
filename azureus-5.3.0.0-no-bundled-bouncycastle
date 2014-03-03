@@ -1,0 +1,91 @@
+diff -up azureus-5.3.0.0/com/aelitis/azureus/core/security/impl/CryptoSTSEngineImpl.java.no-bundled-bouncecastle azureus-5.3.0.0/com/aelitis/azureus/core/security/impl/CryptoSTSEngineImpl.java
+--- azureus-5.3.0.0/com/aelitis/azureus/core/security/impl/CryptoSTSEngineImpl.java.no-bundled-bouncecastle	2013-05-08 22:11:40.000000000 +0200
++++ azureus-5.3.0.0/com/aelitis/azureus/core/security/impl/CryptoSTSEngineImpl.java	2014-03-03 20:08:46.000000000 +0100
+@@ -30,10 +30,12 @@ import java.security.KeyPair;
+ import java.security.PrivateKey;
+ import java.security.PublicKey;
+ import java.security.SecureRandom;
++import java.security.Security;
+ import java.security.Signature;
+ 
++import javax.crypto.KeyAgreement;
++
+ import org.bouncycastle.jce.provider.BouncyCastleProvider;
+-import org.bouncycastle.jce.provider.JCEECDHKeyAgreement;
+ 
+ import com.aelitis.azureus.core.security.CryptoECCUtils;
+ import com.aelitis.azureus.core.security.CryptoManagerException;
+@@ -57,7 +59,7 @@ CryptoSTSEngineImpl
+ 	private PublicKey 	remotePubKey;
+ 	private byte[] 		sharedSecret;
+ 	
+-	private InternalDH	ecDH;
++        private KeyAgreement	ecDH;
+ 	
+ 	/**
+ 	 * 
+@@ -76,9 +78,9 @@ CryptoSTSEngineImpl
+ 		ephemeralKeyPair = CryptoECCUtils.createKeys();
+ 		
+ 		try{
+-			ecDH = new InternalDH();
+-			
+-			//ecDH = KeyAgreement.getInstance("ECDH", BouncyCastleProvider.PROVIDER_NAME);
++		        Security.addProvider(new BouncyCastleProvider());
++
++			ecDH = KeyAgreement.getInstance("ECDH", BouncyCastleProvider.PROVIDER_NAME);
+ 			
+ 			ecDH.init(ephemeralKeyPair.getPrivate());
+ 			
+@@ -402,38 +404,4 @@ CryptoSTSEngineImpl
+ 			throw( new CryptoManagerException( "Failed to put byte[]", e ));
+ 		}
+ 	}
+-	
+-	class 
+-	InternalDH 
+-		extends JCEECDHKeyAgreement.DH
+-	{
+-			// we use this class to obtain compatability with BC
+-		
+-		public void
+-		init(
+-			Key		key )
+-
+-			throws InvalidKeyException, InvalidAlgorithmParameterException
+-		{
+-			engineInit( key, null );
+-		}
+-
+-		public Key
+-		doPhase(
+-			Key		key,
+-			boolean	lastPhase )
+-
+-			throws InvalidKeyException, IllegalStateException
+-		{
+-			return( engineDoPhase( key, lastPhase ));
+-		}
+-
+-		public byte[] 
+-		generateSecret() 
+-		
+-			throws IllegalStateException
+-		{
+-			return( engineGenerateSecret());
+-		}
+-	}
+-}
+\ No newline at end of file
++}
+diff -up azureus-5.3.0.0/org/gudy/azureus2/core3/security/impl/SESecurityManagerBC.java.no-bundled-bouncecastle azureus-5.3.0.0/org/gudy/azureus2/core3/security/impl/SESecurityManagerBC.java
+--- azureus-5.3.0.0/org/gudy/azureus2/core3/security/impl/SESecurityManagerBC.java.no-bundled-bouncecastle	2013-08-13 17:32:46.000000000 +0200
++++ azureus-5.3.0.0/org/gudy/azureus2/core3/security/impl/SESecurityManagerBC.java	2014-03-03 09:28:20.000000000 +0100
+@@ -39,6 +39,7 @@ import java.util.Calendar;
+ import org.bouncycastle.jce.*;
+ import org.bouncycastle.jce.provider.BouncyCastleProvider;
+ import org.bouncycastle.asn1.x509.X509Name;
++import org.bouncycastle.x509.X509V3CertificateGenerator;
+ import org.gudy.azureus2.core3.util.Constants;
+ import org.gudy.azureus2.core3.util.Debug;
+ import org.gudy.azureus2.core3.util.RandomUtils;
