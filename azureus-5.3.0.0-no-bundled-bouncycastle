@@ -33,7 +33,7 @@ diff -up azureus-5.3.0.0/com/aelitis/azureus/core/security/impl/CryptoSTSEngineI
 -			//ecDH = KeyAgreement.getInstance("ECDH", BouncyCastleProvider.PROVIDER_NAME);
 +		        Security.addProvider(new BouncyCastleProvider());
 +
-+			ecDH = KeyAgreement.getInstance("ECDH", BouncyCastleProvider.PROVIDER_NAME);
++			ecDH = KeyAgreement.getInstance("ECDH");
  			
  			ecDH.init(ephemeralKeyPair.getPrivate());
  			

@@ -2,7 +2,7 @@
 
 Name:		azureus
 Version:	5.3.0.0
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 License:	GPLv2+
@@ -166,6 +166,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Mon Mar 03 2014 David Juran <djuran@redhat.com> - 5.3.0.0-3
+- Do not force BouncyCastle Provider
+
 * Mon Mar 03 2014 David Juran <djuran@redhat.com> - 5.3.0.0-2
 - Remove bundled BouncyCastle (Bz 820117)
 
