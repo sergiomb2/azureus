@@ -1,6 +1,83 @@
-diff -up azureus-5.3.0.0/com/aelitis/azureus/core/security/impl/CryptoSTSEngineImpl.java.no-bundled-bouncecastle azureus-5.3.0.0/com/aelitis/azureus/core/security/impl/CryptoSTSEngineImpl.java
---- azureus-5.3.0.0/com/aelitis/azureus/core/security/impl/CryptoSTSEngineImpl.java.no-bundled-bouncecastle	2013-05-08 22:11:40.000000000 +0200
-+++ azureus-5.3.0.0/com/aelitis/azureus/core/security/impl/CryptoSTSEngineImpl.java	2014-03-03 20:08:46.000000000 +0100
+diff -up azureus-5.3.0.0/com/aelitis/azureus/core/security/impl/CryptoHandlerECC.java.no-bundled-bouncycastle azureus-5.3.0.0/com/aelitis/azureus/core/security/impl/CryptoHandlerECC.java
+--- azureus-5.3.0.0/com/aelitis/azureus/core/security/impl/CryptoHandlerECC.java.no-bundled-bouncycastle	2014-03-03 21:16:24.000000000 +0100
++++ azureus-5.3.0.0/com/aelitis/azureus/core/security/impl/CryptoHandlerECC.java	2014-03-06 15:15:35.000000000 +0100
+@@ -37,7 +37,6 @@ import javax.crypto.BadPaddingException;
+ import javax.crypto.Cipher;
+ import javax.crypto.IllegalBlockSizeException;
+ 
+-import org.bouncycastle.jce.provider.JCEIESCipher;
+ import org.bouncycastle.jce.spec.IEKeySpec;
+ import org.bouncycastle.jce.spec.IESParameterSpec;
+ import org.gudy.azureus2.core3.config.COConfigurationManager;
+@@ -225,11 +224,11 @@ CryptoHandlerECC
+ 			
+ 			IESParameterSpec param = new IESParameterSpec( d, e, 128);
+ 		
+-			InternalECIES	cipher = new InternalECIES();
++			Cipher cipher = Cipher.getInstance("ECIES");
+ 	
+-			cipher.internalEngineInit( Cipher.ENCRYPT_MODE, key_spec, param, null ); 
++			cipher.init( Cipher.ENCRYPT_MODE, key_spec, param, null ); 
+ 		
+-			byte[]	encrypted = cipher.internalEngineDoFinal(data, 0, data.length );
++			byte[]	encrypted = cipher.doFinal(data, 0, data.length );
+ 			
+ 			byte[] result = new byte[32+encrypted.length];
+ 			
+@@ -268,12 +267,11 @@ CryptoHandlerECC
+ 			
+ 			IESParameterSpec param = new IESParameterSpec( d, e, 128);
+ 		
+-			InternalECIES	cipher = new InternalECIES();
+-	
+-			cipher.internalEngineInit( Cipher.DECRYPT_MODE, key_spec, param, null ); 
+-		
+-			return( cipher.internalEngineDoFinal( data, 32, data.length - 32 ));
+-			
++			Cipher cipher = Cipher.getInstance("ECIES");
++
++			cipher.init( Cipher.DECRYPT_MODE, key_spec, param, null ); 
++
++			return( cipher.doFinal( data, 32, data.length - 32 ));
+ 		}catch( CryptoManagerException e ){
+ 			
+ 			throw( e );
+@@ -860,32 +858,4 @@ CryptoHandlerECC
+ 		return((int)COConfigurationManager.getIntParameter( CONFIG_PREFIX + "pwtype", CryptoManagerPasswordHandler.HANDLER_TYPE_USER ));
+ 	}
+ 	
+-	class InternalECIES 
+-		extends JCEIESCipher.ECIES
+-	{
+-			// we use this class to obtain compatability with BC
+-
+-		public void 
+-		internalEngineInit(
+-			int                     opmode,
+-			Key                     key,
+-			AlgorithmParameterSpec  params,
+-			SecureRandom            random ) 
+-		
+-			throws InvalidKeyException, InvalidAlgorithmParameterException
+-		{
+-			engineInit(opmode, key, params, random);
+-		}
+-
+-		protected byte[] 
+-		internalEngineDoFinal(
+-			byte[]  input,
+-			int     inputOffset,
+-			int     inputLen ) 
+-		
+-			throws IllegalBlockSizeException, BadPaddingException
+-		{
+-			return engineDoFinal(input, inputOffset, inputLen);
+-		}
+-	}
+ }
+diff -up azureus-5.3.0.0/com/aelitis/azureus/core/security/impl/CryptoSTSEngineImpl.java.no-bundled-bouncycastle azureus-5.3.0.0/com/aelitis/azureus/core/security/impl/CryptoSTSEngineImpl.java
+--- azureus-5.3.0.0/com/aelitis/azureus/core/security/impl/CryptoSTSEngineImpl.java.no-bundled-bouncycastle	2013-05-08 22:11:40.000000000 +0200
++++ azureus-5.3.0.0/com/aelitis/azureus/core/security/impl/CryptoSTSEngineImpl.java	2014-03-03 21:14:33.000000000 +0100
 @@ -30,10 +30,12 @@ import java.security.KeyPair;
  import java.security.PrivateKey;
  import java.security.PublicKey;
@@ -78,9 +155,9 @@ diff -up azureus-5.3.0.0/com/aelitis/azureus/core/security/impl/CryptoSTSEngineI
 -}
 \ No newline at end of file
 +}
-diff -up azureus-5.3.0.0/org/gudy/azureus2/core3/security/impl/SESecurityManagerBC.java.no-bundled-bouncecastle azureus-5.3.0.0/org/gudy/azureus2/core3/security/impl/SESecurityManagerBC.java
---- azureus-5.3.0.0/org/gudy/azureus2/core3/security/impl/SESecurityManagerBC.java.no-bundled-bouncecastle	2013-08-13 17:32:46.000000000 +0200
-+++ azureus-5.3.0.0/org/gudy/azureus2/core3/security/impl/SESecurityManagerBC.java	2014-03-03 09:28:20.000000000 +0100
+diff -up azureus-5.3.0.0/org/gudy/azureus2/core3/security/impl/SESecurityManagerBC.java.no-bundled-bouncycastle azureus-5.3.0.0/org/gudy/azureus2/core3/security/impl/SESecurityManagerBC.java
+--- azureus-5.3.0.0/org/gudy/azureus2/core3/security/impl/SESecurityManagerBC.java.no-bundled-bouncycastle	2013-08-13 17:32:46.000000000 +0200
++++ azureus-5.3.0.0/org/gudy/azureus2/core3/security/impl/SESecurityManagerBC.java	2014-03-03 21:14:33.000000000 +0100
 @@ -39,6 +39,7 @@ import java.util.Calendar;
  import org.bouncycastle.jce.*;
  import org.bouncycastle.jce.provider.BouncyCastleProvider;

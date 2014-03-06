@@ -87,7 +87,7 @@ rm org/gudy/azureus2/ui/swt/win32/Win32UIEnhancer.java
 %patch10 -p1 -b .startupScript
 
 %patch11 -p1 -b .no-bundled-json
-%patch12 -p1 -b .no-bundled-bouncecastle
+%patch12 -p1 -b .no-bundled-bouncycastle
 
 #hacks to org.eclipse.swt.widgets.Tree2 don't compile.
 rm -fR org/eclipse
