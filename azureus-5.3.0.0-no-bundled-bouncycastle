@@ -1,6 +1,6 @@
 diff -up azureus-5.3.0.0/com/aelitis/azureus/core/security/impl/CryptoHandlerECC.java.no-bundled-bouncycastle azureus-5.3.0.0/com/aelitis/azureus/core/security/impl/CryptoHandlerECC.java
---- azureus-5.3.0.0/com/aelitis/azureus/core/security/impl/CryptoHandlerECC.java.no-bundled-bouncycastle	2014-03-03 21:16:24.000000000 +0100
-+++ azureus-5.3.0.0/com/aelitis/azureus/core/security/impl/CryptoHandlerECC.java	2014-03-06 15:25:09.000000000 +0100
+--- azureus-5.3.0.0/com/aelitis/azureus/core/security/impl/CryptoHandlerECC.java.no-bundled-bouncycastle	2012-07-12 22:36:34.000000000 +0200
++++ azureus-5.3.0.0/com/aelitis/azureus/core/security/impl/CryptoHandlerECC.java	2014-03-06 18:07:37.000000000 +0100
 @@ -29,6 +29,7 @@ import java.security.KeyPair;
  import java.security.PrivateKey;
  import java.security.PublicKey;
@@ -9,15 +9,19 @@ diff -up azureus-5.3.0.0/com/aelitis/azureus/core/security/impl/CryptoHandlerECC
  import java.security.Signature;
  import java.security.spec.AlgorithmParameterSpec;
  import java.util.Arrays;
-@@ -37,7 +38,6 @@ import javax.crypto.BadPaddingException;
+@@ -37,9 +38,10 @@ import javax.crypto.BadPaddingException;
  import javax.crypto.Cipher;
  import javax.crypto.IllegalBlockSizeException;
  
 -import org.bouncycastle.jce.provider.JCEIESCipher;
++import org.bouncycastle.jce.provider.BouncyCastleProvider;
  import org.bouncycastle.jce.spec.IEKeySpec;
  import org.bouncycastle.jce.spec.IESParameterSpec;
++
  import org.gudy.azureus2.core3.config.COConfigurationManager;
-@@ -79,7 +79,9 @@ CryptoHandlerECC
+ import org.gudy.azureus2.core3.util.Base32;
+ import org.gudy.azureus2.core3.util.Debug;
+@@ -79,7 +81,9 @@ CryptoHandlerECC
  		CryptoManagerImpl		_manager,
  		int						_instance_id )
  	{
@@ -28,7 +32,7 @@ diff -up azureus-5.3.0.0/com/aelitis/azureus/core/security/impl/CryptoHandlerECC
  		
  		CONFIG_PREFIX += _instance_id + ".";
  		
-@@ -225,11 +227,11 @@ CryptoHandlerECC
+@@ -225,11 +229,11 @@ CryptoHandlerECC
  			
  			IESParameterSpec param = new IESParameterSpec( d, e, 128);
  		
@@ -43,7 +47,7 @@ diff -up azureus-5.3.0.0/com/aelitis/azureus/core/security/impl/CryptoHandlerECC
  			
  			byte[] result = new byte[32+encrypted.length];
  			
-@@ -268,12 +270,11 @@ CryptoHandlerECC
+@@ -268,12 +272,11 @@ CryptoHandlerECC
  			
  			IESParameterSpec param = new IESParameterSpec( d, e, 128);
  		
@@ -61,7 +65,7 @@ diff -up azureus-5.3.0.0/com/aelitis/azureus/core/security/impl/CryptoHandlerECC
  		}catch( CryptoManagerException e ){
  			
  			throw( e );
-@@ -860,32 +861,4 @@ CryptoHandlerECC
+@@ -860,32 +863,4 @@ CryptoHandlerECC
  		return((int)COConfigurationManager.getIntParameter( CONFIG_PREFIX + "pwtype", CryptoManagerPasswordHandler.HANDLER_TYPE_USER ));
  	}
  	
@@ -96,7 +100,7 @@ diff -up azureus-5.3.0.0/com/aelitis/azureus/core/security/impl/CryptoHandlerECC
  }
 diff -up azureus-5.3.0.0/com/aelitis/azureus/core/security/impl/CryptoSTSEngineImpl.java.no-bundled-bouncycastle azureus-5.3.0.0/com/aelitis/azureus/core/security/impl/CryptoSTSEngineImpl.java
 --- azureus-5.3.0.0/com/aelitis/azureus/core/security/impl/CryptoSTSEngineImpl.java.no-bundled-bouncycastle	2013-05-08 22:11:40.000000000 +0200
-+++ azureus-5.3.0.0/com/aelitis/azureus/core/security/impl/CryptoSTSEngineImpl.java	2014-03-03 21:14:33.000000000 +0100
++++ azureus-5.3.0.0/com/aelitis/azureus/core/security/impl/CryptoSTSEngineImpl.java	2014-03-06 17:57:31.000000000 +0100
 @@ -30,10 +30,12 @@ import java.security.KeyPair;
  import java.security.PrivateKey;
  import java.security.PublicKey;
@@ -176,7 +180,7 @@ diff -up azureus-5.3.0.0/com/aelitis/azureus/core/security/impl/CryptoSTSEngineI
 +}
 diff -up azureus-5.3.0.0/org/gudy/azureus2/core3/security/impl/SESecurityManagerBC.java.no-bundled-bouncycastle azureus-5.3.0.0/org/gudy/azureus2/core3/security/impl/SESecurityManagerBC.java
 --- azureus-5.3.0.0/org/gudy/azureus2/core3/security/impl/SESecurityManagerBC.java.no-bundled-bouncycastle	2013-08-13 17:32:46.000000000 +0200
-+++ azureus-5.3.0.0/org/gudy/azureus2/core3/security/impl/SESecurityManagerBC.java	2014-03-03 21:14:33.000000000 +0100
++++ azureus-5.3.0.0/org/gudy/azureus2/core3/security/impl/SESecurityManagerBC.java	2014-03-06 17:57:31.000000000 +0100
 @@ -39,6 +39,7 @@ import java.util.Calendar;
  import org.bouncycastle.jce.*;
  import org.bouncycastle.jce.provider.BouncyCastleProvider;
