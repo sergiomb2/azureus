@@ -2,10 +2,14 @@
 
 Name:		azureus
 Version:	5.3.0.0
-Release:	3%{?dist}
+Release:	4%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
-License:	GPLv2+
+
+#Exception for using Eclipse SWT
+#http://wiki.vuze.com/w/Vuze_License
+License:	GPLv2 with exceptions
+
 URL:		http://azureus.sourceforge.net
 
 Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_5300_source.zip
@@ -90,7 +94,7 @@ rm org/gudy/azureus2/ui/swt/win32/Win32UIEnhancer.java
 %patch12 -p1 -b .no-bundled-bouncycastle
 
 #hacks to org.eclipse.swt.widgets.Tree2 don't compile.
-rm -fR org/eclipse
+#rm -fR org/eclipse
 
 # Convert line endings...
 sed -i 's/\r//' ChangeLog.txt
@@ -166,6 +170,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Tue Apr 08 2014 David Juran <djuran@redhat.com> - 5.3.0.0-4
+- Fix License tag
+
 * Mon Mar 03 2014 David Juran <djuran@redhat.com> - 5.3.0.0-3
 - Do not force BouncyCastle Provider
 
