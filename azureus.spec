@@ -37,6 +37,7 @@ Patch10: azureus-5.2.0.0-startupScript.patch
 
 Patch11: azureus-5.2-no-bundled-json.patch
 Patch12: azureus-5.3.0.0-no-bundled-bouncycastle
+Patch13: azureus-5.3.0.0-noPF.patch
 
 BuildRequires:	ant, jpackage-utils >= 1.5, xml-commons-apis
 BuildRequires:	apache-commons-cli, log4j
@@ -92,9 +93,10 @@ rm org/gudy/azureus2/ui/swt/win32/Win32UIEnhancer.java
 
 %patch11 -p1 -b .no-bundled-json
 %patch12 -p1 -b .no-bundled-bouncycastle
+%patch13 -p1 -b .noPF
 
 #hacks to org.eclipse.swt.widgets.Tree2 don't compile.
-#rm -fR org/eclipse
+rm -fR org/eclipse
 
 # Convert line endings...
 sed -i 's/\r//' ChangeLog.txt
@@ -105,7 +107,8 @@ rm -fR org/apache
 rm -fR org/bouncycastle
 rm -fR org/json
 # http://www.programmers-friend.org/download/ not found in fedora repos 
-#rm -fR org/pf
+#check http://docs.oracle.com/javase/tutorial/essential/io/find.html
+rm -fR org/pf
 
 %build
 mkdir -p build/libs
