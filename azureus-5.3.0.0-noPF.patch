@@ -1,97 +1,85 @@
 diff -up azureus-5.3.0.0/org/gudy/azureus2/ui/common/util/FileFinder.java.noPF azureus-5.3.0.0/org/gudy/azureus2/ui/common/util/FileFinder.java
 --- azureus-5.3.0.0/org/gudy/azureus2/ui/common/util/FileFinder.java.noPF	2014-05-28 21:26:39.000000000 +0200
-+++ azureus-5.3.0.0/org/gudy/azureus2/ui/common/util/FileFinder.java	2014-04-15 07:19:53.000000000 +0200
-@@ -0,0 +1,92 @@
++++ azureus-5.3.0.0/org/gudy/azureus2/ui/common/util/FileFinder.java	2014-06-07 15:10:21.898380971 +0200
+@@ -0,0 +1,80 @@
 +package org.gudy.azureus2.ui.common.util;
 +
 +import java.io.File;
++import java.io.IOException;
++import java.nio.file.attribute.BasicFileAttributes;
++import java.nio.file.Files;
++import java.nio.file.FileSystems;
++import java.nio.file.FileVisitResult;
++import java.nio.file.Path;
++import java.nio.file.PathMatcher;
++import java.nio.file.Paths;
++import java.nio.file.SimpleFileVisitor;
++import java.util.Collections;
++import java.util.Vector;
 +
-+public static printFnames(String sDir){
-+  File[] faFiles = new File(sDir).listFiles();
-+  for(File file: faFiles){
-+    if(file.getName().matches("^(.*?)")){
-+      System.out.println(file.getAbsolutePath());
-+    }
-+    if(file.isDirectory()){
-+      printFnames(file.getAbsolutePath());
-+    }
-+  }
-+}
-+
++import org.gudy.azureus2.core3.logging.LogEvent;
++import org.gudy.azureus2.core3.logging.Logger;
++import org.gudy.azureus2.core3.logging.LogIDs;
 +
 +/** Replaces http://www.programmers-friend.org/apidoc/index.html */
-+Class FileFinder{
++public class FileFinder{
 +
++    private static class MatchingFileVisitor extends SimpleFileVisitor<Path>{
 +
++	private PathMatcher matcher;
++	private Vector<Path> v;
++        
 +
-+    Class MyFileVisitor() extends SimpleFileVisitor<Path>{
-+    
++	MatchingFileVisitor(PathMatcher matcher) {
++	    v = new Vector<Path>();
++	    this.matcher = matcher;
++	}
++
 +    	@Override
-+    	    FileVisitResult visitFile (Path file, BasicFileAttributes attrs) {
++	public FileVisitResult visitFile (Path file, BasicFileAttributes attrs) {
++	    if (matcher.matches(file.getFileName())) {
++		v.add(file);
++	    }
++	    return FileVisitResult.CONTINUE;
 +    	}
++
++	File[] getMatches() {
++	    File[] files=new File[v.size()];
++
++	    for (int i=0;i<v.size();i++)
++		files[i]=v.get(i).toFile();
++	    
++	    return files;
++	}
 +    }
 +
-+    public static File[] findFiles(String dir, String pattern, boolean recursive){
++    public static File[] 
++	findFiles(String dir, String pattern, boolean recursive) throws IllegalArgumentException{
 +	
++	if (dir == null || pattern == null)
++	    throw new IllegalArgumentException("dir or pattern null");
++
 +	Path rootDir = Paths.get(dir);
 +	PathMatcher matcher =
 +	    FileSystems.getDefault().getPathMatcher("glob:"+pattern);
 +
-+	MyFileVisitor myFileVisitor = new MyFileVisitor(matcher);
-+
-+	Files.walkFileTree(rootDir, myFileVisitor);
-+	myFileVisitor.getMatches();
-+
++	MatchingFileVisitor myFileVisitor = new MatchingFileVisitor(matcher);
 +	
++	
++	try{
++	    Files.walkFileTree(rootDir,Collections.EMPTY_SET,recursive?Integer.MAX_VALUE : 1, myFileVisitor);
++	}
++	catch (IOException e) {
++	    Logger.log(new LogEvent(LogIDs.DISK, "IOError" ,e));
++	}
++
++	return myFileVisitor.getMatches();
 +    }
-+    
 +
-+public final void test() throws IOException, InterruptedException {
-+	final Path rootDir = Paths.get("path to your directory where the walk starts");
-+
-+	// Walk thru mainDir directory
-+	Files.walkFileTree(rootDir, new FileVisitor<Path>() {
-+		// First (minor) speed up. Compile regular expression pattern only one time.
-+		private Pattern pattern = Pattern.compile("^(.*?)");
-+
-+		@Override
-+		    public FileVisitResult preVisitDirectory(Path path,
-+							     BasicFileAttributes atts) throws IOException {
-+
-+		    boolean matches = pattern.matcher(path.toString()).matches();
-+
-+		    // TODO: Put here your business logic when matches equals true/false
-+
-+		    return (matches)? FileVisitResult.CONTINUE:FileVisitResult.SKIP_SUBTREE;
-+		}
-+
-+		@Override
-+		    public FileVisitResult visitFile(Path path, BasicFileAttributes mainAtts)
-+		    throws IOException {
-+
-+		    boolean matches = pattern.matcher(path.toString()).matches();
-+
-+		    // TODO: Put here your business logic when matches equals true/false
-+
-+		    return FileVisitResult.CONTINUE;
-+		}
-+
-+		@Override
-+		    public FileVisitResult postVisitDirectory(Path path,
-+							      IOException exc) throws IOException {
-+		    // TODO Auto-generated method stub
-+		    return FileVisitResult.CONTINUE;
-+		}
-+
-+		@Override
-+		    public FileVisitResult visitFileFailed(Path path, IOException exc)
-+		    throws IOException {
-+		    exc.printStackTrace();
-+
-+		    // If the root directory has failed it makes no sense to continue
-+		    return path.equals(rootDir)? FileVisitResult.TERMINATE:FileVisitResult.CONTINUE;
-+		}
-+	    });
++    public static void main(String [] argv) {
++	File[] files = findFiles(".", "*.java", true);
++	for (int i = 0; i<files.length;i++)
++	    System.out.println(files[i]);
 +    }
 +}
 diff -up azureus-5.3.0.0/org/gudy/azureus2/ui/common/util/StringPattern.java.noPF azureus-5.3.0.0/org/gudy/azureus2/ui/common/util/StringPattern.java
@@ -133,13 +121,15 @@ diff -up azureus-5.3.0.0/org/gudy/azureus2/ui/common/util/StringPattern.java.noP
 +}
 diff -up azureus-5.3.0.0/org/gudy/azureus2/ui/console/commands/AddFind.java.noPF azureus-5.3.0.0/org/gudy/azureus2/ui/console/commands/AddFind.java
 --- azureus-5.3.0.0/org/gudy/azureus2/ui/console/commands/AddFind.java.noPF	2012-07-12 22:36:50.000000000 +0200
-+++ azureus-5.3.0.0/org/gudy/azureus2/ui/console/commands/AddFind.java	2014-04-11 19:50:21.000000000 +0200
-@@ -18,8 +18,8 @@ import java.net.URL;
++++ azureus-5.3.0.0/org/gudy/azureus2/ui/console/commands/AddFind.java	2014-06-07 13:22:03.856415849 +0200
+@@ -18,8 +18,10 @@ import java.net.URL;
  import org.apache.commons.cli.CommandLine;
  import org.apache.commons.cli.OptionBuilder;
  import org.gudy.azureus2.ui.console.ConsoleInput;
 -import org.pf.file.FileFinder;
 -import org.pf.text.StringUtil;
++
++import org.gudy.azureus2.ui.common.util.FileFinder;
 +//import org.pf.file.FileFinder;
 +//import org.pf.text.StringUtil;
  
