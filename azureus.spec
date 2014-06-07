@@ -2,7 +2,7 @@
 
 Name:		azureus
 Version:	5.3.0.0
-Release:	3%{?dist}
+Release:	4%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 License:	GPLv2+
@@ -166,6 +166,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5.3.0.0-4
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
+
 * Mon Mar 03 2014 David Juran <djuran@redhat.com> - 5.3.0.0-3
 - Do not force BouncyCastle Provider
 
