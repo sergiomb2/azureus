@@ -105,7 +105,7 @@ rm -fR org/json
 
 %build
 mkdir -p build/libs
-build-jar-repository -p build/libs bcprov apache-commons-cli log4j12 \
+build-jar-repository -p build/libs bcprov apache-commons-cli log4j12-1.2.17 \
   junit apache-commons-lang json_simple
 
 #ppc seems to have eclipse-swt.ppc64 installed so libdir can't be used
