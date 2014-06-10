@@ -2,7 +2,7 @@
 
 Name:		azureus
 Version:	5.3.0.0
-Release:	4%{?dist}
+Release:	5%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 License:	GPLv2+
@@ -35,13 +35,13 @@ Patch11: azureus-5.2-no-bundled-json.patch
 Patch12: azureus-5.3.0.0-no-bundled-bouncycastle
 
 BuildRequires:	ant, jpackage-utils >= 1.5, xml-commons-apis
-BuildRequires:	apache-commons-cli, log4j
+BuildRequires:	apache-commons-cli, log4j12
 BuildRequires:	apache-commons-lang
 BuildRequires:	bouncycastle >= 1.33-3
 BuildRequires:	json_simple
 BuildRequires:	eclipse-swt >= 3.5
 BuildRequires:	junit
-Requires:	apache-commons-cli, log4j
+Requires:	apache-commons-cli, log4j12
 Requires:	apache-commons-lang
 Requires:	eclipse-swt >= 3.5
 Requires:	 bouncycastle >= 1.33-3
@@ -105,7 +105,7 @@ rm -fR org/json
 
 %build
 mkdir -p build/libs
-build-jar-repository -p build/libs bcprov apache-commons-cli log4j \
+build-jar-repository -p build/libs bcprov apache-commons-cli log4j12 \
   junit apache-commons-lang json_simple
 
 #ppc seems to have eclipse-swt.ppc64 installed so libdir can't be used
@@ -166,6 +166,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Tue Jun 10 2014 Alexander Kurtakov <akurtako@redhat.com> 5.3.0.0-5
+- Use log4j12.
+
 * Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5.3.0.0-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
 
