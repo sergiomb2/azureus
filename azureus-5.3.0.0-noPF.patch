@@ -84,8 +84,8 @@ diff -up azureus-5.3.0.0/org/gudy/azureus2/ui/common/util/FileFinder.java.noPF a
 +}
 diff -up azureus-5.3.0.0/org/gudy/azureus2/ui/common/util/StringPattern.java.noPF azureus-5.3.0.0/org/gudy/azureus2/ui/common/util/StringPattern.java
 --- azureus-5.3.0.0/org/gudy/azureus2/ui/common/util/StringPattern.java.noPF	2014-04-11 19:50:21.000000000 +0200
-+++ azureus-5.3.0.0/org/gudy/azureus2/ui/common/util/StringPattern.java	2014-04-11 19:50:21.000000000 +0200
-@@ -0,0 +1,33 @@
++++ azureus-5.3.0.0/org/gudy/azureus2/ui/common/util/StringPattern.java	2014-06-12 18:28:59.684173761 +0200
+@@ -0,0 +1,47 @@
 +package org.gudy.azureus2.ui.common.util;
 +
 +import java.util.regex.Matcher;
@@ -98,31 +98,45 @@ diff -up azureus-5.3.0.0/org/gudy/azureus2/ui/common/util/StringPattern.java.noP
 +public class StringPattern {
 +
 +    private Pattern p;
-+    
++    private boolean hasWildcard;
++
 +    public StringPattern(String sp) {
-+	p = Pattern.compile(sp.replaceAll("\\*","\\.\\*"));
++
++	hasWildcard = (sp.contains("*") ||
++		       sp.contains("?"));
++	
++	//fix up pattern to standard regexp syntax, i.e
++	// * -> .*
++	// ? -> ?
++	sp=sp.replaceAll("\\?","\\.");
++	sp=sp.replaceAll("\\*","\\.\\*");
++	p = Pattern.compile(sp);
 +    }
 +
 +    public boolean hasWildcard() {
-+	return (p.pattern().contains("*") ||
-+		p.pattern().contains("?"));
++	return hasWildcard;
 +    }
 +
-+    public void setIgnorecase(boolean ignoreCase) {
-+	p.compile(p.pattern(),ignoreCase?Pattern.CASE_INSENSITIVE:0);
++    public void setIgnoreCase(boolean ignoreCase) {
++	p=Pattern.compile(p.pattern(),ignoreCase?Pattern.CASE_INSENSITIVE:0);
++    }
++
++    public boolean matches(String probe) {
++	return p.matcher(probe).matches();
 +    }
 +
 +    /* test */
 +    public static void main(String[] argv) {
 +	StringPattern sp = new StringPattern(argv[0]);
 +	System.out.println("hasWildcard: "+ sp.hasWildcard());
-+	sp.setIgnorecase(false);
++	sp.setIgnoreCase(true);
++	System.out.println("matches:"+sp.matches(argv[1]));
 +    }
 +}
 diff -up azureus-5.3.0.0/org/gudy/azureus2/ui/console/commands/AddFind.java.noPF azureus-5.3.0.0/org/gudy/azureus2/ui/console/commands/AddFind.java
 --- azureus-5.3.0.0/org/gudy/azureus2/ui/console/commands/AddFind.java.noPF	2012-07-12 22:36:50.000000000 +0200
-+++ azureus-5.3.0.0/org/gudy/azureus2/ui/console/commands/AddFind.java	2014-06-07 13:22:03.856415849 +0200
-@@ -18,8 +18,10 @@ import java.net.URL;
++++ azureus-5.3.0.0/org/gudy/azureus2/ui/console/commands/AddFind.java	2014-06-20 11:22:07.575584080 +0200
+@@ -18,8 +18,8 @@ import java.net.URL;
  import org.apache.commons.cli.CommandLine;
  import org.apache.commons.cli.OptionBuilder;
  import org.gudy.azureus2.ui.console.ConsoleInput;
@@ -130,22 +144,28 @@ diff -up azureus-5.3.0.0/org/gudy/azureus2/ui/console/commands/AddFind.java.noPF
 -import org.pf.text.StringUtil;
 +
 +import org.gudy.azureus2.ui.common.util.FileFinder;
-+//import org.pf.file.FileFinder;
-+//import org.pf.text.StringUtil;
  
  import com.aelitis.azureus.core.AzureusCoreException;
  
+@@ -189,7 +189,7 @@ public class AddFind extends OptionsCons
+ 	protected String transformLocalArgument(String arg) {
+ 		if( arg.startsWith("~/") || arg.equals("~") )
+ 		{
+-			arg = StringUtil.current().replaceAll(arg, "~", System.getProperty("user.home"));
++		    arg = arg.replace("~", System.getProperty("user.home"));
+ 		}
+ 		return arg;
+ 	}
 diff -up azureus-5.3.0.0/org/gudy/azureus2/ui/console/commands/Set.java.noPF azureus-5.3.0.0/org/gudy/azureus2/ui/console/commands/Set.java
 --- azureus-5.3.0.0/org/gudy/azureus2/ui/console/commands/Set.java.noPF	2013-02-15 22:10:14.000000000 +0100
-+++ azureus-5.3.0.0/org/gudy/azureus2/ui/console/commands/Set.java	2014-04-11 19:50:21.000000000 +0200
-@@ -20,8 +20,10 @@ import java.util.TreeSet;
++++ azureus-5.3.0.0/org/gudy/azureus2/ui/console/commands/Set.java	2014-06-20 11:22:32.690520944 +0200
+@@ -20,8 +20,9 @@ import java.util.TreeSet;
  import org.gudy.azureus2.core3.config.COConfigurationManager;
  import org.gudy.azureus2.core3.util.SHA1Hasher;
  import org.gudy.azureus2.ui.common.ExternalUIConst;
 +import org.gudy.azureus2.ui.common.util.StringPattern;
  import org.gudy.azureus2.ui.console.ConsoleInput;
 -import org.pf.text.StringPattern;
-+//import org.pf.text.StringPattern;
 +
  
  /**
