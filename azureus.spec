@@ -2,7 +2,7 @@
 
 Name:		azureus
 Version:	5.3.0.0
-Release:	4%{?dist}
+Release:	6%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 
@@ -40,13 +40,13 @@ Patch12: azureus-5.3.0.0-no-bundled-bouncycastle
 Patch13: azureus-5.3.0.0-noPF.patch
 
 BuildRequires:	ant, jpackage-utils >= 1.5, xml-commons-apis
-BuildRequires:	apache-commons-cli, log4j
+BuildRequires:	apache-commons-cli, log4j12
 BuildRequires:	apache-commons-lang
 BuildRequires:	bouncycastle >= 1.33-3
 BuildRequires:	json_simple
 BuildRequires:	eclipse-swt >= 3.5
 BuildRequires:	junit
-Requires:	apache-commons-cli, log4j
+Requires:	apache-commons-cli, log4j12
 Requires:	apache-commons-lang
 Requires:	eclipse-swt >= 3.5
 Requires:	 bouncycastle >= 1.33-3
@@ -106,13 +106,11 @@ chmod 644 *.txt
 rm -fR org/apache
 rm -fR org/bouncycastle
 rm -fR org/json
-# http://www.programmers-friend.org/download/ not found in fedora repos 
-#check http://docs.oracle.com/javase/tutorial/essential/io/find.html
 rm -fR org/pf
 
 %build
 mkdir -p build/libs
-build-jar-repository -p build/libs bcprov apache-commons-cli log4j \
+build-jar-repository -p build/libs bcprov apache-commons-cli log4j12-1.2.17 \
   junit apache-commons-lang json_simple
 
 #ppc seems to have eclipse-swt.ppc64 installed so libdir can't be used
@@ -173,8 +171,14 @@ fi
 %{_datadir}/azureus
 
 %changelog
-* Tue Apr 08 2014 David Juran <djuran@redhat.com> - 5.3.0.0-4
+* Tue Apr 08 2014 David Juran <djuran@redhat.com> - 5.3.0.0-6
 - Fix License tag
+
+* Tue Jun 10 2014 Alexander Kurtakov <akurtako@redhat.com> 5.3.0.0-5
+- Use log4j12.
+
+* Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 5.3.0.0-4
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
 
 * Mon Mar 03 2014 David Juran <djuran@redhat.com> - 5.3.0.0-3
 - Do not force BouncyCastle Provider
