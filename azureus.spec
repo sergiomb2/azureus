@@ -171,8 +171,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
-* Tue Apr 08 2014 David Juran <djuran@redhat.com> - 5.3.0.0-6
+* Mon Jul 07 2014 David Juran <djuran@redhat.com> - 5.3.0.0-6
 - Fix License tag
+- Remove dependency on ProframmersFriend library
 
 * Tue Jun 10 2014 Alexander Kurtakov <akurtako@redhat.com> 5.3.0.0-5
 - Use log4j12.
