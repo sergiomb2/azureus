@@ -1,8 +1,8 @@
 %global		_newname Vuze
 
 Name:		azureus
-Version:	5.3.0.0
-Release:	6%{?dist}
+Version:	5.4.0.0
+Release:	1%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 
@@ -12,7 +12,7 @@ License:	GPLv2 with exceptions
 
 URL:		http://azureus.sourceforge.net
 
-Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_5300_source.zip
+Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_5400_source.zip
 
 Source2:	Azureus.desktop
 Source3:	azureus.applications
@@ -93,7 +93,7 @@ rm org/gudy/azureus2/ui/swt/win32/Win32UIEnhancer.java
 
 %patch11 -p1 -b .no-bundled-json
 %patch12 -p1 -b .no-bundled-bouncycastle
-%patch13 -p1 -b .noPF
+#%patch13 -p1 -b .noPF
 
 #hacks to org.eclipse.swt.widgets.Tree2 don't compile.
 rm -fR org/eclipse
@@ -171,6 +171,10 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Sat Oct 11 2014 David Juran <djuran@redhat.com> - 5.4.0.0-1
+- Back out ProgrammersFriend replacement, the entire license issue is a mess.
+- Upgrade to Vuze-5.4.0.0
+
 * Mon Jul 07 2014 David Juran <djuran@redhat.com> - 5.3.0.0-6
 - Fix License tag
 - Remove dependency on ProframmersFriend library
