@@ -2,7 +2,7 @@
 
 Name:		azureus
 Version:	5.4.0.0
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 
@@ -38,6 +38,7 @@ Patch10: azureus-5.2.0.0-startupScript.patch
 Patch11: azureus-5.2-no-bundled-json.patch
 Patch12: azureus-5.3.0.0-no-bundled-bouncycastle
 Patch13: azureus-5.3.0.0-noPF.patch
+Patch14: azureus-5.4.0.0-fix_compile.patch
 
 BuildRequires:	ant, jpackage-utils >= 1.5, xml-commons-apis
 BuildRequires:	apache-commons-cli, log4j12
@@ -94,6 +95,7 @@ rm org/gudy/azureus2/ui/swt/win32/Win32UIEnhancer.java
 %patch11 -p1 -b .no-bundled-json
 %patch12 -p1 -b .no-bundled-bouncycastle
 #%patch13 -p1 -b .noPF
+%patch14 -p1 -b .5.4.0.0_fix_compile
 
 #hacks to org.eclipse.swt.widgets.Tree2 don't compile.
 rm -fR org/eclipse
@@ -106,7 +108,7 @@ chmod 644 *.txt
 rm -fR org/apache
 rm -fR org/bouncycastle
 rm -fR org/json
-rm -fR org/pf
+#rm -fR org/pf
 
 %build
 mkdir -p build/libs
@@ -171,6 +173,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Tue Nov 11 2014 David Juran <djuran@redhat.com> - 5.4.0.0-2
+- Make it build
+
 * Sat Oct 11 2014 David Juran <djuran@redhat.com> - 5.4.0.0-1
 - Back out ProgrammersFriend replacement, the entire license issue is a mess.
 - Upgrade to Vuze-5.4.0.0

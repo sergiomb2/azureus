@@ -1,0 +1,49 @@
+diff -up azureus-5.4.0.0/org/gudy/azureus2/core3/util/AddressUtils.java.5.4.0.0_fix_compile azureus-5.4.0.0/org/gudy/azureus2/core3/util/AddressUtils.java
+--- azureus-5.4.0.0/org/gudy/azureus2/core3/util/AddressUtils.java.5.4.0.0_fix_compile	2014-07-30 18:13:50.000000000 +0200
++++ azureus-5.4.0.0/org/gudy/azureus2/core3/util/AddressUtils.java	2014-11-12 19:41:16.527000000 +0100
+@@ -469,11 +469,11 @@ AddressUtils
+ 			try{
+ 					// unfortunately we have an incompatible base64 standard in i2p, they replaced / with ~ and + with -
+ 				
+-				char[]	encoded = to_decode.toCharArray();
++				byte[]	encoded = to_decode.getBytes();
+ 				
+ 				for ( int i=0;i<encoded.length;i++){
+ 					
+-					char c = encoded[i];
++					byte c = encoded[i];
+ 					
+ 					if ( c == '~' ){
+ 						encoded[i] = '/';
+diff -up azureus-5.4.0.0/org/gudy/azureus2/pluginsimpl/local/utils/xml/simpleparser/SimpleXMLParserDocumentImpl.java.5.4.0.0_fix_compile azureus-5.4.0.0/org/gudy/azureus2/pluginsimpl/local/utils/xml/simpleparser/SimpleXMLParserDocumentImpl.java
+--- azureus-5.4.0.0/org/gudy/azureus2/pluginsimpl/local/utils/xml/simpleparser/SimpleXMLParserDocumentImpl.java.5.4.0.0_fix_compile	2014-07-30 18:13:46.000000000 +0200
++++ azureus-5.4.0.0/org/gudy/azureus2/pluginsimpl/local/utils/xml/simpleparser/SimpleXMLParserDocumentImpl.java	2014-11-12 19:45:53.402000000 +0100
+@@ -24,7 +24,7 @@ package org.gudy.azureus2.pluginsimpl.lo
+ import javax.xml.parsers.*;
+ 
+ import org.xml.sax.*;
+-import org.apache.commons.lang.Entities;
++import org.apache.commons.lang.StringEscapeUtils;
+ import org.gudy.azureus2.core3.util.Constants;
+ import org.gudy.azureus2.core3.util.Debug;
+ import org.gudy.azureus2.plugins.utils.xml.simpleparser.SimpleXMLParserDocument;
+@@ -564,17 +564,8 @@ SimpleXMLParserDocumentImpl
+ 		     					replacement = new String( buffer, 0, buffer_pos );
+ 		     					
+ 		     				}else{
+-		     							     							     					
+-			     				int num = Entities.HTML40.entityValue( ref );
+-			     					
+-		     					if ( num != -1 ){
+-		     					
+-		     						replacement = "&#" + num + ";";
+-		     						
+-		     					}else{
+-		     						
+-		     						replacement = new String( buffer, 0, buffer_pos );
+-		     					}
++		     				
++                                                        replacement = StringEscapeUtils.escapeHtml(ref);			     							     				
+ 		     				}
+ 		     				
+ 		     				char[] chars = replacement.toCharArray();
