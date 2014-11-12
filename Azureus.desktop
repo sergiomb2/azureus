@@ -6,6 +6,6 @@ Exec=azureus
 Icon=azureus
 Terminal=false
 Type=Application
-MimeType=application/x-bittorrent
+MimeType=application/x-bittorrent;
 Categories=Application;Network;FileTransfer;P2P;GTK;Java;
 

@@ -2,7 +2,7 @@
 
 Name:		azureus
 Version:	5.4.0.0
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 
@@ -173,6 +173,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Thu Nov 12 2014 David Juran <djuran@redhat.com> - 5.4.0.0-3
+- Fix Desktop file (as suggested by Sergio Monteiro Basto)
+
 * Tue Nov 11 2014 David Juran <djuran@redhat.com> - 5.4.0.0-2
 - Make it build
 
