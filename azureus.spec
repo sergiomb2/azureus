@@ -173,7 +173,7 @@ fi
 %{_datadir}/azureus
 
 %changelog
-* Thu Wed 12 2014 David Juran <djuran@redhat.com> - 5.4.0.0-3
+* Wed Nov 12 2014 David Juran <djuran@redhat.com> - 5.4.0.0-3
 - Fix Desktop file (as suggested by Sergio Monteiro Basto)
 
 * Tue Nov 11 2014 David Juran <djuran@redhat.com> - 5.4.0.0-2
