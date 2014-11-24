@@ -1,37 +1,42 @@
-diff -up azureus-5.2.0.0/org/gudy/azureus2/platform/unix/startupScript.startupScript azureus-5.2.0.0/org/gudy/azureus2/platform/unix/startupScript
---- azureus-5.2.0.0/org/gudy/azureus2/platform/unix/startupScript.startupScript	2012-09-17 19:51:24.000000000 +0200
-+++ azureus-5.2.0.0/org/gudy/azureus2/platform/unix/startupScript	2014-02-10 20:34:25.000000000 +0100
-@@ -1,10 +1,25 @@
+diff -up azureus-5.5.0.0/org/gudy/azureus2/platform/unix/startupScript.startupScript azureus-5.5.0.0/org/gudy/azureus2/platform/unix/startupScript
+--- azureus-5.5.0.0/org/gudy/azureus2/platform/unix/startupScript.startupScript	2014-11-19 18:30:30.000000000 +0100
++++ azureus-5.5.0.0/org/gudy/azureus2/platform/unix/startupScript	2014-11-24 14:57:31.099062462 +0100
+@@ -1,10 +1,10 @@
  #!/bin/bash
  
  ######## CONFIGURATION OPTIONS ########
 -SCRIPT_NOT_CHANGED=0	# change this to 1 if you don't want your script overwritten!
 -JAVA_PROGRAM_DIR=""	# use full path to java bin dir, ex. "/usr/java/j2sdk1.4.2/bin/"
 -#PROGRAM_DIR="/home/username/apps/azureus"	# use full path to Azureus bin dir
--JAVA_ARGS="-Xmx128m"
+-JAVA_ARGS="-Xmx256m"
 +SCRIPT_NOT_CHANGED=1	# change this to 1 if you don't want your script overwritten!
 +JAVA_PROGRAM_DIR="/usr/lib/jvm/jre/bin/"	# use full path to java bin dir, ex. "/usr/java/j2sdk1.4.2/bin/"
-+
-+PROGRAM_DIR="$HOME/.azureus/app"
++PROGRAM_DIR="$HOME/.azureus/app"	# use full path to Azureus bin dir
 +mkdir -p ${PROGRAM_DIR}
-+
-+case $(uname -i) in
-+        *64)
-+                SWT=/usr/lib64/eclipse/swt.jar
-+		LIBDIR=/usr/lib64
-+                ;;
-+        *)
-+                SWT=/usr/lib/eclipse/swt.jar
-+		LIBDIR=/usr/lib
-+                ;;
-+esac
-+
-+
-+export LD_LIBRARY_PATH=$LIBDIR/eclipse/plugins/:$LIBDIR/eclipse/:$LIBDIR CLASSPATH=$SWT:`build-classpath json_simple bcprov apache-commons-cli log4j`:/usr/share/azureus/Azureus2.jar
  
  #export MOZILLA_FIVE_HOME="/path/to/gre"	# Full path to GRE/Mozilla. When commenting out this line, also comment out the next line
  #if [ "$LD_LIBRARY_PATH x" = " x" ]; then export LD_LIBRARY_PATH=$MOZILLA_FIVE_HOME; else export LD_LIBRARY_PATH=$MOZILLA_FIVE_HOME:$LD_LIBRARY_PATH; fi
-@@ -37,136 +52,27 @@ MSG_JAVABORK="Java appeared to have cras
+@@ -12,6 +12,19 @@ JAVA_ARGS="-Xmx256m"
+ 
+ export SWT_GTK3=0   # things don't work well with the preliminary GTK3 SWT support
+ 
++case $(uname -i) in
++    *64)
++	SWT=/usr/lib64/eclipse/swt.jar
++	LIBDIR=/usr/lib64
++	;;
++    *)
++	SWT=/usr/lib/eclipse/swt.jar
++	LIBDIR=/usr/lib
++	;;
++esac
++
++export LD_LIBRARY_PATH=$LIBDIR/eclipse/plugins/:$LIBDIR/eclipse/:$LIBDIR CLASSPATH=$SWT:`build-classpath json_simple bcprov apache-commons-cli log4j`:/usr/share/azureus/Azureus2.jar
++
+ ######## YOU PROBABLY DO NOT WANT TO TOUCH ANYTHING BELOW! ########
+ 
+ SCRIPT_VERSION=4
+@@ -37,136 +50,27 @@ MSG_JAVABORK="Java appeared to have cras
  
  SKIP_GCJ=1
  
@@ -175,7 +180,7 @@ diff -up azureus-5.2.0.0/org/gudy/azureus2/platform/unix/startupScript.startupSc
  # Change path here so we can do for loop on program dirs with spaces
  cd "${PROGRAM_DIR}"
  
-@@ -175,17 +81,8 @@ for FILE in ./*.jar; do
+@@ -175,17 +79,8 @@ for FILE in ./*.jar; do
  	CLASSPATH="${CLASSPATH:+${CLASSPATH}:}$FILE"
  done
  
@@ -194,7 +199,7 @@ diff -up azureus-5.2.0.0/org/gudy/azureus2/platform/unix/startupScript.startupSc
  
  runJavaOutput "org.gudy.azureus2.platform.unix.ScriptBeforeStartup" "$@";
  
-@@ -195,7 +92,7 @@ echo "${JAVA_PROGRAM_DIR}java ${JAVA_ARG
+@@ -195,7 +90,7 @@ echo "${JAVA_PROGRAM_DIR}java ${JAVA_ARG
  # Don't use "exec -a Azureus ..." here as exec quits this script after completion,
  # preventing ScriptAfterShutdown from running, which installs updates and does
  # restarts

@@ -1,8 +1,8 @@
 %global		_newname Vuze
 
 Name:		azureus
-Version:	5.4.0.0
-Release:	3%{?dist}
+Version:	5.5.0.0
+Release:	1%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 
@@ -12,7 +12,7 @@ License:	GPLv2 with exceptions
 
 URL:		http://azureus.sourceforge.net
 
-Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_5400_source.zip
+Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_5500_source.zip
 
 Source2:	Azureus.desktop
 Source3:	azureus.applications
@@ -173,6 +173,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Mon Nov 24 2014 David Juran <djuran@redhat.com> - 5.5.0.0-1
+- Upgrade to Vuze-5.5.0.0
+
 * Wed Nov 12 2014 David Juran <djuran@redhat.com> - 5.4.0.0-3
 - Fix Desktop file (as suggested by Sergio Monteiro Basto)
 
