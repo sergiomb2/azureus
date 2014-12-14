@@ -1,22 +1,23 @@
-diff -up azureus-5.5.0.0/org/gudy/azureus2/platform/unix/startupScript.startupScript azureus-5.5.0.0/org/gudy/azureus2/platform/unix/startupScript
---- azureus-5.5.0.0/org/gudy/azureus2/platform/unix/startupScript.startupScript	2014-11-19 18:30:30.000000000 +0100
-+++ azureus-5.5.0.0/org/gudy/azureus2/platform/unix/startupScript	2014-11-24 14:57:31.099062462 +0100
-@@ -1,10 +1,10 @@
+Only in azureus: dkldlk
+diff -urp azureus.orig/org/gudy/azureus2/platform/unix/startupScript azureus/org/gudy/azureus2/platform/unix/startupScript
+--- azureus.orig/org/gudy/azureus2/platform/unix/startupScript	2014-11-19 18:30:30.000000000 +0000
++++ azureus/org/gudy/azureus2/platform/unix/startupScript	2014-12-08 04:43:04.535903726 +0000
+@@ -1,10 +1,11 @@
  #!/bin/bash
  
  ######## CONFIGURATION OPTIONS ########
 -SCRIPT_NOT_CHANGED=0	# change this to 1 if you don't want your script overwritten!
 -JAVA_PROGRAM_DIR=""	# use full path to java bin dir, ex. "/usr/java/j2sdk1.4.2/bin/"
 -#PROGRAM_DIR="/home/username/apps/azureus"	# use full path to Azureus bin dir
--JAVA_ARGS="-Xmx256m"
 +SCRIPT_NOT_CHANGED=1	# change this to 1 if you don't want your script overwritten!
 +JAVA_PROGRAM_DIR="/usr/lib/jvm/jre/bin/"	# use full path to java bin dir, ex. "/usr/java/j2sdk1.4.2/bin/"
 +PROGRAM_DIR="$HOME/.azureus/app"	# use full path to Azureus bin dir
+ JAVA_ARGS="-Xmx256m"
 +mkdir -p ${PROGRAM_DIR}
  
  #export MOZILLA_FIVE_HOME="/path/to/gre"	# Full path to GRE/Mozilla. When commenting out this line, also comment out the next line
  #if [ "$LD_LIBRARY_PATH x" = " x" ]; then export LD_LIBRARY_PATH=$MOZILLA_FIVE_HOME; else export LD_LIBRARY_PATH=$MOZILLA_FIVE_HOME:$LD_LIBRARY_PATH; fi
-@@ -12,6 +12,19 @@ JAVA_ARGS="-Xmx256m"
+@@ -12,6 +13,19 @@ JAVA_ARGS="-Xmx256m"
  
  export SWT_GTK3=0   # things don't work well with the preliminary GTK3 SWT support
  
@@ -36,7 +37,7 @@ diff -up azureus-5.5.0.0/org/gudy/azureus2/platform/unix/startupScript.startupSc
  ######## YOU PROBABLY DO NOT WANT TO TOUCH ANYTHING BELOW! ########
  
  SCRIPT_VERSION=4
-@@ -37,136 +50,27 @@ MSG_JAVABORK="Java appeared to have cras
+@@ -37,136 +51,27 @@ MSG_JAVABORK="Java appeared to have cras
  
  SKIP_GCJ=1
  
@@ -180,7 +181,7 @@ diff -up azureus-5.5.0.0/org/gudy/azureus2/platform/unix/startupScript.startupSc
  # Change path here so we can do for loop on program dirs with spaces
  cd "${PROGRAM_DIR}"
  
-@@ -175,17 +79,8 @@ for FILE in ./*.jar; do
+@@ -175,17 +80,8 @@ for FILE in ./*.jar; do
  	CLASSPATH="${CLASSPATH:+${CLASSPATH}:}$FILE"
  done
  
@@ -199,7 +200,7 @@ diff -up azureus-5.5.0.0/org/gudy/azureus2/platform/unix/startupScript.startupSc
  
  runJavaOutput "org.gudy.azureus2.platform.unix.ScriptBeforeStartup" "$@";
  
-@@ -195,7 +90,7 @@ echo "${JAVA_PROGRAM_DIR}java ${JAVA_ARG
+@@ -195,7 +91,7 @@ echo "${JAVA_PROGRAM_DIR}java ${JAVA_ARG
  # Don't use "exec -a Azureus ..." here as exec quits this script after completion,
  # preventing ScriptAfterShutdown from running, which installs updates and does
  # restarts
@@ -208,3 +209,4 @@ diff -up azureus-5.5.0.0/org/gudy/azureus2/platform/unix/startupScript.startupSc
  	-cp "${CLASSPATH}" \
  	-Djava.library.path="${PROGRAM_DIR}" \
  	-Dazureus.install.path="${PROGRAM_DIR}" \
+Only in azureus: -up

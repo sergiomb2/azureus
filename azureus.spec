@@ -2,7 +2,7 @@
 
 Name:		azureus
 Version:	5.5.0.0
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 
@@ -20,20 +20,19 @@ Source3:	azureus.applications
 #ant build script from Azureus-4.3.0.6
 Source4:	build.xml
 
-Patch0:		azureus-cache-size.patch
 Patch1:		azureus-remove-manifest-classpath.patch
 Patch2:		azureus-no-shared-plugins.patch
 Patch3:	azureus-SecureMessageServiceClientHelper-bcprov.patch
 
 Patch4:	azureus-4.0.0.4-boo-osx.diff
 
-Patch6:	azureus-4.0.0.4-stupid-invalid-characters.diff
+Patch6:	azureus-5.5.0.0-stupid-invalid-characters.patch
 
 Patch7:	azureus-4.2.0.4-java5.patch
 
 Patch9:	azureus-4.8.1.2-no-bundled-apache-commons.patch
 
-Patch10: azureus-5.2.0.0-startupScript.patch
+Patch10: azureus-5.5.0.0-startupScript.patch
 
 Patch11: azureus-5.2-no-bundled-json.patch
 Patch12: azureus-5.3.0.0-no-bundled-bouncycastle
@@ -83,7 +82,6 @@ advanced users.
 
 cp %{SOURCE4} .
 
-%patch0 -p0 -b .cache-size
 %patch1 -p1 -b .remove-manifest-classpath
 %patch2 -p1 -b .no-shared-plugins
 
@@ -189,6 +187,12 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Sun Dec 14 2014 Sérgio Basto <sergio@serjux.com> - 5.5.0.0-2
+- Use JAVA_ARGS="-Xmx256m" on startupScript .
+- Drop patch azureus-cache-size.patch . 
+- Fix in better way invalid characters.
+- Make it possible build for Fedora 20 and lower.
+
 * Mon Nov 24 2014 David Juran <djuran@redhat.com> - 5.5.0.0-1
 - Upgrade to Vuze-5.5.0.0
 

@@ -1,0 +1,26 @@
+Patch made with (code page was MACINTOSH , convert to utf-8):
+iconv com/aelitis/azureus/core/metasearch/impl/DateParserRegex.java -f MACINTOSH -t utf8
+--- ./com/aelitis/azureus/core/metasearch/impl/DateParserRegex.java.orig	2014-12-08 04:10:19.341580596 +0000
++++ ./com/aelitis/azureus/core/metasearch/impl/DateParserRegex.java	2014-12-08 04:25:59.957553724 +0000
+@@ -50,17 +50,17 @@ public class DateParserRegex extends Dat
+ 	
+ 	private static final String[] MONTHS_LIST = new String[] {
+ 		" january janvier enero januar",
+-		" february fevrier février febrero februar",
+-		" march mars marzo marz marz märz" ,
++		" february fevrier f√©vrier febrero februar",
++		" march mars marzo marz marz m√§rz" ,
+ 		" april avril abril april ",
+ 		" may mai mayo mai",
+ 		" june juin junio juni",
+ 		" july juillet julio juli",
+-		" august aout août agosto august",
++		" august aout ao√ªt agosto august",
+ 		" september septembre septiembre september",
+ 		" october octobre octubre oktober",
+ 		" november novembre noviembre november",
+-		" december decembre décembre diciembre dezember"};
++		" december decembre d√©cembre diciembre dezember"};
+ 	
+ 	public DateParserRegex() {
+ 		this("GMT-7",true,null);
