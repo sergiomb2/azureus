@@ -41,17 +41,27 @@ Patch13: azureus-5.3.0.0-noPF.patch
 Patch14: azureus-5.4.0.0-fix_compile.patch
 
 BuildRequires:	ant, jpackage-utils >= 1.5, xml-commons-apis
-BuildRequires:	apache-commons-cli, log4j12
+%if 0%{?fedora} > 20
+BuildRequires:	log4j12
+%else
+BuildRequires:	log4j
+%endif
+BuildRequires:	apache-commons-cli
 BuildRequires:	apache-commons-lang
 BuildRequires:	bouncycastle >= 1.33-3
 BuildRequires:	json_simple
 BuildRequires:	eclipse-swt >= 3.5
 BuildRequires:	junit
-Requires:	apache-commons-cli, log4j12
+%if 0%{?fedora} > 20
+Requires:	log4j12
+%else
+Requires:	log4j
+%endif
+Requires:	apache-commons-cli
 Requires:	apache-commons-lang
 Requires:	eclipse-swt >= 3.5
-Requires:	 bouncycastle >= 1.33-3
-Requires:	 java >= 1:1.6.0
+Requires:	bouncycastle >= 1.33-3
+Requires:	java >= 1:1.6.0
 Requires:	json_simple
 BuildRequires:	 java-devel >= 1:1.6.0
 BuildRequires:	 desktop-file-utils
@@ -63,7 +73,7 @@ Provides:	vuze = %{version}-%{release}
 BuildArch:	noarch
 
 
-%description 
+%description
 Azureus (now %{_newname}) implements the BitTorrent protocol using java
 and comes bundled with many invaluable features for both beginners and
 advanced users.
@@ -111,8 +121,14 @@ rm -fR org/json
 #rm -fR org/pf
 
 %build
+
+%global log4j_ver %{nil}
+%if 0%{?fedora} > 20
+%global log4j_ver 12-1.2.17
+%endif
+
 mkdir -p build/libs
-build-jar-repository -p build/libs bcprov apache-commons-cli log4j12-1.2.17 \
+build-jar-repository -p build/libs bcprov apache-commons-cli log4j%{log4j_ver} \
   junit apache-commons-lang json_simple
 
 #ppc seems to have eclipse-swt.ppc64 installed so libdir can't be used
