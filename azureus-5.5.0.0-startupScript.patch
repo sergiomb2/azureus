@@ -196,7 +196,7 @@ diff -urp azureus.orig/org/gudy/azureus2/platform/unix/startupScript azureus/org
 -# some distros symlink application level plugins into the users's plugin directory..
 -# remove all symlinks in user's plugin directory
 -find ~/.azureus/plugins -maxdepth 1 -type l -xtype d  -exec rm {} \;
-+JAVA_PROPS="-Dazureus.script.version=${SCRIPT_VERSION} -Dorg.eclipse.swt.browser.UseWebKitGTK=true"
++JAVA_PROPS="-Dazureus.script.version=${SCRIPT_VERSION} -Dorg.eclipse.swt.browser.UseWebKitGTK=true -Dazureus.skipSWTcheck=1"
  
  runJavaOutput "org.gudy.azureus2.platform.unix.ScriptBeforeStartup" "$@";
  
