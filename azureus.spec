@@ -2,7 +2,7 @@
 
 Name:		azureus
 Version:	5.6.0.0
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 
@@ -17,18 +17,15 @@ Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_5600_source.zip
 Source2:	Azureus.desktop
 Source3:	azureus.applications
 
-#ant build script from Azureus-4.3.0.6
-Source4:	build.xml
+#ant build script from Azureus-4.3.0.6 with patches included.
+Source4: build.xml
 
-Patch1:		azureus-remove-manifest-classpath.patch
-Patch2:		azureus-no-shared-plugins.patch
+Patch2:	azureus-no-shared-plugins.patch
 Patch3:	azureus-SecureMessageServiceClientHelper-bcprov.patch
 
 Patch4:	azureus-4.0.0.4-boo-osx.diff
 
 Patch6:	azureus-5.6.0.0-stupid-invalid-characters.patch
-
-Patch7:	azureus-4.2.0.4-java5.patch
 
 Patch9:	azureus-5.6.0.0-no-bundled-apache-commons.patch
 
@@ -82,7 +79,6 @@ advanced users.
 
 cp %{SOURCE4} .
 
-%patch1 -p1 -b .remove-manifest-classpath
 %patch2 -p1 -b .no-shared-plugins
 
 %patch3 -p1 -b .nobcprov
@@ -93,8 +89,6 @@ rm org/gudy/azureus2/ui/swt/win32/Win32UIEnhancer.java
 %patch4 -p1 -b .boo-osx
 
 %patch6  -p1 -b stupid-invalid-characters
-
-%patch7 -p1 -b .java5
 
 %patch9 -p1 -b .no-bundled-apache-commons
 
@@ -188,6 +182,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Tue May 05 2015 Sérgio Basto <sergio@serjux.com> - 5.6.0.0-2
+- Drop patch1 and pacth7 and use file build.xml already patched.
+
 * Tue May 05 2015 Sérgio Basto <sergio@serjux.com> - 5.6.0.0-1
 - Update to Azureus-5.6.0.0
 - New patches for no-bundled-apache-commons, stupid-invalid-characters,
