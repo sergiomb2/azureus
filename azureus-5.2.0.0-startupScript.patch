@@ -1,4 +1,3 @@
-Only in azureus: dkldlk
 diff -urp azureus.orig/org/gudy/azureus2/platform/unix/startupScript azureus/org/gudy/azureus2/platform/unix/startupScript
 --- azureus.orig/org/gudy/azureus2/platform/unix/startupScript	2014-11-19 18:30:30.000000000 +0000
 +++ azureus/org/gudy/azureus2/platform/unix/startupScript	2014-12-08 04:43:04.535903726 +0000
@@ -209,4 +208,3 @@ diff -urp azureus.orig/org/gudy/azureus2/platform/unix/startupScript azureus/org
  	-cp "${CLASSPATH}" \
  	-Djava.library.path="${PROGRAM_DIR}" \
  	-Dazureus.install.path="${PROGRAM_DIR}" \
-Only in azureus: -up
