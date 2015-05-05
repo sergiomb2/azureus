@@ -1,8 +1,8 @@
 %global		_newname Vuze
 
 Name:		azureus
-Version:	5.5.0.0
-Release:	2%{?dist}
+Version:	5.6.0.0
+Release:	1%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 
@@ -12,7 +12,7 @@ License:	GPLv2 with exceptions
 
 URL:		http://azureus.sourceforge.net
 
-Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_5500_source.zip
+Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_5600_source.zip
 
 Source2:	Azureus.desktop
 Source3:	azureus.applications
@@ -26,18 +26,18 @@ Patch3:	azureus-SecureMessageServiceClientHelper-bcprov.patch
 
 Patch4:	azureus-4.0.0.4-boo-osx.diff
 
-Patch6:	azureus-5.5.0.0-stupid-invalid-characters.patch
+Patch6:	azureus-5.6.0.0-stupid-invalid-characters.patch
 
 Patch7:	azureus-4.2.0.4-java5.patch
 
-Patch9:	azureus-4.8.1.2-no-bundled-apache-commons.patch
+Patch9:	azureus-5.6.0.0-no-bundled-apache-commons.patch
 
-Patch10: azureus-5.5.0.0-startupScript.patch
+Patch10: azureus-5.6.0.0-startupScript.patch
 
 Patch11: azureus-5.2-no-bundled-json.patch
 Patch12: azureus-5.3.0.0-no-bundled-bouncycastle
 Patch13: azureus-5.3.0.0-noPF.patch
-Patch14: azureus-5.4.0.0-fix_compile.patch
+Patch14: azureus-5.6.0.0-fix_compile.patch
 
 BuildRequires:	ant, jpackage-utils >= 1.5, xml-commons-apis
 %if 0%{?fedora} > 20
@@ -176,7 +176,8 @@ if [ -x /usr/bin/gtk-update-icon-cache ]; then
 fi
 
 %files
-%doc ChangeLog.txt GPL.txt
+%doc ChangeLog.txt
+%license GPL.txt
 %{_datadir}/applications/*
 %{_datadir}/application-registry/*
 %{_datadir}/pixmaps/azureus.png
@@ -187,9 +188,17 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Tue May 05 2015 Sérgio Basto <sergio@serjux.com> - 5.6.0.0-1
+- Update to Azureus-5.6.0.0
+- New patches for no-bundled-apache-commons, stupid-invalid-characters,
+    startupScript and fix_compile (which also has modifications)
+
+* Wed Feb 25 2015 David Juran <djuran@redhat.com> - 5.5.0.0-4
+- Use licence tag
+
 * Sun Dec 14 2014 Sérgio Basto <sergio@serjux.com> - 5.5.0.0-2
 - Use JAVA_ARGS="-Xmx256m" on startupScript .
-- Drop patch azureus-cache-size.patch . 
+- Drop patch azureus-cache-size.patch .
 - Fix in better way invalid characters.
 - Make it possible build for Fedora 20 and lower.
 
