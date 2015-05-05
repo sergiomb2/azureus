@@ -141,7 +141,7 @@
 -			fi
 -		fi
 +	"$@" > $TMP_SCRIPT
-+	if [ -f ~/$TMP_SCRIPT ]; then
++	if [ -f $TMP_SCRIPT ]; then
 +		chmod +x $TMP_SCRIPT
 +		. $TMP_SCRIPT
 +		rm $TMP_SCRIPT
