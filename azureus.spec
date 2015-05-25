@@ -2,7 +2,7 @@
 
 Name:		azureus
 Version:	5.6.0.0
-Release:	2%{?dist}
+Release:	3%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 
@@ -182,6 +182,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Mon May 25 2015 Sérgio Basto <sergio@serjux.com> - 5.6.0.0-3
+-  Remove Encoding from desktop file
+
 * Tue May 05 2015 Sérgio Basto <sergio@serjux.com> - 5.6.0.0-2
 - Drop patch1 and pacth7 and use file build.xml already patched.
 
