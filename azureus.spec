@@ -1,7 +1,7 @@
 %global		_newname Vuze
 
 Name:		azureus
-Version:	5.6.1.0
+Version:	5.6.1.2
 Release:	1%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
@@ -12,7 +12,7 @@ License:	GPLv2 with exceptions
 
 URL:		http://azureus.sourceforge.net
 
-Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_5610_source.zip
+Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_5612_source.zip
 
 Source2:	Azureus.desktop
 Source3:	azureus.applications
@@ -182,6 +182,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Tue Jun 09 2015 Sérgio Basto <sergio@serjux.com> - 5.6.1.2-1
+- Update to 5.6.1.2
+
 * Wed Jun 03 2015 Sérgio Basto <sergio@serjux.com> - 5.6.1.0-1
 - Update to 5.6.1.0
 
