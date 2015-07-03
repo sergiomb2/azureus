@@ -2,7 +2,7 @@
 
 Name:		azureus
 Version:	5.6.1.2
-Release:	1%{?dist}
+Release:	2%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 
@@ -94,6 +94,10 @@ rm org/gudy/azureus2/ui/swt/win32/Win32UIEnhancer.java
 
 %patch10 -p1 -b .startupScript
 
+%if 0%{?fedora} > 20
+sed  -i 's/log4j/log4j-1/g' org/gudy/azureus2/platform/unix/startupScript
+%endif
+
 %patch11 -p1 -b .no-bundled-json
 %patch12 -p1 -b .no-bundled-bouncycastle
 #%patch13 -p1 -b .noPF
@@ -182,6 +186,10 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Fri Jun 26 2015 Sérgio Basto <sergio@serjux.com> - 5.6.1.2-2
+- Use the correct log4j (the old log4j-1) and fix "Could not find log4j" when
+  log4j 2.0 is not installed.
+
 * Tue Jun 09 2015 Sérgio Basto <sergio@serjux.com> - 5.6.1.2-1
 - Update to 5.6.1.2
 
