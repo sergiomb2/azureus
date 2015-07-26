@@ -20,40 +20,40 @@ Source3:	azureus.applications
 #ant build script from Azureus-4.3.0.6 with patches included.
 Source4: build.xml
 
-Patch2:	azureus-no-shared-plugins.patch
-Patch3:	azureus-SecureMessageServiceClientHelper-bcprov.patch
+Patch1:	azureus-no-shared-plugins.patch
+Patch2:	azureus-SecureMessageServiceClientHelper-bcprov.patch
 
-Patch4:	azureus-4.0.0.4-boo-osx.diff
+Patch3:	azureus-4.0.0.4-boo-osx.diff
 
-Patch6:	azureus-5.6.0.0-stupid-invalid-characters.patch
+Patch4:	azureus-5.6.0.0-stupid-invalid-characters.patch
 
-Patch9:	azureus-5.6.0.0-no-bundled-apache-commons.patch
+Patch6:	azureus-5.6.0.0-no-bundled-apache-commons.patch
 
-Patch10: azureus-5.6.0.0-startupScript.patch
+Patch7: azureus-5.6.0.0-startupScript.patch
 
-Patch11: azureus-5.2-no-bundled-json.patch
-Patch12: azureus-5.3.0.0-no-bundled-bouncycastle
+Patch8: azureus-5.2-no-bundled-json.patch
+Patch9: azureus-5.3.0.0-no-bundled-bouncycastle
+Patch10: azureus-5.6.0.0-fix_compile.patch
 Patch13: azureus-5.3.0.0-noPF.patch
-Patch14: azureus-5.6.0.0-fix_compile.patch
 
 BuildRequires:	ant, jpackage-utils >= 1.5, xml-commons-apis
+BuildRequires:	apache-commons-cli
 %if 0%{?fedora} > 20
 BuildRequires:	log4j12
 %else
 BuildRequires:	log4j
 %endif
-BuildRequires:	apache-commons-cli
 BuildRequires:	apache-commons-lang
 BuildRequires:	bouncycastle >= 1.33-3
 BuildRequires:	json_simple
 BuildRequires:	eclipse-swt >= 3.5
 BuildRequires:	junit
+Requires:	apache-commons-cli
 %if 0%{?fedora} > 20
 Requires:	log4j12
 %else
 Requires:	log4j
 %endif
-Requires:	apache-commons-cli
 Requires:	apache-commons-lang
 Requires:	eclipse-swt >= 3.5
 Requires:	bouncycastle >= 1.33-3
@@ -79,29 +79,29 @@ advanced users.
 
 cp %{SOURCE4} .
 
-%patch2 -p1 -b .no-shared-plugins
+%patch1 -p1 -b .no-shared-plugins
 
-%patch3 -p1 -b .nobcprov
+%patch2 -p1 -b .nobcprov
 
 rm org/gudy/azureus2/ui/swt/osx/CarbonUIEnhancer.java
 rm org/gudy/azureus2/ui/swt/osx/Start.java
 rm org/gudy/azureus2/ui/swt/win32/Win32UIEnhancer.java
-%patch4 -p1 -b .boo-osx
+%patch3 -p1 -b .boo-osx
 
-%patch6  -p1 -b stupid-invalid-characters
+%patch4  -p1 -b stupid-invalid-characters
 
-%patch9 -p1 -b .no-bundled-apache-commons
+%patch6 -p1 -b .no-bundled-apache-commons
 
-%patch10 -p1 -b .startupScript
+%patch7 -p1 -b .startupScript
 
 %if 0%{?fedora} > 20
-sed  -i 's/log4j/log4j-1/g' org/gudy/azureus2/platform/unix/startupScript
+sed -i 's/log4j/log4j-1/g' org/gudy/azureus2/platform/unix/startupScript
 %endif
 
-%patch11 -p1 -b .no-bundled-json
-%patch12 -p1 -b .no-bundled-bouncycastle
+%patch8 -p1 -b .no-bundled-json
+%patch9 -p1 -b .no-bundled-bouncycastle
+%patch10 -p1 -b .5.4.0.0_fix_compile
 #%patch13 -p1 -b .noPF
-%patch14 -p1 -b .5.4.0.0_fix_compile
 
 #hacks to org.eclipse.swt.widgets.Tree2 don't compile.
 rm -fR org/eclipse
