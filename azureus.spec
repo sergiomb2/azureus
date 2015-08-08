@@ -1,8 +1,8 @@
 %global		_newname Vuze
 
 Name:		azureus
-Version:	5.6.1.2
-Release:	2%{?dist}
+Version:	5.6.2.0
+Release:	1%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
 
@@ -12,7 +12,7 @@ License:	GPLv2 with exceptions
 
 URL:		http://azureus.sourceforge.net
 
-Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_5612_source.zip
+Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_5620_source.zip
 
 Source2:	Azureus.desktop
 Source3:	azureus.applications
@@ -186,6 +186,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Fri Aug 07 2015 Sérgio Basto <sergio@serjux.com> - 5.6.2.0-1
+- Update to 5.6.2.0
+
 * Fri Jun 26 2015 Sérgio Basto <sergio@serjux.com> - 5.6.1.2-2
 - Use the correct log4j (the old log4j-1) and fix "Could not find log4j" when
   log4j 2.0 is not installed.
