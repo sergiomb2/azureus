@@ -1,7 +1,7 @@
 %global		_newname Vuze
 
 Name:		azureus
-Version:	5.6.2.0
+Version:	5.7.0.0
 Release:	1%{?dist}
 Summary:	A BitTorrent Client
 Group:		Applications/Internet
@@ -12,7 +12,7 @@ License:	GPLv2 with exceptions
 
 URL:		http://azureus.sourceforge.net
 
-Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_5620_source.zip
+Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_5700_source.zip
 
 Source2:	Azureus.desktop
 Source3:	azureus.applications
@@ -23,13 +23,11 @@ Source4: build.xml
 Patch1:	azureus-no-shared-plugins.patch
 Patch2:	azureus-SecureMessageServiceClientHelper-bcprov.patch
 
-Patch3:	azureus-4.0.0.4-boo-osx.diff
-
 Patch4:	azureus-5.6.0.0-stupid-invalid-characters.patch
 
 Patch6:	azureus-5.6.0.0-no-bundled-apache-commons.patch
 
-Patch7: azureus-5.6.0.0-startupScript.patch
+Patch7: azureus-5.7.0.0-startupScript.patch
 
 Patch8: azureus-5.2-no-bundled-json.patch
 Patch9: azureus-5.3.0.0-no-bundled-bouncycastle
@@ -86,7 +84,6 @@ cp %{SOURCE4} .
 rm org/gudy/azureus2/ui/swt/osx/CarbonUIEnhancer.java
 rm org/gudy/azureus2/ui/swt/osx/Start.java
 rm org/gudy/azureus2/ui/swt/win32/Win32UIEnhancer.java
-%patch3 -p1 -b .boo-osx
 
 %patch4  -p1 -b stupid-invalid-characters
 
@@ -186,6 +183,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Tue Dec 08 2015 Sérgio Basto <sergio@serjux.com> - 5.7.0.0-1
+- Update to 5.7.0.0
+
 * Fri Aug 07 2015 Sérgio Basto <sergio@serjux.com> - 5.6.2.0-1
 - Update to 5.6.2.0
 
@@ -203,7 +203,7 @@ fi
 -  Remove Encoding from desktop file
 
 * Tue May 05 2015 Sérgio Basto <sergio@serjux.com> - 5.6.0.0-2
-- Drop patch1 and pacth7 and use file build.xml already patched.
+- Drop patch1 and patch7 and use file build.xml already patched.
 
 * Tue May 05 2015 Sérgio Basto <sergio@serjux.com> - 5.6.0.0-1
 - Update to Azureus-5.6.0.0
