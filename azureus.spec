@@ -1,32 +1,32 @@
-%global		_newname Vuze
+%global     _newname Vuze
 
-Name:		azureus
-Version:	5.7.1.0
+Name:       azureus
+Version:    5.7.1.0
 %global     uversion  %(foo=%{version}; echo ${foo//./})
-Release:	1%{?dist}
-Summary:	A BitTorrent Client
-Group:		Applications/Internet
+Release:    1%{?dist}
+Summary:    A BitTorrent Client
+Group:      Applications/Internet
 
 #Exception for using Eclipse SWT
 #http://wiki.vuze.com/w/Vuze_License
-License:	GPLv2 with exceptions
+License:    GPLv2 with exceptions
 
-URL:		http://azureus.sourceforge.net
+URL:        http://azureus.sourceforge.net
 
-Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_%{uversion}_source.zip
+Source0:    http://downloads.sourceforge.net/azureus/%{_newname}_%{uversion}_source.zip
 
-Source2:	Azureus.desktop
-Source3:	azureus.applications
+Source2:    Azureus.desktop
+Source3:    azureus.applications
 
 #ant build script from Azureus-4.3.0.6 with patches included.
 Source4: build.xml
 
-Patch1:	azureus-no-shared-plugins.patch
-Patch2:	azureus-SecureMessageServiceClientHelper-bcprov.patch
+Patch1: azureus-no-shared-plugins.patch
+Patch2: azureus-SecureMessageServiceClientHelper-bcprov.patch
 
-Patch4:	azureus-5.6.0.0-stupid-invalid-characters.patch
+Patch4: azureus-5.6.0.0-stupid-invalid-characters.patch
 
-Patch6:	azureus-5.6.0.0-no-bundled-apache-commons.patch
+Patch6: azureus-5.6.0.0-no-bundled-apache-commons.patch
 
 Patch7: azureus-5.7.0.0-startupScript.patch
 
@@ -35,37 +35,37 @@ Patch9: azureus-5.3.0.0-no-bundled-bouncycastle
 Patch10: azureus-5.6.0.0-fix_compile.patch
 Patch13: azureus-5.3.0.0-noPF.patch
 
-BuildRequires:	ant, jpackage-utils >= 1.5, xml-commons-apis
-BuildRequires:	apache-commons-cli
+BuildRequires:  ant, jpackage-utils >= 1.5, xml-commons-apis
+BuildRequires:  apache-commons-cli
 %if 0%{?fedora} > 20
-BuildRequires:	log4j12
+BuildRequires:  log4j12
 %else
-BuildRequires:	log4j
+BuildRequires:  log4j
 %endif
-BuildRequires:	apache-commons-lang
-BuildRequires:	bouncycastle >= 1.33-3
-BuildRequires:	json_simple
-BuildRequires:	eclipse-swt >= 3.5
-BuildRequires:	junit
-Requires:	apache-commons-cli
+BuildRequires:  apache-commons-lang
+BuildRequires:  bouncycastle >= 1.33-3
+BuildRequires:  json_simple
+BuildRequires:  eclipse-swt >= 3.5
+BuildRequires:  junit
+Requires:   apache-commons-cli
 %if 0%{?fedora} > 20
-Requires:	log4j12
+Requires:   log4j12
 %else
-Requires:	log4j
+Requires:   log4j
 %endif
-Requires:	apache-commons-lang
-Requires:	eclipse-swt >= 3.5
-Requires:	bouncycastle >= 1.33-3
-Requires:	java >= 1:1.6.0
-Requires:	json_simple
-BuildRequires:	 java-devel >= 1:1.6.0
-BuildRequires:	 desktop-file-utils
-Requires(post):	 desktop-file-utils
-Requires(postun):	desktop-file-utils
+Requires:   apache-commons-lang
+Requires:   eclipse-swt >= 3.5
+Requires:   bouncycastle >= 1.33-3
+Requires:   java >= 1:1.6.0
+Requires:   json_simple
+BuildRequires:   java-devel >= 1:1.6.0
+BuildRequires:   desktop-file-utils
+Requires(post):  desktop-file-utils
+Requires(postun):   desktop-file-utils
 
-Provides:	vuze = %{version}-%{release}
+Provides:   vuze = %{version}-%{release}
 
-BuildArch:	noarch
+BuildArch:  noarch
 
 
 %description
