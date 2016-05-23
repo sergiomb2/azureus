@@ -1,17 +1,19 @@
---- azureus-5.2.0.0/com/aelitis/azureus/util/ImportExportUtils.java.orig	2014-02-09 17:34:09.214700559 +0000
-+++ azureus-5.2.0.0/com/aelitis/azureus/util/ImportExportUtils.java	2014-02-09 17:34:19.114801052 +0000
-@@ -360,7 +360,7 @@ public final class ImportExportUtils {
- 	
- 		throws IOException
+diff -rup Vuze_5720_source.orig/com/aelitis/azureus/util/ImportExportUtils.java Vuze_5720_source/com/aelitis/azureus/util/ImportExportUtils.java
+--- Vuze_5720_source.orig/com/aelitis/azureus/util/ImportExportUtils.java	2016-05-02 18:16:02.000000000 +0100
++++ Vuze_5720_source/com/aelitis/azureus/util/ImportExportUtils.java	2016-05-23 02:49:34.859216438 +0100
+@@ -371,7 +371,7 @@ public final class ImportExportUtils {
+ 		String		key,
+ 		String[]	data )
  	{
 -		List	l = new JSONArray(data.length);
 +		List	l = new JSONArray();
  		
  		map.put( key, l );
  		
---- azureus-5.2.0.0/com/aelitis/azureus/util/JSONUtils.java.orig	2014-02-09 17:36:41.882250193 +0000
-+++ azureus-5.2.0.0/com/aelitis/azureus/util/JSONUtils.java	2014-02-09 17:36:49.410326603 +0000
-@@ -74,7 +74,7 @@ public class JSONUtils
+diff -rup Vuze_5720_source.orig/com/aelitis/azureus/util/JSONUtils.java Vuze_5720_source/com/aelitis/azureus/util/JSONUtils.java
+--- Vuze_5720_source.orig/com/aelitis/azureus/util/JSONUtils.java	2016-04-13 20:20:34.000000000 +0100
++++ Vuze_5720_source/com/aelitis/azureus/util/JSONUtils.java	2016-05-23 02:49:34.860216453 +0100
+@@ -71,7 +71,7 @@ public class JSONUtils
  	 * @since 3.0.1.5
  	 */
  	public static JSONObject encodeToJSONObject(Map map) {
@@ -20,7 +22,7 @@
  
  		for (Map.Entry<String, Object> entry: ((Map<String,Object>)map).entrySet()){
  			String key 		= entry.getKey();
-@@ -105,9 +105,7 @@ public class JSONUtils
+@@ -102,9 +102,7 @@ public class JSONUtils
  	 */
  	public static String encodeToJSON(Map map) {
  		JSONObject jobj = encodeToJSONObject(map);		
@@ -31,7 +33,7 @@
  	}
  
  	public static String encodeToJSON(Collection list) {
-@@ -138,7 +136,7 @@ public class JSONUtils
+@@ -135,7 +133,7 @@ public class JSONUtils
  	 * @since 3.0.1.5
  	 */
  	private static JSONArray encodeToJSONArray(Collection list) {
