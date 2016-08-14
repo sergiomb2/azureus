@@ -1,7 +1,7 @@
 %global     _newname Vuze
 
 Name:       azureus
-Version:    5.7.2.0
+Version:    5.7.3.0
 %global     uversion  %(foo=%{version}; echo ${foo//./})
 Release:    1%{?dist}
 Summary:    A BitTorrent Client
@@ -26,7 +26,7 @@ Patch2: azureus-SecureMessageServiceClientHelper-bcprov.patch
 
 Patch4: azureus-5.6.0.0-stupid-invalid-characters.patch
 
-Patch6: azureus-5.6.0.0-no-bundled-apache-commons.patch
+Patch6: azureus-5.7.3.0-no-bundled-apache-commons.patch
 Patch7: azureus-5.7.0.0-startupScript.patch
 Patch8: azureus-5.7.2.0-no-bundled-json.patch
 Patch9: azureus-5.7.2.0-no-bundled-bouncycastle.patch
@@ -181,6 +181,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Sun Aug 14 2016 Sérgio Basto <sergio@serjux.com> - 5.7.3.0-1
+- Update azureus to 5.7.3.0
+
 * Mon May 23 2016 Sérgio Basto <sergio@serjux.com> - 5.7.2.0-1
 - Update azureus to 5.7.2.0
 

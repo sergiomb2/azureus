@@ -1,5 +1,6 @@
---- azureus-5.6.orig/com/aelitis/azureus/core/metasearch/impl/web/WebResult.java	2015-03-03 18:10:42.000000000 +0000
-+++ azureus-5.6/com/aelitis/azureus/core/metasearch/impl/web/WebResult.java	2015-05-05 01:51:37.337704512 +0100
+diff -rup Vuze_5730_source/com/aelitis/azureus/core/metasearch/impl/web/WebResult.java Vuze_5730_source.new/com/aelitis/azureus/core/metasearch/impl/web/WebResult.java
+--- Vuze_5730_source/com/aelitis/azureus/core/metasearch/impl/web/WebResult.java	2016-06-07 23:23:26.000000000 +0100
++++ Vuze_5730_source.new/com/aelitis/azureus/core/metasearch/impl/web/WebResult.java	2016-08-14 17:08:56.478057390 +0100
 @@ -87,14 +87,14 @@ public class WebResult extends Result {
  	public void setNameFromHTML(String name) {
  		if(name != null) {
@@ -89,8 +90,9 @@
  			votes_str = votes_str.replaceAll(",", "");
  			votes_str = votes_str.replaceAll(" ", "");
  			try {
---- azureus-5.6.orig/com/aelitis/azureus/core/metasearch/Result.java	2015-03-03 18:10:42.000000000 +0000
-+++ azureus-5.6/com/aelitis/azureus/core/metasearch/Result.java	2015-05-05 01:53:18.705924748 +0100
+diff -rup Vuze_5730_source/com/aelitis/azureus/core/metasearch/Result.java Vuze_5730_source.new/com/aelitis/azureus/core/metasearch/Result.java
+--- Vuze_5730_source/com/aelitis/azureus/core/metasearch/Result.java	2016-05-13 20:23:54.000000000 +0100
++++ Vuze_5730_source.new/com/aelitis/azureus/core/metasearch/Result.java	2016-08-14 17:08:56.478057390 +0100
 @@ -26,7 +26,7 @@ import java.util.Locale;
  import java.util.Map;
  import java.util.Random;
@@ -98,9 +100,9 @@
 -import org.apache.commons.lang.Entities;
 +import org.apache.commons.lang.StringEscapeUtils;
  import org.gudy.azureus2.core3.util.DisplayFormatters;
+ import org.gudy.azureus2.core3.util.SystemTime;
  import org.json.simple.JSONObject;
- 
-@@ -377,6 +377,6 @@ public abstract class Result {
+@@ -382,6 +382,6 @@ public abstract class Result {
  		if ( input == null ){
  			return( null );
  		}
@@ -108,3 +110,4 @@
 +		return( StringEscapeUtils.unescapeHtml( input ));
  	}
  }
+Only in Vuze_5730_source.new/com/aelitis/azureus/core/metasearch: Result.java.orig
