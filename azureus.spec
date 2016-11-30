@@ -1,7 +1,7 @@
 %global     _newname Vuze
 
 Name:       azureus
-Version:    5.7.3.0
+Version:    5.7.4.0
 %global     uversion  %(foo=%{version}; echo ${foo//./})
 Release:    1%{?dist}
 Summary:    A BitTorrent Client
@@ -181,6 +181,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Tue Nov 22 2016 Sérgio Basto <sergio@serjux.com> - 5.7.4.0-1
+- New upstream release, 5.7.4.0
+
 * Sun Aug 14 2016 Sérgio Basto <sergio@serjux.com> - 5.7.3.0-1
 - Update azureus to 5.7.3.0
 

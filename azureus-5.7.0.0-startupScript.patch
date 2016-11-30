@@ -1,5 +1,5 @@
---- ./org/gudy/azureus2/platform/unix/startupScript.orig	2015-12-08 03:58:32.713233818 +0000
-+++ ./org/gudy/azureus2/platform/unix/startupScript	2015-12-08 04:32:39.102427958 +0000
+--- ./org/gudy/azureus2/platform/unix/startupScript.orig	2016-11-18 18:41:58.000000000 +0000
++++ ./org/gudy/azureus2/platform/unix/startupScript	2016-11-22 10:08:06.952877962 +0000
 @@ -1,15 +1,31 @@
  #!/bin/bash
  
@@ -34,8 +34,8 @@
 +
  ######## YOU PROBABLY DO NOT WANT TO TOUCH ANYTHING BELOW! ########
  
- SCRIPT_VERSION=5
-@@ -35,132 +51,27 @@ MSG_JAVABORK="Java appeared to have cras
+ SCRIPT_VERSION=6
+@@ -35,80 +51,10 @@ MSG_JAVABORK="Java appeared to have cras
  
  SKIP_GCJ=1
  
@@ -77,7 +77,7 @@
 -			return 1
 -		fi
 -	else
--		echo $MSG8 "${JAVADIR}/" $MSG9 ; echo $MSG4
+-		echo $MSG8 "${JAVADIR}/" $MSG9 ; echo $MSG_JAVA_BELOW_MIN
 -	fi
 -	return 1
 -}
@@ -100,8 +100,8 @@
 -    exit 1
 -	else
 -		VERSION=`echo ${JAVA_HEADER} | sed "s/^.* version \"\(.*\)\"/\1/"`
--		if echo $VERSION | grep "^1.[0-4]" ; then
--			echo $MSG3 "[${JAVA_PROGRAM_DIR}java = ${VERSION}]" ; echo $MSG4
+-		if echo $VERSION | grep "^1.[0-5]" ; then
+-			echo $MSG_JAVA_TOO_OLD "[${JAVA_PROGRAM_DIR}java = ${VERSION}]" ; echo $MSG_JAVA_BELOW_MIN
 -			return 1
 -		else
 -			echo $MSG5 "[${JAVA_PROGRAM_DIR}java = ${JAVA_IMPL} ${VERSION}]" ; echo $MSG6
@@ -112,13 +112,12 @@
 -
  runJavaOutput()
  {
--	# assume we can write to the user's home..
-+        TMP_SCRIPT=$(mktemp)
+ 	# assume we can write to the user's home..
++	TMP_SCRIPT=$(mktemp)
  
--	${JAVA_PROGRAM_DIR}java "${JAVA_ARGS}" \
-+	${JAVA_PROGRAM_DIR}java ${JAVA_ARGS} \
+ 	${JAVA_PROGRAM_DIR}java "${JAVA_ARGS}" \
  		-cp "${CLASSPATH}" \
- 		-Djava.library.path="${PROGRAM_DIR}" \
+@@ -116,72 +62,18 @@ runJavaOutput()
  		-Dazureus.install.path="${PROGRAM_DIR}" \
  		-Dazureus.script="$0" \
  		$JAVA_PROPS \
@@ -132,25 +131,44 @@
 -
 -moveInSWT()
 -{
--	if [ ! -f "${PROGRAM_DIR}/swt.jar" ]; then
--		if [ ! "$(echo ${PROGRAM_DIR}/swt/*.jar)" = "${PROGRAM_DIR}/swt/*.jar" ]; then
--			if [ "`${JAVA_PROGRAM_DIR}java -cp \"${CLASSPATH}\" org.gudy.azureus2.platform.JavaBitMode`" = "64" ]; then 
--				cp ${PROGRAM_DIR}/swt/swt64.jar ${PROGRAM_DIR}/swt.jar
--			else
--				cp ${PROGRAM_DIR}/swt/swt32.jar ${PROGRAM_DIR}/swt.jar
--			fi
+-	if [ "$(echo ${PROGRAM_DIR}/swt/*.jar)" = "${PROGRAM_DIR}/swt/*.jar" ]; then
+-		# No swt dir
+-		return;
+-	fi
+-	if [ "`${JAVA_PROGRAM_DIR}java -cp \"${CLASSPATH}\" org.gudy.azureus2.platform.JavaBitMode`" = "64" ]; then
+-		SWTFILE="swt64"
+-	else
+-		SWTFILE="swt32"
+-	fi
+-	if [[ "${VERSION}" > "1.8" ]]; then
+-		if [ -f "${PROGRAM_DIR}/swt/${SWTFILE}-J8.jar" ]; then
+-			SWTFILE="${SWTFILE}-J8";
 -		fi
 -	fi
 +		"$@" > $TMP_SCRIPT
-+       
+ 
+-	if [ -f "${PROGRAM_DIR}/swt.jar" ]; then
+-		SWTVER=`unzip -cq "${PROGRAM_DIR}/swt.jar" version.txt | sed "s/^version \(.*\)/\1/"`
+-	fi
+-	SWTVERNEW=`unzip -cq "${PROGRAM_DIR}/swt/${SWTFILE}.jar" version.txt | sed "s/^version \(.*\)/\1/"`
+-	if [[ ( "${SWTVER}" != "" ) && ( "${SWTVERNEW}" > "${SWTVER}" ) ]]; then
+-		echo "Upgrading SWT from ${SWTVER} to ${SWTVERNEW}"
+-		rm "${PROGRAM_DIR}/swt.jar"
+-	fi
+-
+-	if [ ! -f "${PROGRAM_DIR}/swt.jar" ]; then
+-		cp "${PROGRAM_DIR}/swt/${SWTFILE}.jar" "${PROGRAM_DIR}/swt.jar"
+-		echo "Using ${SWTFILE} ${SWTVERNEW}"
+-	else
+-		echo "SWT ${SWTVER}"
 +	if [ -f $TMP_SCRIPT ]; then
-+               chmod +x $TMP_SCRIPT
-+               . $TMP_SCRIPT
-+               rm $TMP_SCRIPT
-+        fi
++	   chmod +x $TMP_SCRIPT
++	   . $TMP_SCRIPT
++	   rm $TMP_SCRIPT
+ 	fi
  }
  
--
+ 
  echo $MSG_STARTING
  
 -# locate and test the java executable
@@ -177,7 +195,7 @@
  # Change path here so we can do for loop on program dirs with spaces
  cd "${PROGRAM_DIR}"
  
-@@ -169,17 +80,8 @@ for FILE in ./*.jar; do
+@@ -190,17 +82,8 @@ for FILE in ./*.jar; do
  	CLASSPATH="${CLASSPATH:+${CLASSPATH}:}$FILE"
  done
  
@@ -196,7 +214,7 @@
  
  runJavaOutput "org.gudy.azureus2.platform.unix.ScriptBeforeStartup" "$@";
  
-@@ -189,7 +91,7 @@ echo "${JAVA_PROGRAM_DIR}java ${JAVA_ARG
+@@ -210,7 +93,7 @@ echo "${JAVA_PROGRAM_DIR}java ${JAVA_ARG
  # Don't use "exec -a Azureus ..." here as exec quits this script after completion,
  # preventing ScriptAfterShutdown from running, which installs updates and does
  # restarts
