@@ -3,7 +3,7 @@
 Name:       azureus
 Version:    5.7.4.0
 %global     uversion  %(foo=%{version}; echo ${foo//./})
-Release:    1%{?dist}
+Release:    2%{?dist}
 Summary:    A BitTorrent Client
 Group:      Applications/Internet
 
@@ -36,22 +36,14 @@ Patch13: azureus-5.3.0.0-noPF.patch
 
 BuildRequires:  ant, jpackage-utils >= 1.5, xml-commons-apis
 BuildRequires:  apache-commons-cli
-%if 0%{?fedora} > 20
 BuildRequires:  log4j12
-%else
-BuildRequires:  log4j
-%endif
 BuildRequires:  apache-commons-lang
 BuildRequires:  bouncycastle >= 1.33-3
 BuildRequires:  json_simple
 BuildRequires:  eclipse-swt >= 3.5
 BuildRequires:  junit
 Requires:   apache-commons-cli
-%if 0%{?fedora} > 20
 Requires:   log4j12
-%else
-Requires:   log4j
-%endif
 Requires:   apache-commons-lang
 Requires:   eclipse-swt >= 3.5
 Requires:   bouncycastle >= 1.33-3
@@ -84,13 +76,9 @@ rm org/gudy/azureus2/ui/swt/osx/CarbonUIEnhancer.java
 rm org/gudy/azureus2/ui/swt/osx/Start.java
 rm org/gudy/azureus2/ui/swt/win32/Win32UIEnhancer.java
 
-%patch4  -p1 -b stupid-invalid-characters
+%patch4  -p1 -b .stupid-invalid-characters
 %patch6 -p1 -b .no-bundled-apache-commons
 %patch7 -p1 -b .startupScript
-
-%if 0%{?fedora} > 20
-sed -i 's/log4j/log4j-1/g' org/gudy/azureus2/platform/unix/startupScript
-%endif
 
 %patch8 -p1 -b .no-bundled-json
 %patch9 -p1 -b .no-bundled-bouncycastle
@@ -113,13 +101,8 @@ rm -fR org/json
 
 %build
 
-%global log4j_ver %{nil}
-%if 0%{?fedora} > 20
-%global log4j_ver 12-1.2.17
-%endif
-
 mkdir -p build/libs
-build-jar-repository -p build/libs bcprov apache-commons-cli log4j%{log4j_ver} \
+build-jar-repository -p build/libs bcprov apache-commons-cli log4j12-1.2.17 \
   junit apache-commons-lang json_simple
 
 #ppc seems to have eclipse-swt.ppc64 installed so libdir can't be used
@@ -181,6 +164,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Wed Dec 21 2016 Sérgio Basto <sergio@serjux.com> - 5.7.4.0-2
+- improvement of include swt jar , drop requires for Fedora <= 20
+
 * Tue Nov 22 2016 Sérgio Basto <sergio@serjux.com> - 5.7.4.0-1
 - New upstream release, 5.7.4.0
 
