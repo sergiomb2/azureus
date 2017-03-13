@@ -1,5 +1,6 @@
---- ./com/aelitis/azureus/core/clientmessageservice/secure/impl/SecureMessageServiceClientHelper.java.orig	2016-04-13 20:20:34.000000000 +0100
-+++ ./com/aelitis/azureus/core/clientmessageservice/secure/impl/SecureMessageServiceClientHelper.java	2016-05-23 02:45:43.988702702 +0100
+diff -up azureus-5.7.2.0/com/aelitis/azureus/core/clientmessageservice/secure/impl/SecureMessageServiceClientHelper.java.nobcprov azureus-5.7.2.0/com/aelitis/azureus/core/clientmessageservice/secure/impl/SecureMessageServiceClientHelper.java
+--- azureus-5.7.2.0/com/aelitis/azureus/core/clientmessageservice/secure/impl/SecureMessageServiceClientHelper.java.nobcprov	2016-04-13 20:20:34.000000000 +0200
++++ azureus-5.7.2.0/com/aelitis/azureus/core/clientmessageservice/secure/impl/SecureMessageServiceClientHelper.java	2016-05-31 21:19:32.698994793 +0200
 @@ -36,7 +36,6 @@ import org.gudy.bouncycastle.crypto.Ciph
  import org.gudy.bouncycastle.crypto.encodings.PKCS1Encoding;
  import org.gudy.bouncycastle.crypto.engines.RSAEngine;

@@ -18,7 +18,9 @@ Source0:    http://downloads.sourceforge.net/azureus/%{_newname}_%{uversion}_sou
 Source2:    Azureus.desktop
 Source3:    azureus.applications
 
-#ant build script from Azureus-4.3.0.6 with patches included.
+# ant build script from Azureus-4.3.0.6 with patches included:
+# - azureus-remove-manifest-classpath.patch
+# - azureus-4.2.0.4-java5.patch
 Source4: build.xml
 
 Patch1: azureus-no-shared-plugins.patch
@@ -100,7 +102,6 @@ rm -fR org/json
 #rm -fR org/pf
 
 %build
-
 mkdir -p build/libs
 build-jar-repository -p build/libs bcprov apache-commons-cli log4j12-1.2.17 \
   junit apache-commons-lang json_simple
