@@ -1,9 +1,9 @@
 %global     _newname Vuze
 
 Name:       azureus
-Version:    5.7.4.0
+Version:    5.7.5.0
 %global     uversion  %(foo=%{version}; echo ${foo//./})
-Release:    2%{?dist}
+Release:    1%{?dist}
 Summary:    A BitTorrent Client
 Group:      Applications/Internet
 
@@ -25,13 +25,9 @@ Source4: build.xml
 
 Patch1: azureus-no-shared-plugins.patch
 Patch2: azureus-SecureMessageServiceClientHelper-bcprov.patch
-
-Patch4: azureus-5.6.0.0-stupid-invalid-characters.patch
-
-Patch6: azureus-5.7.3.0-no-bundled-apache-commons.patch
+Patch6: azureus-5.7.5.0-no-bundled-apache-commons.patch
 Patch7: azureus-5.7.0.0-startupScript.patch
-Patch8: azureus-5.7.2.0-no-bundled-json.patch
-Patch9: azureus-5.7.2.0-no-bundled-bouncycastle.patch
+Patch8: azureus-5.7.5.0-no-bundled-json.patch
 Patch10: azureus-5.6.0.0-fix_compile.patch
 Patch11: vuze-5.3.0.0-disable-updaters.patch
 Patch13: azureus-5.3.0.0-noPF.patch
@@ -47,7 +43,9 @@ BuildRequires:  junit
 Requires:   apache-commons-cli
 Requires:   log4j12
 Requires:   apache-commons-lang
+%if 0%{?fedora}
 Requires:   eclipse-swt >= 3.5
+%endif
 Requires:   bouncycastle >= 1.33-3
 Requires:   java >= 1:1.6.0
 Requires:   json_simple
@@ -78,18 +76,13 @@ rm org/gudy/azureus2/ui/swt/osx/CarbonUIEnhancer.java
 rm org/gudy/azureus2/ui/swt/osx/Start.java
 rm org/gudy/azureus2/ui/swt/win32/Win32UIEnhancer.java
 
-%patch4  -p1 -b .stupid-invalid-characters
 %patch6 -p1 -b .no-bundled-apache-commons
 %patch7 -p1 -b .startupScript
 
 %patch8 -p1 -b .no-bundled-json
-%patch9 -p1 -b .no-bundled-bouncycastle
 %patch10 -p1 -b .5.4.0.0_fix_compile
 %patch11 -p1 -b .disable_updaters
 #patch13 -p1 -b .noPF
-
-#hacks to org.eclipse.swt.widgets.Tree2 don't compile.
-rm -fR org/eclipse
 
 # Convert line endings...
 sed -i 's/\r//' ChangeLog.txt
@@ -165,6 +158,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Mon Mar 13 2017 Sérgio Basto <sergio@serjux.com> - 5.7.5.0-1
+- Update azureus to 5.7.5.0
+
 * Wed Dec 21 2016 Sérgio Basto <sergio@serjux.com> - 5.7.4.0-2
 - improvement of include swt jar , drop requires for Fedora <= 20
 
