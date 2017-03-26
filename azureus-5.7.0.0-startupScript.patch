@@ -1,6 +1,6 @@
---- ./org/gudy/azureus2/platform/unix/startupScript.orig	2016-12-21 05:53:20.849197227 +0000
-+++ ./org/gudy/azureus2/platform/unix/startupScript	2016-12-22 04:32:59.753675864 +0000
-@@ -1,15 +1,19 @@
+--- Vuze_5750_source/org/gudy/azureus2/platform/unix/startupScript.orig	2017-03-26 03:54:57.498205458 +0100
++++ Vuze_5750_source/org/gudy/azureus2/platform/unix/startupScript	2017-03-26 03:56:47.383304634 +0100
+@@ -1,15 +1,22 @@
  #!/bin/bash
  
  ######## CONFIGURATION OPTIONS ########
@@ -12,6 +12,9 @@
 +PROGRAM_DIR="$HOME/.azureus/app"	# use full path to Azureus bin dir
  JAVA_ARGS="-Xmx256m"
 +mkdir -p ${PROGRAM_DIR}
++
++#Workaround for SWT problem with wayland
++export GDK_BACKEND=x11
  
  #export MOZILLA_FIVE_HOME="/path/to/gre"	# Full path to GRE/Mozilla. When commenting out this line, also comment out the next line
  #if [ "$LD_LIBRARY_PATH x" = " x" ]; then export LD_LIBRARY_PATH=$MOZILLA_FIVE_HOME; else export LD_LIBRARY_PATH=$MOZILLA_FIVE_HOME:$LD_LIBRARY_PATH; fi
@@ -23,7 +26,7 @@
  ######## YOU PROBABLY DO NOT WANT TO TOUCH ANYTHING BELOW! ########
  
  SCRIPT_VERSION=6
-@@ -35,153 +54,27 @@ MSG_JAVABORK="Java appeared to have cras
+@@ -35,153 +42,27 @@ MSG_JAVABORK="Java appeared to have cras
  
  SKIP_GCJ=1
  
@@ -187,7 +190,7 @@
  # Change path here so we can do for loop on program dirs with spaces
  cd "${PROGRAM_DIR}"
  
-@@ -190,17 +83,8 @@ for FILE in ./*.jar; do
+@@ -190,17 +71,8 @@ for FILE in ./*.jar; do
  	CLASSPATH="${CLASSPATH:+${CLASSPATH}:}$FILE"
  done
  
@@ -206,7 +209,7 @@
  
  runJavaOutput "org.gudy.azureus2.platform.unix.ScriptBeforeStartup" "$@";
  
-@@ -210,7 +94,7 @@ echo "${JAVA_PROGRAM_DIR}java ${JAVA_ARG
+@@ -210,7 +82,7 @@ echo "${JAVA_PROGRAM_DIR}java ${JAVA_ARG
  # Don't use "exec -a Azureus ..." here as exec quits this script after completion,
  # preventing ScriptAfterShutdown from running, which installs updates and does
  # restarts
