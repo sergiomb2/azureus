@@ -23,7 +23,7 @@
  ######## YOU PROBABLY DO NOT WANT TO TOUCH ANYTHING BELOW! ########
  
  SCRIPT_VERSION=6
-@@ -35,80 +39,10 @@ MSG_JAVABORK="Java appeared to have cras
+@@ -35,153 +54,27 @@ MSG_JAVABORK="Java appeared to have cras
  
  SKIP_GCJ=1
  
@@ -100,12 +100,14 @@
 -
  runJavaOutput()
  {
- 	# assume we can write to the user's home..
-+	TMP_SCRIPT=$(mktemp)
- 
- 	${JAVA_PROGRAM_DIR}java "${JAVA_ARGS}" \
+-	# assume we can write to the user's home..
+-
+-	${JAVA_PROGRAM_DIR}java "${JAVA_ARGS}" \
++        TMP_SCRIPT=$(mktemp)
++	
++	${JAVA_PROGRAM_DIR}java ${JAVA_ARGS} \
  		-cp "${CLASSPATH}" \
-@@ -116,72 +50,18 @@ runJavaOutput()
+ 		-Djava.library.path="${PROGRAM_DIR}" \
  		-Dazureus.install.path="${PROGRAM_DIR}" \
  		-Dazureus.script="$0" \
  		$JAVA_PROPS \
@@ -133,8 +135,7 @@
 -			SWTFILE="${SWTFILE}-J8";
 -		fi
 -	fi
-+		"$@" > $TMP_SCRIPT
- 
+-
 -	if [ -f "${PROGRAM_DIR}/swt.jar" ]; then
 -		SWTVER=`unzip -cq "${PROGRAM_DIR}/swt.jar" version.txt | sed "s/^version \(.*\)/\1/"`
 -	fi
@@ -149,14 +150,17 @@
 -		echo "Using ${SWTFILE} ${SWTVERNEW}"
 -	else
 -		echo "SWT ${SWTVER}"
+-	fi
++		"$@" > $TMP_SCRIPT
++	
 +	if [ -f $TMP_SCRIPT ]; then
-+	   chmod +x $TMP_SCRIPT
-+	   . $TMP_SCRIPT
-+	   rm $TMP_SCRIPT
- 	fi
++                chmod +x $TMP_SCRIPT
++                . $TMP_SCRIPT
++                rm $TMP_SCRIPT
++        fi
  }
  
- 
+-
  echo $MSG_STARTING
  
 -# locate and test the java executable
@@ -183,7 +187,7 @@
  # Change path here so we can do for loop on program dirs with spaces
  cd "${PROGRAM_DIR}"
  
-@@ -190,17 +70,8 @@ for FILE in ./*.jar; do
+@@ -190,17 +83,8 @@ for FILE in ./*.jar; do
  	CLASSPATH="${CLASSPATH:+${CLASSPATH}:}$FILE"
  done
  
@@ -202,7 +206,7 @@
  
  runJavaOutput "org.gudy.azureus2.platform.unix.ScriptBeforeStartup" "$@";
  
-@@ -210,7 +81,7 @@ echo "${JAVA_PROGRAM_DIR}java ${JAVA_ARG
+@@ -210,7 +94,7 @@ echo "${JAVA_PROGRAM_DIR}java ${JAVA_ARG
  # Don't use "exec -a Azureus ..." here as exec quits this script after completion,
  # preventing ScriptAfterShutdown from running, which installs updates and does
  # restarts

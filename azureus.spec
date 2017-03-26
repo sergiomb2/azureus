@@ -3,7 +3,7 @@
 Name:       azureus
 Version:    5.7.5.0
 %global     uversion  %(foo=%{version}; echo ${foo//./})
-Release:    1%{?dist}
+Release:    2%{?dist}
 Summary:    A BitTorrent Client
 Group:      Applications/Internet
 
@@ -28,6 +28,7 @@ Patch2: azureus-SecureMessageServiceClientHelper-bcprov.patch
 Patch6: azureus-5.7.5.0-no-bundled-apache-commons.patch
 Patch7: azureus-5.7.0.0-startupScript.patch
 Patch8: azureus-5.7.5.0-no-bundled-json.patch
+Patch9: azureus-5.7.5.0-no-bundled-bouncycastle.patch
 Patch10: azureus-5.6.0.0-fix_compile.patch
 Patch11: vuze-5.3.0.0-disable-updaters.patch
 Patch13: azureus-5.3.0.0-noPF.patch
@@ -69,30 +70,30 @@ advanced users.
 
 cp %{SOURCE4} .
 
-%patch1 -p1 -b .no-shared-plugins
-%patch2 -p1 -b .nobcprov
-
-rm org/gudy/azureus2/ui/swt/osx/CarbonUIEnhancer.java
-rm org/gudy/azureus2/ui/swt/osx/Start.java
-rm org/gudy/azureus2/ui/swt/win32/Win32UIEnhancer.java
-
-%patch6 -p1 -b .no-bundled-apache-commons
-%patch7 -p1 -b .startupScript
-
-%patch8 -p1 -b .no-bundled-json
-%patch10 -p1 -b .5.4.0.0_fix_compile
-%patch11 -p1 -b .disable_updaters
-#patch13 -p1 -b .noPF
-
 # Convert line endings...
 sed -i 's/\r//' ChangeLog.txt
 chmod 644 *.txt
 
 #remove bundled libs
-rm -fR org/apache
-rm -fR org/bouncycastle
-rm -fR org/json
+rm -r org/apache
+rm -r org/bouncycastle
+rm -r org/json
+rm -r org/gudy/bouncycastle
 #rm -fR org/pf
+
+rm org/gudy/azureus2/ui/swt/osx/CarbonUIEnhancer.java
+rm org/gudy/azureus2/ui/swt/osx/Start.java
+rm org/gudy/azureus2/ui/swt/win32/Win32UIEnhancer.java
+
+%patch1 -p1 -b .no-shared-plugins
+%patch2 -p1 -b .nobcprov
+%patch6 -p1 -b .no-bundled-apache-commons
+%patch7 -p1 -b .startupScript
+%patch8 -p1 -b .no-bundled-json
+%patch9 -p1 -b .no-bundled-bouncycastle
+%patch10 -p1 -b .fix_compile
+%patch11 -p1 -b .disable_updaters
+#patch13 -p1 -b .noPF
 
 %build
 mkdir -p build/libs
@@ -158,6 +159,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Sat Mar 25 2017 Sérgio Basto <sergio@serjux.com> - 5.7.5.0-2
+- rebuilt
+
 * Mon Mar 13 2017 Sérgio Basto <sergio@serjux.com> - 5.7.5.0-1
 - Update azureus to 5.7.5.0
 
