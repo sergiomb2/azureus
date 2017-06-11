@@ -3,7 +3,7 @@
 Name:       azureus
 Version:    5.7.5.0
 %global     uversion  %(foo=%{version}; echo ${foo//./})
-Release:    2%{?dist}
+Release:    3%{?dist}
 Summary:    A BitTorrent Client
 Group:      Applications/Internet
 
@@ -159,6 +159,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Sun May 28 2017 Sérgio Basto <sergio@serjux.com> - 5.7.5.0-3
+- Add to Azureus.desktop magnet links
+
 * Sat Mar 25 2017 Sérgio Basto <sergio@serjux.com> - 5.7.5.0-2
 - rebuilt
 

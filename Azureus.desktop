@@ -1,10 +1,10 @@
 [Desktop Entry]
 Name=Azureus
 GenericName=BitTorrent Client
-Exec=azureus
+Exec=azureus %U
 Icon=azureus
 Terminal=false
 Type=Application
-MimeType=application/x-bittorrent;
+MimeType=x-scheme-handler/magnet;application/x-bittorrent;
 Categories=Application;Network;FileTransfer;P2P;GTK;Java;
 
