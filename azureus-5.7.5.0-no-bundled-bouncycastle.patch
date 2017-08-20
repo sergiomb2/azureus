@@ -1,0 +1,533 @@
+diff -up azureus-5.7.5.0/com/aelitis/azureus/core/clientmessageservice/secure/impl/SecureMessageServiceClientHelper.java.no-bundled-bouncycastle azureus-5.7.5.0/com/aelitis/azureus/core/clientmessageservice/secure/impl/SecureMessageServiceClientHelper.java
+--- azureus-5.7.5.0/com/aelitis/azureus/core/clientmessageservice/secure/impl/SecureMessageServiceClientHelper.java.no-bundled-bouncycastle	2017-03-16 19:53:10.047131517 +0100
++++ azureus-5.7.5.0/com/aelitis/azureus/core/clientmessageservice/secure/impl/SecureMessageServiceClientHelper.java	2017-03-16 19:53:10.055131517 +0100
+@@ -31,10 +31,10 @@ import javax.crypto.SecretKey;
+ import org.gudy.azureus2.core3.util.Debug;
+ import org.gudy.azureus2.core3.util.RandomUtils;
+ import org.gudy.azureus2.plugins.utils.StaticUtilities;
+-import org.gudy.bouncycastle.crypto.CipherParameters;
+-import org.gudy.bouncycastle.crypto.encodings.PKCS1Encoding;
+-import org.gudy.bouncycastle.crypto.engines.RSAEngine;
+-import org.gudy.bouncycastle.crypto.params.ParametersWithRandom;
++import org.bouncycastle.crypto.CipherParameters;
++import org.bouncycastle.crypto.encodings.PKCS1Encoding;
++import org.bouncycastle.crypto.engines.RSAEngine;
++import org.bouncycastle.crypto.params.ParametersWithRandom;
+ 
+ import com.aelitis.azureus.core.clientmessageservice.ClientMessageService;
+ import com.aelitis.azureus.core.clientmessageservice.ClientMessageServiceClient;
+diff -up azureus-5.7.5.0/com/aelitis/azureus/core/dht/control/impl/DHTControlImpl.java.no-bundled-bouncycastle azureus-5.7.5.0/com/aelitis/azureus/core/dht/control/impl/DHTControlImpl.java
+--- azureus-5.7.5.0/com/aelitis/azureus/core/dht/control/impl/DHTControlImpl.java.no-bundled-bouncycastle	2016-12-10 02:10:06.000000000 +0100
++++ azureus-5.7.5.0/com/aelitis/azureus/core/dht/control/impl/DHTControlImpl.java	2017-03-16 19:53:10.055131517 +0100
+@@ -29,9 +29,9 @@ import java.util.*;
+ import java.util.Map.Entry;
+ 
+ import org.gudy.azureus2.core3.util.*;
+-import org.gudy.bouncycastle.crypto.CipherParameters;
+-import org.gudy.bouncycastle.crypto.engines.RC4Engine;
+-import org.gudy.bouncycastle.crypto.params.KeyParameter;
++import org.bouncycastle.crypto.CipherParameters;
++import org.bouncycastle.crypto.engines.RC4Engine;
++import org.bouncycastle.crypto.params.KeyParameter;
+ 
+ import com.aelitis.azureus.core.dht.*;
+ import com.aelitis.azureus.core.dht.control.*;
+diff -up azureus-5.7.5.0/com/aelitis/azureus/core/networkmanager/impl/TransportCipher.java.no-bundled-bouncycastle azureus-5.7.5.0/com/aelitis/azureus/core/networkmanager/impl/TransportCipher.java
+--- azureus-5.7.5.0/com/aelitis/azureus/core/networkmanager/impl/TransportCipher.java.no-bundled-bouncycastle	2016-04-13 20:20:34.000000000 +0200
++++ azureus-5.7.5.0/com/aelitis/azureus/core/networkmanager/impl/TransportCipher.java	2017-03-16 19:53:10.056131517 +0100
+@@ -27,9 +27,9 @@ import javax.crypto.Cipher;
+ import javax.crypto.spec.SecretKeySpec;
+ 
+ import org.gudy.azureus2.core3.util.Debug;
+-import org.gudy.bouncycastle.crypto.CipherParameters;
+-import org.gudy.bouncycastle.crypto.engines.RC4Engine;
+-import org.gudy.bouncycastle.crypto.params.KeyParameter;
++import org.bouncycastle.crypto.CipherParameters;
++import org.bouncycastle.crypto.engines.RC4Engine;
++import org.bouncycastle.crypto.params.KeyParameter;
+ 
+ public class 
+ TransportCipher 
+diff -up azureus-5.7.5.0/com/aelitis/azureus/core/networkmanager/impl/udp/UDPConnectionSet.java.no-bundled-bouncycastle azureus-5.7.5.0/com/aelitis/azureus/core/networkmanager/impl/udp/UDPConnectionSet.java
+--- azureus-5.7.5.0/com/aelitis/azureus/core/networkmanager/impl/udp/UDPConnectionSet.java.no-bundled-bouncycastle	2016-12-09 18:56:38.000000000 +0100
++++ azureus-5.7.5.0/com/aelitis/azureus/core/networkmanager/impl/udp/UDPConnectionSet.java	2017-03-16 19:53:10.056131517 +0100
+@@ -33,9 +33,9 @@ import org.gudy.azureus2.core3.util.Debu
+ import org.gudy.azureus2.core3.util.RandomUtils;
+ import org.gudy.azureus2.core3.util.SHA1Hasher;
+ import org.gudy.azureus2.core3.util.SystemTime;
+-import org.gudy.bouncycastle.crypto.CipherParameters;
+-import org.gudy.bouncycastle.crypto.engines.RC4Engine;
+-import org.gudy.bouncycastle.crypto.params.KeyParameter;
++import org.bouncycastle.crypto.CipherParameters;
++import org.bouncycastle.crypto.engines.RC4Engine;
++import org.bouncycastle.crypto.params.KeyParameter;
+ 
+ import com.aelitis.net.udp.uc.PRUDPPacketReply;
+ 
+diff -up azureus-5.7.5.0/com/aelitis/azureus/core/pairing/impl/PairingManagerTunnelHandler.java.no-bundled-bouncycastle azureus-5.7.5.0/com/aelitis/azureus/core/pairing/impl/PairingManagerTunnelHandler.java
+--- azureus-5.7.5.0/com/aelitis/azureus/core/pairing/impl/PairingManagerTunnelHandler.java.no-bundled-bouncycastle	2016-12-09 18:56:38.000000000 +0100
++++ azureus-5.7.5.0/com/aelitis/azureus/core/pairing/impl/PairingManagerTunnelHandler.java	2017-03-16 19:53:10.056131517 +0100
+@@ -53,9 +53,9 @@ import org.gudy.azureus2.core3.util.UrlU
+ import org.gudy.azureus2.plugins.PluginInterface;
+ import org.gudy.azureus2.plugins.tracker.web.TrackerWebPageRequest;
+ import org.gudy.azureus2.plugins.tracker.web.TrackerWebPageResponse;
+-import org.gudy.bouncycastle.crypto.agreement.srp.SRP6Server;
+-import org.gudy.bouncycastle.crypto.agreement.srp.SRP6VerifierGenerator;
+-import org.gudy.bouncycastle.crypto.digests.SHA256Digest;
++import org.bouncycastle.crypto.agreement.srp.SRP6Server;
++import org.bouncycastle.crypto.agreement.srp.SRP6VerifierGenerator;
++import org.bouncycastle.crypto.digests.SHA256Digest;
+ import org.json.simple.JSONObject;
+ 
+ import com.aelitis.azureus.core.AzureusCore;
+diff -up azureus-5.7.5.0/com/aelitis/azureus/core/security/CryptoECCUtils.java.no-bundled-bouncycastle azureus-5.7.5.0/com/aelitis/azureus/core/security/CryptoECCUtils.java
+--- azureus-5.7.5.0/com/aelitis/azureus/core/security/CryptoECCUtils.java.no-bundled-bouncycastle	2016-04-13 20:20:34.000000000 +0200
++++ azureus-5.7.5.0/com/aelitis/azureus/core/security/CryptoECCUtils.java	2017-03-16 19:53:10.057131517 +0100
+@@ -30,15 +30,15 @@ import java.security.PublicKey;
+ import java.security.Signature;
+ import java.security.spec.KeySpec;
+ 
+-import org.gudy.bouncycastle.jce.ECNamedCurveTable;
+-import org.gudy.bouncycastle.jce.interfaces.ECPrivateKey;
+-import org.gudy.bouncycastle.jce.interfaces.ECPublicKey;
+-import org.gudy.bouncycastle.jce.provider.BouncyCastleProvider;
+-import org.gudy.bouncycastle.jce.spec.ECNamedCurveParameterSpec;
+-import org.gudy.bouncycastle.jce.spec.ECParameterSpec;
+-import org.gudy.bouncycastle.jce.spec.ECPrivateKeySpec;
+-import org.gudy.bouncycastle.jce.spec.ECPublicKeySpec;
+-import org.gudy.bouncycastle.math.ec.ECPoint;
++import org.bouncycastle.jce.ECNamedCurveTable;
++import org.bouncycastle.jce.interfaces.ECPrivateKey;
++import org.bouncycastle.jce.interfaces.ECPublicKey;
++import org.bouncycastle.jce.provider.BouncyCastleProvider;
++import org.bouncycastle.jce.spec.ECNamedCurveParameterSpec;
++import org.bouncycastle.jce.spec.ECParameterSpec;
++import org.bouncycastle.jce.spec.ECPrivateKeySpec;
++import org.bouncycastle.jce.spec.ECPublicKeySpec;
++import org.bouncycastle.math.ec.ECPoint;
+ 
+ public class 
+ CryptoECCUtils 
+diff -up azureus-5.7.5.0/com/aelitis/azureus/core/security/impl/CryptoHandlerECC.java.no-bundled-bouncycastle azureus-5.7.5.0/com/aelitis/azureus/core/security/impl/CryptoHandlerECC.java
+--- azureus-5.7.5.0/com/aelitis/azureus/core/security/impl/CryptoHandlerECC.java.no-bundled-bouncycastle	2016-12-09 18:56:38.000000000 +0100
++++ azureus-5.7.5.0/com/aelitis/azureus/core/security/impl/CryptoHandlerECC.java	2017-03-16 19:53:10.057131517 +0100
+@@ -26,6 +26,7 @@ import java.security.KeyPair;
+ import java.security.PrivateKey;
+ import java.security.PublicKey;
+ import java.security.SecureRandom;
++import java.security.Security;
+ import java.security.Signature;
+ import java.security.spec.AlgorithmParameterSpec;
+ import java.util.Arrays;
+@@ -39,9 +40,10 @@ import org.gudy.azureus2.core3.util.Base
+ import org.gudy.azureus2.core3.util.Debug;
+ import org.gudy.azureus2.core3.util.RandomUtils;
+ import org.gudy.azureus2.core3.util.SystemTime;
+-import org.gudy.bouncycastle.jce.provider.JCEIESCipher;
+-import org.gudy.bouncycastle.jce.spec.IEKeySpec;
+-import org.gudy.bouncycastle.jce.spec.IESParameterSpec;
++import org.bouncycastle.jce.spec.IEKeySpec;
++import org.bouncycastle.jce.spec.IESParameterSpec;
++
++import org.bouncycastle.jce.provider.BouncyCastleProvider;
+ 
+ import com.aelitis.azureus.core.security.CryptoECCUtils;
+ import com.aelitis.azureus.core.security.CryptoHandler;
+@@ -76,7 +78,9 @@ CryptoHandlerECC
+ 		CryptoManagerImpl		_manager,
+ 		int						_instance_id )
+ 	{
+-		manager	= _manager;
++		Security.addProvider(new BouncyCastleProvider());
++
++	        manager	= _manager;
+ 		
+ 		CONFIG_PREFIX += _instance_id + ".";
+ 		
+@@ -222,11 +226,11 @@ CryptoHandlerECC
+ 			
+ 			IESParameterSpec param = new IESParameterSpec( d, e, 128);
+ 		
+-			InternalECIES	cipher = new InternalECIES();
++			Cipher cipher = Cipher.getInstance("ECIES");
+ 	
+-			cipher.internalEngineInit( Cipher.ENCRYPT_MODE, key_spec, param, null ); 
++			cipher.init( Cipher.ENCRYPT_MODE, key_spec, param, null ); 
+ 		
+-			byte[]	encrypted = cipher.internalEngineDoFinal(data, 0, data.length );
++			byte[]	encrypted = cipher.doFinal(data, 0, data.length );
+ 			
+ 			byte[] result = new byte[32+encrypted.length];
+ 			
+@@ -265,12 +269,11 @@ CryptoHandlerECC
+ 			
+ 			IESParameterSpec param = new IESParameterSpec( d, e, 128);
+ 		
+-			InternalECIES	cipher = new InternalECIES();
+-	
+-			cipher.internalEngineInit( Cipher.DECRYPT_MODE, key_spec, param, null ); 
+-		
+-			return( cipher.internalEngineDoFinal( data, 32, data.length - 32 ));
+-			
++			Cipher cipher = Cipher.getInstance("ECIES");
++
++			cipher.init( Cipher.DECRYPT_MODE, key_spec, param, null ); 
++
++			return( cipher.doFinal( data, 32, data.length - 32 ));
+ 		}catch( CryptoManagerException e ){
+ 			
+ 			throw( e );
+@@ -866,33 +869,4 @@ CryptoHandlerECC
+ 	{
+ 		return((int)COConfigurationManager.getIntParameter( CONFIG_PREFIX + "pwtype", CryptoManagerPasswordHandler.HANDLER_TYPE_USER ));
+ 	}
+-	
+-	static class InternalECIES
+-		extends JCEIESCipher.ECIES
+-	{
+-			// we use this class to obtain compatability with BC
+-
+-		public void 
+-		internalEngineInit(
+-			int                     opmode,
+-			Key                     key,
+-			AlgorithmParameterSpec  params,
+-			SecureRandom            random ) 
+-		
+-			throws InvalidKeyException, InvalidAlgorithmParameterException
+-		{
+-			engineInit(opmode, key, params, random);
+-		}
+-
+-		protected byte[] 
+-		internalEngineDoFinal(
+-			byte[]  input,
+-			int     inputOffset,
+-			int     inputLen ) 
+-		
+-			throws IllegalBlockSizeException, BadPaddingException
+-		{
+-			return engineDoFinal(input, inputOffset, inputLen);
+-		}
+-	}
+ }
+diff -up azureus-5.7.5.0/com/aelitis/azureus/core/security/impl/CryptoManagerImpl.java.no-bundled-bouncycastle azureus-5.7.5.0/com/aelitis/azureus/core/security/impl/CryptoManagerImpl.java
+--- azureus-5.7.5.0/com/aelitis/azureus/core/security/impl/CryptoManagerImpl.java.no-bundled-bouncycastle	2016-12-09 18:56:38.000000000 +0100
++++ azureus-5.7.5.0/com/aelitis/azureus/core/security/impl/CryptoManagerImpl.java	2017-03-16 19:53:10.057131517 +0100
+@@ -40,9 +40,9 @@ import org.gudy.azureus2.core3.util.Simp
+ import org.gudy.azureus2.core3.util.SystemTime;
+ import org.gudy.azureus2.core3.util.TimerEvent;
+ import org.gudy.azureus2.core3.util.TimerEventPerformer;
+-import org.gudy.bouncycastle.crypto.CipherParameters;
+-import org.gudy.bouncycastle.crypto.engines.RC4Engine;
+-import org.gudy.bouncycastle.crypto.params.KeyParameter;
++import org.bouncycastle.crypto.CipherParameters;
++import org.bouncycastle.crypto.engines.RC4Engine;
++import org.bouncycastle.crypto.params.KeyParameter;
+ 
+ import com.aelitis.azureus.core.security.CryptoHandler;
+ import com.aelitis.azureus.core.security.CryptoManager;
+diff -up azureus-5.7.5.0/com/aelitis/azureus/core/security/impl/CryptoSTSEngineImpl.java.no-bundled-bouncycastle azureus-5.7.5.0/com/aelitis/azureus/core/security/impl/CryptoSTSEngineImpl.java
+--- azureus-5.7.5.0/com/aelitis/azureus/core/security/impl/CryptoSTSEngineImpl.java.no-bundled-bouncycastle	2016-12-09 18:56:38.000000000 +0100
++++ azureus-5.7.5.0/com/aelitis/azureus/core/security/impl/CryptoSTSEngineImpl.java	2017-03-16 19:53:10.057131517 +0100
+@@ -27,14 +27,16 @@ import java.security.KeyPair;
+ import java.security.PrivateKey;
+ import java.security.PublicKey;
+ import java.security.SecureRandom;
++import java.security.Security;
+ import java.security.Signature;
+ 
+-import org.gudy.bouncycastle.jce.provider.JCEECDHKeyAgreement;
++import javax.crypto.KeyAgreement;
+ 
+ import com.aelitis.azureus.core.security.CryptoECCUtils;
+ import com.aelitis.azureus.core.security.CryptoManagerException;
+ import com.aelitis.azureus.core.security.CryptoSTSEngine;
+ 
++import org.bouncycastle.jce.provider.BouncyCastleProvider;
+ 
+ 
+ /**
+@@ -53,7 +55,7 @@ CryptoSTSEngineImpl
+ 	private PublicKey 	remotePubKey;
+ 	private byte[] 		sharedSecret;
+ 	
+-	private InternalDH	ecDH;
++        private KeyAgreement	ecDH;
+ 	
+ 	/**
+ 	 * 
+@@ -72,9 +74,9 @@ CryptoSTSEngineImpl
+ 		ephemeralKeyPair = CryptoECCUtils.createKeys();
+ 		
+ 		try{
+-			ecDH = new InternalDH();
+-			
+-			//ecDH = KeyAgreement.getInstance("ECDH", BouncyCastleProvider.PROVIDER_NAME);
++		        Security.addProvider(new BouncyCastleProvider());
++
++			ecDH = KeyAgreement.getInstance("ECDH");
+ 			
+ 			ecDH.init(ephemeralKeyPair.getPrivate());
+ 			
+@@ -398,38 +400,4 @@ CryptoSTSEngineImpl
+ 			throw( new CryptoManagerException( "Failed to put byte[]", e ));
+ 		}
+ 	}
+-	
+-	static class
+-	InternalDH 
+-		extends JCEECDHKeyAgreement.DH
+-	{
+-			// we use this class to obtain compatability with BC
+-		
+-		public void
+-		init(
+-			Key		key )
+-
+-			throws InvalidKeyException, InvalidAlgorithmParameterException
+-		{
+-			engineInit( key, null );
+-		}
+-
+-		public Key
+-		doPhase(
+-			Key		key,
+-			boolean	lastPhase )
+-
+-			throws InvalidKeyException, IllegalStateException
+-		{
+-			return( engineDoPhase( key, lastPhase ));
+-		}
+-
+-		public byte[] 
+-		generateSecret() 
+-		
+-			throws IllegalStateException
+-		{
+-			return( engineGenerateSecret());
+-		}
+-	}
+-}
+\ No newline at end of file
++}
+diff -up azureus-5.7.5.0/com/aelitis/azureus/core/subs/impl/SubscriptionImpl.java.no-bundled-bouncycastle azureus-5.7.5.0/com/aelitis/azureus/core/subs/impl/SubscriptionImpl.java
+--- azureus-5.7.5.0/com/aelitis/azureus/core/subs/impl/SubscriptionImpl.java.no-bundled-bouncycastle	2016-12-02 23:24:26.000000000 +0100
++++ azureus-5.7.5.0/com/aelitis/azureus/core/subs/impl/SubscriptionImpl.java	2017-03-16 19:53:10.058131517 +0100
+@@ -45,7 +45,7 @@ import org.gudy.azureus2.core3.util.Rand
+ import org.gudy.azureus2.core3.util.SystemTime;
+ import org.gudy.azureus2.core3.util.TorrentUtils;
+ import org.gudy.azureus2.core3.util.UrlUtils;
+-import org.gudy.bouncycastle.util.encoders.Base64;
++import org.bouncycastle.util.encoders.Base64;
+ import org.json.simple.JSONObject;
+ 
+ import com.aelitis.azureus.core.lws.LightWeightSeed;
+diff -up azureus-5.7.5.0/com/aelitis/azureus/core/subs/impl/SubscriptionManagerImpl.java.no-bundled-bouncycastle azureus-5.7.5.0/com/aelitis/azureus/core/subs/impl/SubscriptionManagerImpl.java
+--- azureus-5.7.5.0/com/aelitis/azureus/core/subs/impl/SubscriptionManagerImpl.java.no-bundled-bouncycastle	2017-02-23 21:37:18.000000000 +0100
++++ azureus-5.7.5.0/com/aelitis/azureus/core/subs/impl/SubscriptionManagerImpl.java	2017-03-16 19:53:10.059131517 +0100
+@@ -58,7 +58,7 @@ import org.gudy.azureus2.pluginsimpl.loc
+ import org.gudy.azureus2.pluginsimpl.local.PluginInitializer;
+ import org.gudy.azureus2.pluginsimpl.local.torrent.TorrentImpl;
+ import org.gudy.azureus2.pluginsimpl.local.utils.UtilitiesImpl;
+-import org.gudy.bouncycastle.util.encoders.Base64;
++import org.bouncycastle.util.encoders.Base64;
+ 
+ import com.aelitis.azureus.core.AzureusCore;
+ import com.aelitis.azureus.core.AzureusCoreRunningListener;
+diff -up azureus-5.7.5.0/com/aelitis/azureus/ui/swt/browser/listener/TorrentListener.java.no-bundled-bouncycastle azureus-5.7.5.0/com/aelitis/azureus/ui/swt/browser/listener/TorrentListener.java
+--- azureus-5.7.5.0/com/aelitis/azureus/ui/swt/browser/listener/TorrentListener.java.no-bundled-bouncycastle	2016-04-13 20:20:34.000000000 +0200
++++ azureus-5.7.5.0/com/aelitis/azureus/ui/swt/browser/listener/TorrentListener.java	2017-03-16 19:53:10.059131517 +0100
+@@ -25,7 +25,7 @@ import org.eclipse.swt.widgets.Shell;
+ import org.gudy.azureus2.core3.config.COConfigurationManager;
+ import org.gudy.azureus2.core3.torrent.TOTorrent;
+ import org.gudy.azureus2.core3.util.*;
+-import org.gudy.bouncycastle.util.encoders.Base64;
++import org.bouncycastle.util.encoders.Base64;
+ 
+ import com.aelitis.azureus.core.AzureusCore;
+ import com.aelitis.azureus.core.AzureusCoreRunningListener;
+diff -up azureus-5.7.5.0/com/aelitis/azureus/util/JSONUtils.java.no-bundled-bouncycastle azureus-5.7.5.0/com/aelitis/azureus/util/JSONUtils.java
+--- azureus-5.7.5.0/com/aelitis/azureus/util/JSONUtils.java.no-bundled-bouncycastle	2017-03-16 19:53:10.053131517 +0100
++++ azureus-5.7.5.0/com/aelitis/azureus/util/JSONUtils.java	2017-03-16 19:53:10.059131517 +0100
+@@ -21,7 +21,7 @@ import java.io.UnsupportedEncodingExcept
+ import java.util.*;
+ 
+ import org.gudy.azureus2.core3.util.Debug;
+-import org.gudy.bouncycastle.util.encoders.Base64;
++import org.bouncycastle.util.encoders.Base64;
+ import org.json.simple.JSONArray;
+ import org.json.simple.JSONObject;
+ import org.json.simple.JSONValue;
+diff -up azureus-5.7.5.0/com/aelitis/azureus/util/MapUtils.java.no-bundled-bouncycastle azureus-5.7.5.0/com/aelitis/azureus/util/MapUtils.java
+--- azureus-5.7.5.0/com/aelitis/azureus/util/MapUtils.java.no-bundled-bouncycastle	2017-01-05 01:08:14.000000000 +0100
++++ azureus-5.7.5.0/com/aelitis/azureus/util/MapUtils.java	2017-03-16 19:53:10.060131517 +0100
+@@ -21,7 +21,7 @@ import java.util.*;
+ 
+ import org.gudy.azureus2.core3.util.Base32;
+ import org.gudy.azureus2.core3.util.Debug;
+-import org.gudy.bouncycastle.util.encoders.Base64;
++import org.bouncycastle.util.encoders.Base64;
+ 
+ /**
+  * @author TuxPaper
+diff -up azureus-5.7.5.0/com/aelitis/net/magneturi/impl/MagnetURIHandlerImpl.java.no-bundled-bouncycastle azureus-5.7.5.0/com/aelitis/net/magneturi/impl/MagnetURIHandlerImpl.java
+--- azureus-5.7.5.0/com/aelitis/net/magneturi/impl/MagnetURIHandlerImpl.java.no-bundled-bouncycastle	2016-04-13 20:20:34.000000000 +0200
++++ azureus-5.7.5.0/com/aelitis/net/magneturi/impl/MagnetURIHandlerImpl.java	2017-03-16 19:53:10.060131517 +0100
+@@ -29,7 +29,7 @@ import org.gudy.azureus2.core3.logging.L
+ import org.gudy.azureus2.core3.logging.LogIDs;
+ import org.gudy.azureus2.core3.logging.Logger;
+ import org.gudy.azureus2.core3.util.*;
+-import org.gudy.bouncycastle.util.encoders.Base64;
++import org.bouncycastle.util.encoders.Base64;
+ 
+ import com.aelitis.azureus.core.util.CopyOnWriteList;
+ import com.aelitis.azureus.core.util.HTTPUtils;
+diff -up azureus-5.7.5.0/com/aelitis/net/udp/uc/impl/PRUDPPacketHandlerImpl.java.no-bundled-bouncycastle azureus-5.7.5.0/com/aelitis/net/udp/uc/impl/PRUDPPacketHandlerImpl.java
+--- azureus-5.7.5.0/com/aelitis/net/udp/uc/impl/PRUDPPacketHandlerImpl.java.no-bundled-bouncycastle	2016-11-28 22:30:00.000000000 +0100
++++ azureus-5.7.5.0/com/aelitis/net/udp/uc/impl/PRUDPPacketHandlerImpl.java	2017-03-16 19:53:10.060131517 +0100
+@@ -39,7 +39,7 @@ import org.gudy.azureus2.core3.logging.L
+ import org.gudy.azureus2.core3.logging.LogIDs;
+ import org.gudy.azureus2.core3.logging.Logger;
+ import org.gudy.azureus2.core3.util.*;
+-import org.gudy.bouncycastle.util.encoders.Base64;
++import org.bouncycastle.util.encoders.Base64;
+ 
+ import com.aelitis.azureus.core.networkmanager.admin.NetworkAdmin;
+ import com.aelitis.azureus.core.networkmanager.admin.NetworkAdminPropertyChangeListener;
+diff -up azureus-5.7.5.0/org/gudy/azureus2/core3/security/impl/SESecurityManagerBC.java.no-bundled-bouncycastle azureus-5.7.5.0/org/gudy/azureus2/core3/security/impl/SESecurityManagerBC.java
+--- azureus-5.7.5.0/org/gudy/azureus2/core3/security/impl/SESecurityManagerBC.java.no-bundled-bouncycastle	2016-11-28 21:20:54.000000000 +0100
++++ azureus-5.7.5.0/org/gudy/azureus2/core3/security/impl/SESecurityManagerBC.java	2017-03-16 19:54:13.957133793 +0100
+@@ -37,9 +37,10 @@ import org.gudy.azureus2.core3.util.Cons
+ import org.gudy.azureus2.core3.util.Debug;
+ import org.gudy.azureus2.core3.util.RandomUtils;
+ import org.gudy.azureus2.core3.util.SystemTime;
+-import org.gudy.bouncycastle.asn1.x509.X509Name;
+-import org.gudy.bouncycastle.jce.*;
+-import org.gudy.bouncycastle.jce.provider.BouncyCastleProvider;
++import org.bouncycastle.asn1.x509.X509Name;
++import org.bouncycastle.jce.*;
++import org.bouncycastle.jce.provider.BouncyCastleProvider;
++import org.bouncycastle.x509.X509V3CertificateGenerator;
+ 
+ public class 
+ SESecurityManagerBC 
+@@ -48,7 +49,7 @@ SESecurityManagerBC
+ 	initialise()
+ 	{		
+ 		try{
+-			Security.addProvider(new org.gudy.bouncycastle.jce.provider.BouncyCastleProvider());
++			Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
+ 
+ 			KeyFactory kf = KeyFactory.getInstance( "ECDSA", BouncyCastleProvider.PROVIDER_NAME );
+ 			
+diff -up azureus-5.7.5.0/org/gudy/azureus2/core3/tracker/server/impl/tcp/TRTrackerServerProcessorTCP.java.no-bundled-bouncycastle azureus-5.7.5.0/org/gudy/azureus2/core3/tracker/server/impl/tcp/TRTrackerServerProcessorTCP.java
+--- azureus-5.7.5.0/org/gudy/azureus2/core3/tracker/server/impl/tcp/TRTrackerServerProcessorTCP.java.no-bundled-bouncycastle	2016-11-30 21:37:22.000000000 +0100
++++ azureus-5.7.5.0/org/gudy/azureus2/core3/tracker/server/impl/tcp/TRTrackerServerProcessorTCP.java	2017-03-16 19:53:10.061131517 +0100
+@@ -32,7 +32,7 @@ import org.gudy.azureus2.core3.internat.
+ import org.gudy.azureus2.core3.tracker.server.*;
+ import org.gudy.azureus2.core3.tracker.server.impl.*;
+ import org.gudy.azureus2.core3.util.*;
+-import org.gudy.bouncycastle.util.encoders.Base64;
++import org.bouncycastle.util.encoders.Base64;
+ 
+ import com.aelitis.azureus.core.dht.netcoords.DHTNetworkPosition;
+ import com.aelitis.azureus.core.dht.netcoords.DHTNetworkPositionManager;
+diff -up azureus-5.7.5.0/org/gudy/azureus2/core3/util/AddressUtils.java.no-bundled-bouncycastle azureus-5.7.5.0/org/gudy/azureus2/core3/util/AddressUtils.java
+--- azureus-5.7.5.0/org/gudy/azureus2/core3/util/AddressUtils.java.no-bundled-bouncycastle	2017-01-13 09:12:36.000000000 +0100
++++ azureus-5.7.5.0/org/gudy/azureus2/core3/util/AddressUtils.java	2017-03-16 19:53:10.061131517 +0100
+@@ -33,7 +33,7 @@ import java.util.Map;
+ 
+ import org.gudy.azureus2.core3.config.COConfigurationManager;
+ import org.gudy.azureus2.core3.config.ParameterListener;
+-import org.gudy.bouncycastle.util.encoders.Base64;
++import org.bouncycastle.util.encoders.Base64;
+ 
+ import com.aelitis.azureus.core.AzureusCoreFactory;
+ import com.aelitis.azureus.core.instancemanager.AZInstance;
+@@ -526,11 +526,11 @@ AddressUtils
+ 			try{
+ 					// unfortunately we have an incompatible base64 standard in i2p, they replaced / with ~ and + with -
+ 				
+-				char[]	encoded = to_decode.toCharArray();
++				byte[]	encoded = to_decode.getBytes();
+ 				
+ 				for ( int i=0;i<encoded.length;i++){
+ 					
+-					char c = encoded[i];
++					byte c = encoded[i];
+ 					
+ 					if ( c == '~' ){
+ 						encoded[i] = '/';
+diff -up azureus-5.7.5.0/org/gudy/azureus2/core3/util/MD4Hasher.java.no-bundled-bouncycastle azureus-5.7.5.0/org/gudy/azureus2/core3/util/MD4Hasher.java
+--- azureus-5.7.5.0/org/gudy/azureus2/core3/util/MD4Hasher.java.no-bundled-bouncycastle	2016-04-13 20:20:34.000000000 +0200
++++ azureus-5.7.5.0/org/gudy/azureus2/core3/util/MD4Hasher.java	2017-03-16 19:53:10.061131517 +0100
+@@ -21,7 +21,7 @@ package org.gudy.azureus2.core3.util;
+ 
+ import java.security.*;
+ 
+-import org.gudy.bouncycastle.jce.provider.BouncyCastleProvider;
++import org.bouncycastle.jce.provider.BouncyCastleProvider;
+ 
+ 
+ public class 
+diff -up azureus-5.7.5.0/org/gudy/azureus2/core3/util/UrlUtils.java.no-bundled-bouncycastle azureus-5.7.5.0/org/gudy/azureus2/core3/util/UrlUtils.java
+--- azureus-5.7.5.0/org/gudy/azureus2/core3/util/UrlUtils.java.no-bundled-bouncycastle	2017-01-18 05:48:30.000000000 +0100
++++ azureus-5.7.5.0/org/gudy/azureus2/core3/util/UrlUtils.java	2017-03-16 19:53:10.062131517 +0100
+@@ -48,7 +48,7 @@ import org.gudy.azureus2.plugins.torrent
+ import org.gudy.azureus2.plugins.utils.resourcedownloader.ResourceDownloader;
+ import org.gudy.azureus2.plugins.utils.resourceuploader.ResourceUploader;
+ import org.gudy.azureus2.pluginsimpl.local.PluginCoreUtils;
+-import org.gudy.bouncycastle.util.encoders.Base64;
++import org.bouncycastle.util.encoders.Base64;
+ 
+ import com.aelitis.azureus.core.networkmanager.admin.NetworkAdmin;
+ 
+diff -up azureus-5.7.5.0/org/gudy/azureus2/ui/console/util/StringEncrypter.java.no-bundled-bouncycastle azureus-5.7.5.0/org/gudy/azureus2/ui/console/util/StringEncrypter.java
+--- azureus-5.7.5.0/org/gudy/azureus2/ui/console/util/StringEncrypter.java.no-bundled-bouncycastle	2016-11-28 22:34:22.000000000 +0100
++++ azureus-5.7.5.0/org/gudy/azureus2/ui/console/util/StringEncrypter.java	2017-03-16 19:53:10.062131517 +0100
+@@ -29,7 +29,7 @@ import javax.crypto.SecretKeyFactory;
+ import javax.crypto.spec.DESKeySpec;
+ import javax.crypto.spec.DESedeKeySpec;
+ 
+-import org.gudy.bouncycastle.util.encoders.Base64;
++import org.bouncycastle.util.encoders.Base64;
+ 
+ /**
+  * utility class to encrypt strings. this class was taken from the examples at:
+diff -up azureus-5.7.5.0/org/gudy/azureus2/ui/swt/auth/AuthenticatorWindow.java.no-bundled-bouncycastle azureus-5.7.5.0/org/gudy/azureus2/ui/swt/auth/AuthenticatorWindow.java
+--- azureus-5.7.5.0/org/gudy/azureus2/ui/swt/auth/AuthenticatorWindow.java.no-bundled-bouncycastle	2016-11-28 20:54:06.000000000 +0100
++++ azureus-5.7.5.0/org/gudy/azureus2/ui/swt/auth/AuthenticatorWindow.java	2017-03-16 19:53:10.062131517 +0100
+@@ -41,7 +41,7 @@ import org.gudy.azureus2.core3.torrent.*
+ import org.gudy.azureus2.core3.util.*;
+ import org.gudy.azureus2.core3.config.*;
+ import org.gudy.azureus2.core3.security.*;
+-import org.gudy.bouncycastle.util.encoders.Base64;
++import org.bouncycastle.util.encoders.Base64;
+ 
+ import com.aelitis.azureus.core.networkmanager.admin.NetworkAdmin;
+ import com.aelitis.azureus.ui.common.RememberedDecisionsManager;
+diff -up azureus-5.7.5.0/org/gudy/azureus2/ui/swt/debug/UIDebugGenerator.java.no-bundled-bouncycastle azureus-5.7.5.0/org/gudy/azureus2/ui/swt/debug/UIDebugGenerator.java
+--- azureus-5.7.5.0/org/gudy/azureus2/ui/swt/debug/UIDebugGenerator.java.no-bundled-bouncycastle	2017-01-13 00:22:52.000000000 +0100
++++ azureus-5.7.5.0/org/gudy/azureus2/ui/swt/debug/UIDebugGenerator.java	2017-03-16 19:53:10.062131517 +0100
+@@ -46,7 +46,7 @@ import org.gudy.azureus2.ui.swt.componen
+ import org.gudy.azureus2.ui.swt.shells.CoreWaiterSWT;
+ import org.gudy.azureus2.ui.swt.shells.CoreWaiterSWT.TriggerInThread;
+ import org.gudy.azureus2.ui.swt.shells.MessageBoxShell;
+-import org.gudy.bouncycastle.util.encoders.Base64;
++import org.bouncycastle.util.encoders.Base64;
+ 
+ import com.aelitis.azureus.core.*;
+ import com.aelitis.azureus.core.util.AZ3Functions;
+diff -up azureus-5.7.5.0/org/gudy/azureus2/ui/swt/views/TagSettingsView.java.no-bundled-bouncycastle azureus-5.7.5.0/org/gudy/azureus2/ui/swt/views/TagSettingsView.java
+--- azureus-5.7.5.0/org/gudy/azureus2/ui/swt/views/TagSettingsView.java.no-bundled-bouncycastle	2017-02-27 23:35:02.000000000 +0100
++++ azureus-5.7.5.0/org/gudy/azureus2/ui/swt/views/TagSettingsView.java	2017-03-16 19:53:10.062131517 +0100
+@@ -51,7 +51,7 @@ import org.gudy.azureus2.ui.swt.config.g
+ import org.gudy.azureus2.ui.swt.plugins.UISWTView;
+ import org.gudy.azureus2.ui.swt.plugins.UISWTViewEvent;
+ import org.gudy.azureus2.ui.swt.pluginsimpl.UISWTViewCoreEventListener;
+-import org.gudy.bouncycastle.util.Arrays;
++import org.bouncycastle.util.Arrays;
+ 
+ import com.aelitis.azureus.core.tag.*;
+ import com.aelitis.azureus.core.tag.TagFeatureProperties.TagProperty;
