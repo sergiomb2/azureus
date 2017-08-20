@@ -3,7 +3,7 @@
 Name:       azureus
 Version:    5.7.5.0
 %global     uversion  %(foo=%{version}; echo ${foo//./})
-Release:    3%{?dist}
+Release:    4%{?dist}
 Summary:    A BitTorrent Client
 Group:      Applications/Internet
 
@@ -159,6 +159,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Sun Aug 20 2017 Sérgio Basto <sergio@serjux.com> - 5.7.5.0-4
+- Enable SWT_GTK3 and Wayland
+
 * Sun May 28 2017 Sérgio Basto <sergio@serjux.com> - 5.7.5.0-3
 - Add to Azureus.desktop magnet links
 

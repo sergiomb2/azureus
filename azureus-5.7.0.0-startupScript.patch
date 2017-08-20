@@ -1,6 +1,6 @@
 --- Vuze_5750_source/org/gudy/azureus2/platform/unix/startupScript.orig	2017-03-26 03:54:57.498205458 +0100
 +++ Vuze_5750_source/org/gudy/azureus2/platform/unix/startupScript	2017-03-26 03:56:47.383304634 +0100
-@@ -1,15 +1,22 @@
+@@ -1,15 +1,18 @@
  #!/bin/bash
  
  ######## CONFIGURATION OPTIONS ########
@@ -12,15 +12,11 @@
 +PROGRAM_DIR="$HOME/.azureus/app"	# use full path to Azureus bin dir
  JAVA_ARGS="-Xmx256m"
 +mkdir -p ${PROGRAM_DIR}
-+
-+#Workaround for SWT problem with wayland
-+export GDK_BACKEND=x11
  
  #export MOZILLA_FIVE_HOME="/path/to/gre"	# Full path to GRE/Mozilla. When commenting out this line, also comment out the next line
  #if [ "$LD_LIBRARY_PATH x" = " x" ]; then export LD_LIBRARY_PATH=$MOZILLA_FIVE_HOME; else export LD_LIBRARY_PATH=$MOZILLA_FIVE_HOME:$LD_LIBRARY_PATH; fi
  #######################################
  
-+export SWT_GTK3=0
 +export CLASSPATH=`build-classpath json_simple bcprov apache-commons-cli apache-commons-lang log4j-1 swt`:/usr/share/azureus/Azureus2.jar
 +
  ######## YOU PROBABLY DO NOT WANT TO TOUCH ANYTHING BELOW! ########
