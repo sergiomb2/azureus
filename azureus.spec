@@ -1,9 +1,9 @@
 %global     _newname Vuze
 
 Name:       azureus
-Version:    5.7.5.0
+Version:    5.7.6.0
 %global     uversion  %(foo=%{version}; echo ${foo//./})
-Release:    4%{?dist}
+Release:    1%{?dist}
 Summary:    A BitTorrent Client
 Group:      Applications/Internet
 
@@ -159,6 +159,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Sun Nov 05 2017 Sérgio Basto <sergio@serjux.com> - 5.7.6.0-1
+- Update azureus to 5.7.6.0
+
 * Sun Aug 20 2017 Sérgio Basto <sergio@serjux.com> - 5.7.5.0-4
 - Enable SWT_GTK3 and Wayland
 
