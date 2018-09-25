@@ -1,0 +1,26 @@
+diff -up azureus-5.7.6.0/org/gudy/azureus2/pluginsimpl/local/PluginStateImpl.java.gplv2orlater azureus-5.7.6.0/org/gudy/azureus2/pluginsimpl/local/PluginStateImpl.java
+--- azureus-5.7.6.0/org/gudy/azureus2/pluginsimpl/local/PluginStateImpl.java.gplv2orlater	2018-07-30 12:31:20.139665794 -0400
++++ azureus-5.7.6.0/org/gudy/azureus2/pluginsimpl/local/PluginStateImpl.java	2018-07-30 12:31:40.218134774 -0400
+@@ -7,7 +7,8 @@
+  *
+  * This program is free software; you can redistribute it and/or modify
+  * it under the terms of the GNU General Public License as published by
+- * the Free Software Foundation; version 2 of the License.
++ * the Free Software Foundation; either version 2 of the License, or
++ * (at your option) any later version.
+  * 
+  * This program is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+diff -up azureus-5.7.6.0/org/gudy/azureus2/plugins/PluginState.java.gplv2orlater azureus-5.7.6.0/org/gudy/azureus2/plugins/PluginState.java
+--- azureus-5.7.6.0/org/gudy/azureus2/plugins/PluginState.java.gplv2orlater	2018-07-30 12:30:35.594843879 -0400
++++ azureus-5.7.6.0/org/gudy/azureus2/plugins/PluginState.java	2018-07-30 12:30:52.481397277 -0400
+@@ -7,7 +7,8 @@
+  *
+  * This program is free software; you can redistribute it and/or modify
+  * it under the terms of the GNU General Public License as published by
+- * the Free Software Foundation; version 2 of the License.
++ * the Free Software Foundation; either version 2 of the License, or
++ * (at your option) any later version.
+  * 
+  * This program is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of

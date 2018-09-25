@@ -3,13 +3,13 @@
 Name:       azureus
 Version:    5.7.6.0
 %global     uversion  %(foo=%{version}; echo ${foo//./})
-Release:    1%{?dist}
+Release:    2%{?dist}
 Summary:    A BitTorrent Client
 Group:      Applications/Internet
 
 #Exception for using Eclipse SWT
 #http://wiki.vuze.com/w/Vuze_License
-License:    GPLv2 with exceptions
+License:    GPLv2+ with exceptions
 
 URL:        http://azureus.sourceforge.net
 
@@ -31,27 +31,33 @@ Patch8: azureus-5.7.5.0-no-bundled-json.patch
 Patch9: azureus-5.7.5.0-no-bundled-bouncycastle.patch
 Patch10: azureus-5.6.0.0-fix_compile.patch
 Patch11: vuze-5.3.0.0-disable-updaters.patch
-Patch13: azureus-5.3.0.0-noPF.patch
+# On 2018-07-01, Tom Callaway was able to contact Allan Crooks by email.
+# Allan gave explicit permission for his files (PluginState.java, PluginStateImpl.java)
+# to be used under GPLv2+.
+# See also: https://github.com/BiglySoftware/BiglyBT/pull/559
+Patch12: azureus-5.7.6.0-relicense-allan-crooks-files.patch
 
-BuildRequires:  ant, jpackage-utils >= 1.5, xml-commons-apis
+BuildRequires:  ant
+BuildRequires:  jpackage-utils >= 1.5
+BuildRequires:  xml-commons-apis
 BuildRequires:  apache-commons-cli
 BuildRequires:  log4j12
+BuildRequires:  junit
 BuildRequires:  apache-commons-lang
 BuildRequires:  bouncycastle >= 1.33-3
 BuildRequires:  json_simple
 BuildRequires:  eclipse-swt >= 3.5
 BuildRequires:  junit
-Requires:   apache-commons-cli
-Requires:   log4j12
-Requires:   apache-commons-lang
-%if 0%{?fedora}
-Requires:   eclipse-swt >= 3.5
-%endif
-Requires:   bouncycastle >= 1.33-3
-Requires:   java >= 1:1.6.0
-Requires:   json_simple
-BuildRequires:   java-devel >= 1:1.6.0
-BuildRequires:   desktop-file-utils
+BuildRequires:  java-devel >= 1:1.6.0
+BuildRequires:  desktop-file-utils
+
+Requires:       apache-commons-cli
+Requires:       log4j12
+Requires:       apache-commons-lang
+Requires:       eclipse-swt >= 3.5
+Requires:       bouncycastle >= 1.33-3
+Requires:       java >= 1:1.6.0
+Requires:       json_simple
 Requires(post):  desktop-file-utils
 Requires(postun):   desktop-file-utils
 
@@ -85,6 +91,12 @@ rm org/gudy/azureus2/ui/swt/osx/CarbonUIEnhancer.java
 rm org/gudy/azureus2/ui/swt/osx/Start.java
 rm org/gudy/azureus2/ui/swt/win32/Win32UIEnhancer.java
 
+# nuke this file to avoid any confusion of licensing
+rm -rf org/gudy/azureus2/ui/console/multiuser/TestUserManager.java
+
+#hacks to org.eclipse.swt.widgets.Tree2 don't compile.
+rm -fR org/eclipse
+
 %patch1 -p1 -b .no-shared-plugins
 %patch2 -p1 -b .nobcprov
 %patch6 -p1 -b .no-bundled-apache-commons
@@ -93,7 +105,7 @@ rm org/gudy/azureus2/ui/swt/win32/Win32UIEnhancer.java
 %patch9 -p1 -b .no-bundled-bouncycastle
 %patch10 -p1 -b .fix_compile
 %patch11 -p1 -b .disable_updaters
-#patch13 -p1 -b .noPF
+%patch12 -p1 -b .gplv2orlater
 
 %build
 mkdir -p build/libs
@@ -159,6 +171,9 @@ fi
 %{_datadir}/azureus
 
 %changelog
+* Tue Sep 25 2018 Sérgio Basto <sergio@serjux.com> - 5.7.6.0-2
+- Fix License
+
 * Sun Nov 05 2017 Sérgio Basto <sergio@serjux.com> - 5.7.6.0-1
 - Update azureus to 5.7.6.0
 
