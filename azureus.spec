@@ -3,7 +3,7 @@
 Name:       azureus
 Version:    5.7.6.0
 %global     uversion  %(foo=%{version}; echo ${foo//./})
-Release:    2%{?dist}
+Release:    3%{?dist}
 Summary:    A BitTorrent Client
 Group:      Applications/Internet
 
@@ -14,7 +14,6 @@ License:    GPLv2+ with exceptions
 URL:        http://azureus.sourceforge.net
 
 Source0:    http://downloads.sourceforge.net/azureus/%{_newname}_%{uversion}_source.zip
-
 Source2:    Azureus.desktop
 Source3:    azureus.applications
 
@@ -41,20 +40,30 @@ BuildRequires:  ant
 BuildRequires:  jpackage-utils >= 1.5
 BuildRequires:  xml-commons-apis
 BuildRequires:  apache-commons-cli
-BuildRequires:  log4j12
 BuildRequires:  junit
 BuildRequires:  apache-commons-lang
 BuildRequires:  bouncycastle >= 1.33-3
 BuildRequires:  json_simple
+%if 0%{?fedora}
+BuildRequires:  log4j12
 BuildRequires:  eclipse-swt >= 3.5
+%else
+BuildRequires:  log4j
+BuildRequires:  devtoolset-4-eclipse-swt >= 3.5
+%endif
 BuildRequires:  junit
 BuildRequires:  java-devel >= 1:1.6.0
 BuildRequires:  desktop-file-utils
 
 Requires:       apache-commons-cli
-Requires:       log4j12
 Requires:       apache-commons-lang
+%if 0%{?fedora}
+Requires:       log4j12
 Requires:       eclipse-swt >= 3.5
+%else
+Requires:       log4j
+Requires:       devtoolset-4-eclipse-swt >= 3.5
+%endif
 Requires:       bouncycastle >= 1.33-3
 Requires:       java >= 1:1.6.0
 Requires:       json_simple
@@ -107,17 +116,32 @@ rm -fR org/eclipse
 %patch11 -p1 -b .disable_updaters
 %patch12 -p1 -b .gplv2orlater
 
+%if 0%{?rhel}
+sed -i 's/log4j-1/log4j/g' org/gudy/azureus2/platform/unix/startupScript
+%endif
+
 %build
 mkdir -p build/libs
-build-jar-repository -p build/libs bcprov apache-commons-cli log4j12-1.2.17 \
+
+%global log4j_ver %{nil}
+%if 0%{?fedora} > 20
+%global log4j_ver 12-1.2.17
+%endif
+
+build-jar-repository -p build/libs bcprov apache-commons-cli log4j%{log4j_ver} \
   junit apache-commons-lang json_simple
 
+%if 0%{?rhel}
+#. /opt/rh/rh-java-common/enable
+ln -s /opt/rh/devtoolset-4/root/usr/lib64/eclipse/swt.jar build/libs
+%else
 #ppc seems to have eclipse-swt.ppc64 installed so libdir can't be used
 if [ -e /usr/lib/eclipse/swt.jar ];then
   ln -s /usr/lib/eclipse/swt.jar build/libs
 else
   ln -s /usr/lib64/eclipse/swt.jar build/libs
 fi
+%endif
 
 ant jar
 
@@ -141,6 +165,12 @@ desktop-file-install --dir ${RPM_BUILD_ROOT}%{_datadir}/applications %{SOURCE2}
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/application-registry
 install -m644 %{SOURCE3} $RPM_BUILD_ROOT%{_datadir}/application-registry
+
+%if 0%{?rhel}
+mkdir $RPM_BUILD_ROOT%{_datadir}/java
+ln -s /opt/rh/devtoolset-4/root/usr/lib64/eclipse/swt.jar $RPM_BUILD_ROOT%{_datadir}/java
+%endif
+
 
 %post
 update-desktop-database %{_datadir}/applications
@@ -169,8 +199,15 @@ fi
 %{_datadir}/icons/hicolor/64x64/apps/azureus.png
 %{_bindir}/azureus
 %{_datadir}/azureus
+%if 0%{?rhel}
+%{_datadir}/java/swt.jar
+%endif
+
 
 %changelog
+* Sun Oct 21 2018 Sérgio Basto <sergio@serjux.com> - 5.7.6.0-3
+- Steps to build in epel7 with Devtoolset-4
+
 * Tue Sep 25 2018 Sérgio Basto <sergio@serjux.com> - 5.7.6.0-2
 - Fix License
 
