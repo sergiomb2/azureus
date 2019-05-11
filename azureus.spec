@@ -3,9 +3,9 @@
 Name:       azureus
 Version:    5.7.6.0
 %global     uversion  %(foo=%{version}; echo ${foo//./})
-Release:    3%{?dist}
+Release:    6%{?dist}
+Epoch:      1
 Summary:    A BitTorrent Client
-Group:      Applications/Internet
 
 #Exception for using Eclipse SWT
 #http://wiki.vuze.com/w/Vuze_License
@@ -49,7 +49,7 @@ BuildRequires:  log4j12
 BuildRequires:  eclipse-swt >= 3.5
 %else
 BuildRequires:  log4j
-BuildRequires:  devtoolset-4-eclipse-swt >= 3.5
+BuildRequires:  rh-eclipse46-eclipse-swt >= 3.5
 %endif
 BuildRequires:  junit
 BuildRequires:  java-devel >= 1:1.6.0
@@ -62,7 +62,7 @@ Requires:       log4j12
 Requires:       eclipse-swt >= 3.5
 %else
 Requires:       log4j
-Requires:       devtoolset-4-eclipse-swt >= 3.5
+Requires:       rh-eclipse46-eclipse-swt >= 3.5
 %endif
 Requires:       bouncycastle >= 1.33-3
 Requires:       java >= 1:1.6.0
@@ -133,7 +133,9 @@ build-jar-repository -p build/libs bcprov apache-commons-cli log4j%{log4j_ver} \
 
 %if 0%{?rhel}
 #. /opt/rh/rh-java-common/enable
-ln -s /opt/rh/devtoolset-4/root/usr/lib64/eclipse/swt.jar build/libs
+#ln -s /opt/rh/devtoolset-4/root/usr/lib64/eclipse/swt.jar build/libs
+#scl enable rh-eclipse46 bash
+ln -s /opt/rh/rh-eclipse46/root/usr/lib64/eclipse/swt.jar build/libs 
 %else
 #ppc seems to have eclipse-swt.ppc64 installed so libdir can't be used
 if [ -e /usr/lib/eclipse/swt.jar ];then
@@ -205,6 +207,15 @@ fi
 
 
 %changelog
+* Sat May 11 2019 Sérgio Basto <sergio@serjux.com> - 1:5.7.6.0-6
+- Add Epoch 1
+
+* Sat May 11 2019 Sérgio Basto <sergio@serjux.com> - 5.7.6.0-5
+- Remove Group tag
+
+* Sat May 11 2019 Sérgio Basto <sergio@serjux.com> - 5.7.6.0-4
+- Use rh-eclipse46
+
 * Sun Oct 21 2018 Sérgio Basto <sergio@serjux.com> - 5.7.6.0-3
 - Steps to build in epel7 with Devtoolset-4
 
