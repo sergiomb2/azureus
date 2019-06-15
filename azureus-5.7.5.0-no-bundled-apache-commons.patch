@@ -1,5 +1,6 @@
---- Vuze_5750_source/com/aelitis/azureus/core/metasearch/impl/web/WebResult.java.orig	2017-02-07 23:44:44.000000000 +0000
-+++ Vuze_5750_source/com/aelitis/azureus/core/metasearch/impl/web/WebResult.java	2017-03-13 00:50:35.355803440 +0000
+diff -up azureus-5.7.5.0/com/aelitis/azureus/core/metasearch/impl/web/WebResult.java.no-bundled-apache-commons azureus-5.7.5.0/com/aelitis/azureus/core/metasearch/impl/web/WebResult.java
+--- azureus-5.7.5.0/com/aelitis/azureus/core/metasearch/impl/web/WebResult.java.no-bundled-apache-commons	2017-02-07 23:44:44.000000000 +0100
++++ azureus-5.7.5.0/com/aelitis/azureus/core/metasearch/impl/web/WebResult.java	2017-03-16 06:12:02.528049876 +0100
 @@ -87,14 +87,14 @@ public class WebResult extends Result {
  	public void setNameFromHTML(String name) {
  		if(name != null) {
@@ -89,8 +90,9 @@
  			votes_str = votes_str.replaceAll(",", "");
  			votes_str = votes_str.replaceAll(" ", "");
  			try {
---- Vuze_5750_source/com/aelitis/azureus/core/metasearch/Result.java.orig	2017-02-22 22:29:54.000000000 +0000
-+++ Vuze_5750_source/com/aelitis/azureus/core/metasearch/Result.java	2017-03-13 00:51:41.584496928 +0000
+diff -up azureus-5.7.5.0/com/aelitis/azureus/core/metasearch/Result.java.no-bundled-apache-commons azureus-5.7.5.0/com/aelitis/azureus/core/metasearch/Result.java
+--- azureus-5.7.5.0/com/aelitis/azureus/core/metasearch/Result.java.no-bundled-apache-commons	2017-02-22 22:29:54.000000000 +0100
++++ azureus-5.7.5.0/com/aelitis/azureus/core/metasearch/Result.java	2017-03-16 06:11:40.075049076 +0100
 @@ -28,7 +28,7 @@ import java.util.Locale;
  import java.util.Map;
  import java.util.Random;

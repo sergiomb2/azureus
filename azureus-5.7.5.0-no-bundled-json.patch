@@ -1,5 +1,6 @@
---- Vuze_5750_source/com/aelitis/azureus/util/ImportExportUtils.java.orig	2016-11-29 04:51:14.000000000 +0000
-+++ Vuze_5750_source/com/aelitis/azureus/util/ImportExportUtils.java	2017-03-13 00:56:15.678365502 +0000
+diff -up azureus-5.7.5.0/com/aelitis/azureus/util/ImportExportUtils.java.no-bundled-json azureus-5.7.5.0/com/aelitis/azureus/util/ImportExportUtils.java
+--- azureus-5.7.5.0/com/aelitis/azureus/util/ImportExportUtils.java.no-bundled-json	2017-03-16 06:13:56.808053946 +0100
++++ azureus-5.7.5.0/com/aelitis/azureus/util/ImportExportUtils.java	2017-03-16 06:16:44.645059923 +0100
 @@ -368,7 +368,7 @@ public final class ImportExportUtils {
  		String		key,
  		String[]	data )
@@ -9,8 +10,9 @@
  		
  		map.put( key, l );
  
---- Vuze_5750_source/com/aelitis/azureus/util/JSONUtils.java.orig	2016-11-15 19:01:18.000000000 +0000
-+++ Vuze_5750_source/com/aelitis/azureus/util/JSONUtils.java	2017-03-13 00:56:15.678365502 +0000
+diff -up azureus-5.7.5.0/com/aelitis/azureus/util/JSONUtils.java.no-bundled-json azureus-5.7.5.0/com/aelitis/azureus/util/JSONUtils.java
+--- azureus-5.7.5.0/com/aelitis/azureus/util/JSONUtils.java.no-bundled-json	2016-11-15 19:01:18.000000000 +0100
++++ azureus-5.7.5.0/com/aelitis/azureus/util/JSONUtils.java	2017-03-16 06:13:56.809053946 +0100
 @@ -71,7 +71,7 @@ public class JSONUtils
  	 * @since 3.0.1.5
  	 */
